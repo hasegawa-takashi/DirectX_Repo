@@ -1,0 +1,4 @@
+﻿  Particle.cpp
+d:\mydocument\direectx_00\direectx_00\particle.cpp(1): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
+  d:\mydocument\direectx_00\direectx_00\particle.cpp(1): note: command-line arguments:  see previous definition of '_CRT_SECURE_NO_WARNINGS'
+  DireectX_00.vcxproj -> D:\MyDocument\DireectX_00\Debug\DireectX_00.exe
