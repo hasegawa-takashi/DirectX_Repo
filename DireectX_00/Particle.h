@@ -7,15 +7,15 @@
 #include "..\data/Effecseer/include/EffekseerRendererDX9.h"
 #include "..\data/Effecseer/include/EffekseerSoundXAudio2.h"
 #if _DEBUG
-#pragma comment(lib, "data/Effecseer/VS2015/Debug/Effekseer.lib" )
-#pragma comment(lib, "data/Effecseer/VS2015/Debug/EffekseerRendererDX9.lib" )
-#pragma comment(lib, "data/Effecseer/VS2015/Debug/EffekseerSoundXAudio2.lib" )
-#pragma comment(lib, "data/Effecseer/VS2015/Debug/xaudio2.lib" )
+#pragma comment(lib, "../data/Effecseer/VS2015/Debug/Effekseer.lib" )
+#pragma comment(lib, "../data/Effecseer/VS2015/Debug/EffekseerRendererDX9.lib" )
+#pragma comment(lib, "../data/Effecseer/VS2015/Debug/EffekseerSoundXAudio2.lib" )
+#pragma comment(lib, "../data/Effecseer/VS2015/Debug/xaudio2.lib" )
 #else
-#pragma comment(lib, "data/Effecseer/VS2015/Release/Effekseer.lib" )
-#pragma comment(lib, "data/Effecseer/VS2015/Release/EffekseerRendererDX9.lib" )
-#pragma comment(lib, "data/Effecseer/VS2015/Release/EffekseerSoundXAudio2.lib" )
-#pragma comment(lib, "data/Effecseer/VS2015/Debug/xaudio2.lib" )
+#pragma comment(lib, "../data/Effecseer/VS2015/Release/Effekseer.lib" )
+#pragma comment(lib, "../data/Effecseer/VS2015/Release/EffekseerRendererDX9.lib" )
+#pragma comment(lib, "../data/Effecseer/VS2015/Release/EffekseerSoundXAudio2.lib" )
+#pragma comment(lib, "../data/Effecseer/VS2015/Debug/xaudio2.lib" )
 #endif
 
 
@@ -31,8 +31,8 @@ private:
 
 public:
 
-	CParticle() {}
-	virtual ~CParticle() {}
+	CParticle();
+	virtual ~CParticle();
 
 	// === 継承するメッセージ === //
 
@@ -45,7 +45,7 @@ public:
 	void UIDraw() {};
 	void Release();
 	void Pause() {};
-	bool AllRelaseObj() {};
+	bool AllRelaseObj() { return true; }
 
 	// 複数ある可能性があるもの
 	ColBox GetCol() = 0;

@@ -15,9 +15,8 @@ CParticle::CParticle()
 }
 
 // デストラクタ
-CParticle::~CParticle(void)
-{
-	Release();
+CParticle::~CParticle(void){
+
 }
 
 // 更新
@@ -41,15 +40,4 @@ void CParticle::LateDraw(void)
 {
 	
 }
-
-void CParticle::SetPos(D3DXVECTOR3 pos)
-{
-	m_mtxWorld._41 = pos.x;
-	m_mtxWorld._42 = pos.y;
-	m_mtxWorld._43 = pos.z;
-}
-
-D3DXVECTOR3 CParticle::GetPos()
-{
-	return D3DXVECTOR3(m_mtxWorld._41,m_mtxWorld._42, m_mtxWorld._43);
-}					   
+					   
