@@ -7,6 +7,7 @@
 
 CMeshRender::CMeshRender()
 {
+
 	m_pFrameRoot = NULL;
 	m_pAnimCtrl = NULL;
 	m_uNumAnimSet = 0;
@@ -466,7 +467,6 @@ D3DXMATRIX* CMeshRender::GetBorn(LPD3DXFRAME pFrameBase ,LPSTR BornName)
 	if (std::string(pFrameBase->Name).compare(BornName) == 0)
 	{
 		MYFRAME* pFrame = (MYFRAME*)pFrameBase;
-		
 		return &pFrame->CombinedTransformationMatrix;
 	}
 

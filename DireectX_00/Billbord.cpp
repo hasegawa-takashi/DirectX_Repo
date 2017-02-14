@@ -108,7 +108,6 @@ HRESULT CBillbord::CreateMake3DBillbord(
 	float TexPosUp,
 	float TexPosDown)
 {
-
 	D3DXCreateTextureFromFile(CWindow::Instance()->GetDevice() ,						// デバイスへのポインタ
 		TexFile,			// ファイルの名前
 		&billbox.g_pD3DTextureBillboard);	// 読み込むメモリ

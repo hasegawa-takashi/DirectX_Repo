@@ -1,7 +1,7 @@
 #pragma once
 
+#include<d3d9.h>
 #include<math.h>
-#include<time.h>
 #include"Window.h"
 
 class CCalculation
@@ -17,11 +17,6 @@ public:
 	//////////////////////////////////
 	// --- 反射ベクトル
 	D3DXVECTOR3* calcReflectVector(D3DXVECTOR3* out, const D3DXVECTOR3& front, const D3DXVECTOR3& normal);
-
-	/////////////////////////////////
-	// --- 二つのベクトルのなす角
-	double AngleOf2Vector(D3DXVECTOR3 A, D3DXVECTOR3 B);
-
 
 };
 

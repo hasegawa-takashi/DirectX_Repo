@@ -1,6 +1,5 @@
 #pragma once
 #include "EnemyMgr.h"
-#include"Billbord.h"
 
 class TrainingBot : public ObjBase
 {
@@ -18,7 +17,7 @@ public:
 	void Pause();
 	bool AllRelaseObj();
 	ColBox GetCol();
-	CMeshRender GetRender();
+	CMeshRender* GetRender();
 	void SetidentNumb(int);
 	int GetidentNumb();
 

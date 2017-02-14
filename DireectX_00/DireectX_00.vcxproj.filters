@@ -89,9 +89,6 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{55af9cec-99be-4a0b-aaab-d3cff08a5ff7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Effecseer">
-      <UniqueIdentifier>{cc8b0764-bf5d-4a50-bfa9-739186aa1ea0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Title.cpp">
@@ -258,15 +255,6 @@
     <ClInclude Include="Sort.h" />
     <ClInclude Include="Debug.h">
       <Filter>Debug</Filter>
-    </ClInclude>
-    <ClInclude Include="..\data\Effecseer\include\Effekseer.h">
-      <Filter>Effecseer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\data\Effecseer\include\EffekseerRendererDX9.h">
-      <Filter>Effecseer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\data\Effecseer\include\EffekseerSoundXAudio2.h">
-      <Filter>Effecseer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

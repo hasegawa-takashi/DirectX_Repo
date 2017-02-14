@@ -26,18 +26,18 @@ void CTitle::Init() {
 
 	CObjManager::Instance()->PushObj(new CCamera, ID_CAMERA);
 
-	CObjManager::Instance()->Init();
-
 }
 
 void CTitle::Update() {
+
+
+	CObjManager::Instance()->Update();
 
 	if (CInput::GetKeyPress(DIK_SPACE))
 	{
 		CSceneMgr::Instance()->ChangeScene(new CGameMain);
 	}
 
-	CObjManager::Instance()->Update();
 
 }
 

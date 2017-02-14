@@ -25,7 +25,6 @@ public:
 	ColBox GetCol(){ return Collison; }
 
 private:
-	SpriteBox spritebox[MAX_TEXTURE_TITLE];
 	CSprite *sprite[MAX_TEXTURE_TITLE];
 
 	ColBox Collison;
@@ -36,6 +35,6 @@ private:
 
 	bool PushFade;
 
-
+	int fade[MAX_TEXTURE_TITLE];
 };
 

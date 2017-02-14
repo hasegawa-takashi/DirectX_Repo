@@ -16,8 +16,10 @@ CField::~CField()
 // ‰Šú‰»
 void CField::Init()
 {
+
+	m_ModelMesh = new CMeshRender;
 	if (!m_bLoad) {
-		m_bLoad = m_ModelMesh.Initialize(PATH_MESHLAND);
+		m_bLoad = m_ModelMesh->Initialize(PATH_MESHLAND);
 	}
 	/*if (m_bLoad) {
 		SetMesh(&m_mesh);
@@ -39,7 +41,7 @@ void CField::Init()
 // ‰Šú‰»
 void CField::Update()
 {
-	m_ModelMesh.Update(m_mtxWorld);
+	m_ModelMesh->Update(m_mtxWorld);
 }
 
 
@@ -49,7 +51,7 @@ void CField::Draw()
 
 	CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_SPECULARENABLE, TRUE);	// ‹¾–Ê”½ŽË‚ð–³Œø
 	if (m_bLoad)
-		m_ModelMesh.Render();
+		m_ModelMesh->Render();
 
 	CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_SPECULARENABLE, FALSE);	// ‹¾–Ê”½ŽË‚ð–³Œø
 }
@@ -59,6 +61,7 @@ void CField::Release()
 {
 	if (m_bLoad) {
 		m_bLoad = false;
-		m_ModelMesh.Finalize();
+		m_ModelMesh->Finalize();
+		delete m_ModelMesh;
 	}
 }

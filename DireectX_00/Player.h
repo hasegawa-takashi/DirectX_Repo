@@ -4,8 +4,8 @@
 #include "Window.h"
 #include"Billbord.h"
 #include"Ballet.h"
-#include"Particle.h"
 #include<vector>
+#include"Camera.h"
 
 #define MAX_BALLET (30)
 

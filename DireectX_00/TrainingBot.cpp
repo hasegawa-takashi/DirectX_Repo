@@ -3,17 +3,22 @@
 #define PATH_BillBord	_T("../data/Texture/Target.png")
 
 TrainingBot::TrainingBot()
+	:billnprd(nullptr)
 {
 }
 
 
 TrainingBot::~TrainingBot()
 {
+	delete billnprd;
 }
 
 void TrainingBot::Init()
 {
+	delete billnprd;
+	billnprd = nullptr;
 	billnprd = new CBillbord();
+
 	billnprd->CreateMake3DBillbord(PATH_BillBord, 1.5f, 1.5f, 0.0f, 1.0f, 0.0f, 1.0f);
 
 	Collision.m_Pos.x = m_mtxWorld._41;
@@ -38,12 +43,12 @@ void TrainingBot::LateUpdate()
 
 void TrainingBot::Draw()
 {
-	billnprd->Render();
+	
 }
 
 void TrainingBot::LateDraw()
 {
-	
+	billnprd->Render();
 }
 
 void TrainingBot::Release()
@@ -67,7 +72,7 @@ ColBox TrainingBot::GetCol()
 		
 }
 
-CMeshRender TrainingBot::GetRender()
+CMeshRender* TrainingBot::GetRender()
 {
 	return m_ModelMesh;
 }

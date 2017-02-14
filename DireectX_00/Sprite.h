@@ -16,6 +16,7 @@ struct SpriteBox
 	LPD3DXSPRITE m_Sprite;
 	VERTEX_2D vertex_2d[NUM_VERTEX];
 	int Fade;
+	bool Createflag;
 };
 
 class CSprite
@@ -30,6 +31,8 @@ public:
 	void Update();
 	void Render();
 	void Release();
+
+	void SetFade(int nowfade);
 
 	HRESULT CreateMakeVertex2DPolygon(
 		LPCTSTR TexFile,

@@ -16,15 +16,17 @@ void CTitleUI::Init()
 
 	for (int loop = 0; loop < MAX_TEXTURE_TITLE; ++loop)
 	{
-
-		sprite[loop] = new CSprite;
+		auto p = new CSprite;
+		sprite[loop] = p;
 		sprite[loop]->Init();
 
-		sprite[loop]->CreateMakeVertex2DPolygon(_T("../data/Texture/title.png"), 0, 0, 800, 600, 255);
-		sprite[loop]->CreateMakeVertex2DPolygon(_T("../data/Texture/PushEnter.png"), 0, 0, 800, 600, 255);
-
-
 	}
+
+	fade[0] = 255;
+	sprite[0]->CreateMakeVertex2DPolygon(_T("../data/Texture/title.png"), 0, 0, 800, 600, fade[0]);
+	fade[1] = 255;
+	sprite[1]->CreateMakeVertex2DPolygon(_T("../data/Texture/PushEnter.png"), 0, 0, 800, 600, fade[1]);
+
 	CObjManager::Instance()->SerchObj(ID_CAMERA, CameraObjMgr);
 	if (!CameraObjMgr.empty())
 	{
@@ -33,26 +35,29 @@ void CTitleUI::Init()
 
 		CameraObj->SetCameraType(Cam_PREVIEW);
 	}
+
+
+
 }
 
 void CTitleUI::Update()
 {
-	if (spritebox[1].Fade >= 255)
+	if (fade[1] >= 255)
 		PushFade = true;
-	else if (spritebox[1].Fade <= 0)
+	else if (fade[1] <= 0)
 		PushFade = false;
 
 	if (PushFade == true)
 	{
-		spritebox[1].Fade -= 10;
+		fade[1] -= 10;
 	}
 	else{
-		spritebox[1].Fade += 10;
+		fade[1] += 10;
 	}
 
 	for (int loop = 0; loop < MAX_TEXTURE_TITLE; ++loop)
 	{
-		sprite[loop]->CreateMakeVertex2DPolygon(_T("../data/Texture/PushEnter.png"), 0, 0, 800, 600, spritebox[1].Fade);
+		sprite[loop]->SetFade(fade[loop]);
 	}
 }
 
@@ -81,8 +86,15 @@ void CTitleUI::Release()
 {
 	for (int i = 0; i < MAX_TEXTURE_TITLE; ++i)
 	{
-		sprite[i]->Release();
-		delete sprite[i];
+		
+
+		if (sprite[i] != NULL)
+		{
+			sprite[i]->Release();
+			auto p = sprite[i];
+			delete sprite[i];
+			sprite[i] = NULL;
+		}
 	}
 }
 

@@ -1,8 +1,13 @@
 #pragma once
-#include "Scene.h"
+#include"Scene.h"
 #include"ObjManager.h"
+#include"Camera.h"
+#include"Player.h"
+#include"EnemyMgr.h"
+#include"Field.h"
+#include"Sky.h"
+#include"Goal.h"
 
-class CSceneBase;
 class CGameMain :public CSceneBase
 {
 public:

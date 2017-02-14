@@ -47,7 +47,7 @@ public:
 	//-------------------------------------------------------
 	void CSceneMgr::Init() {
 		m_Run = true;
-
+		// シーンの準備
 	}
 
 	//-------------------------------------------------------
@@ -81,6 +81,7 @@ public:
 
 		// シーンの削除
 		m_SceneVec.back()->Release();
+		delete m_SceneVec.back();
 		m_SceneVec.pop_back();
 
 		return true;
@@ -128,7 +129,6 @@ public:
 		{
 			m_SceneVec.back()->Update();
 
-
 			m_SceneVec.back()->LateUpdate();
 		}
 
@@ -144,9 +144,6 @@ public:
 		if (m_SceneVec.empty())
 			return;
 
-		/*for( auto itr = m_SceneVec.begin(); itr != m_SceneVec.end(); itr++ ) {
-			( *itr )->Draw();
-			}*/
 
 		HRESULT hr = CWindow::Instance()->GetDevice()->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(128, 128, 255), 1.0f, 0);
 
@@ -189,6 +186,9 @@ public:
 	//
 	//-------------------------------------------------------
 	void CSceneMgr::Release() {
+		for (auto& p : m_SceneVec) {
+			delete p;
+		}
 		m_SceneVec.clear();
 		delete fade;
 	}

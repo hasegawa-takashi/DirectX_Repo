@@ -26,7 +26,7 @@
 bool CGameWnd::Init(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int iCmdShow)
 {
 	_CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF | _CRTDBG_ALLOC_MEM_DF);
-	//_CrtSetBreakAlloc(155);
+	//_CrtSetBreakAlloc(193);
 	
 	// 変数宣言
 	HRESULT Createflag = E_FAIL;
@@ -45,16 +45,13 @@ bool CGameWnd::Init(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, i
 	
 	// Windowのスクリーンモードの設定(今は出来ないただの木偶です)
 	
-
 	// タイマの分解能をセット
 	timeBeginPeriod(1);
-
-
 
 	// インスタンスの初期化
 	CSceneMgr::Instance()->Init();
 
-	// シーンの準備
+	// 一番最初のタイトルのプッシュ
 	CSceneMgr::Instance()->PushScene(new CTitle);
 
 	// Objマネージャーの初期化
@@ -117,17 +114,14 @@ void CGameWnd::Release(HINSTANCE hInstance)
 {
 	::timeEndPeriod(1);				// タイマの分解能を元に戻す
 	
+	CDebug::Instance()->Release();
+
 	CInput::Fin();
 	fps->Release();
 
-	//scene->PopScene();
-	//objmgr->Relase();
+	//CObjManager::Instance()->Release();
 
 	CSceneMgr::Instance()->Release();
-
-	CObjManager::Instance()->Release();
-
-	CDebug::Instance()->Release();
 
 	window->ReleaseWin(hInstance);
 

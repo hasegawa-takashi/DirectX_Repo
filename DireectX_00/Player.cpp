@@ -33,13 +33,15 @@ Player::Player()
 	HitCnt = false;
 	BalletCnt = 0;
 
+	m_ModelMesh = new CMeshRender;
+
 	if (!m_Load)
 	{
-		m_Load = m_ModelMesh.Initialize(PATH_MESHPLAYER);
+		m_Load = m_ModelMesh->Initialize(PATH_MESHPLAYER);
 
 		if (m_Load)
 		{
-			m_ModelMesh.SwitchAnimSet(1);
+			m_ModelMesh->SwitchAnimSet(1);
 		}
 	}
 
@@ -126,7 +128,7 @@ void Player::Update()
 	CheckFloor();
 	
 	// アニメーションメッシュの更新
-	m_ModelMesh.Update(m_mtxWorld);
+	m_ModelMesh->Update(m_mtxWorld);
 	
 	// 弾の更新
 	for (auto itr = _vecbullet_L.begin(); itr != _vecbullet_L.end(); ++itr)
@@ -151,7 +153,7 @@ void Player::Draw()
 
 	// キャラクターの描画
 	CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_SPECULARENABLE, FALSE);	// 鏡面反射を無効
-	m_ModelMesh.Render();
+	m_ModelMesh->Render();
 	CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_SPECULARENABLE, TRUE);	
 
 	// 弾の描画
@@ -177,8 +179,9 @@ void Player::Release()
 	// メッシュの終了処理
 	if (m_Load)
 	{
+		m_ModelMesh->Finalize();
+		delete m_ModelMesh;
 		m_Load = false;
-		m_ModelMesh.Finalize();
 	}
 
 	// 弾の終了処理
@@ -270,7 +273,7 @@ void Player::Move()
 ////////////////////////////////////////////////////////////////////////
 void Player::TransBorn()
 {
-	D3DXMATRIX* HipBorn = m_ModelMesh.SerchBorn("root_spine_02");
+	D3DXMATRIX* HipBorn = m_ModelMesh->SerchBorn("root_spine_02");
 
 
 	D3DXMATRIX rot;
@@ -366,7 +369,7 @@ void Player::ChangeDir()
 	{
 		if (m_Load)
 		{
-			m_ModelMesh.SwitchAnimSet(0);
+			m_ModelMesh->SwitchAnimSet(0);
 		}
 
 		// プレイヤーの向きの設定
@@ -414,7 +417,7 @@ void Player::ChangeDir()
 	else{
 		if (m_Load)
 		{
-			m_ModelMesh.SwitchAnimSet(1);
+			m_ModelMesh->SwitchAnimSet(1);
 		}
 	}
 }

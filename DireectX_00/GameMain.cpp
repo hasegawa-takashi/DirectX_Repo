@@ -1,11 +1,4 @@
 #include "GameMain.h"
-#include"Player.h"
-#include"ObjManager.h"
-#include"Camera.h"
-#include"Field.h"
-#include"Sky.h"
-#include"Goal.h"
-#include"EnemyMgr.h"
 
 CGameMain::CGameMain()
 {
@@ -19,15 +12,16 @@ CGameMain::~CGameMain()
 void CGameMain::Init() {
 	// 初期オブジェクトの設定一気に設定するよ
 	CObjManager::Instance()->MonSter();
-	
-	CObjManager::Instance()->PushObj(new Player,ID_PLAYER);
+
+	CObjManager::Instance()->PushObj(new CCamera, ID_CAMERA);
+	CObjManager::Instance()->PushObj(new Player, ID_PLAYER);
 	CObjManager::Instance()->PushObj(new CEnemyMgr, ID_ENEMY);
 	CObjManager::Instance()->PushObj(new CField, ID_FIELD);
 	CObjManager::Instance()->PushObj(new CSky, ID_OTHER);
 	CObjManager::Instance()->PushObj(new CGoal, ID_GOAL);
-	CObjManager::Instance()->PushObj(new CCamera, ID_CAMERA);
 
 	CObjManager::Instance()->Init();
+
 
 }
 

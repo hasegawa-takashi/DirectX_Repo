@@ -2,9 +2,8 @@
 
 #include"ObjManager.h"
 #include"Window.h"
-#include<functional> 
-#include <iostream>
-#include"boost\coroutine2\all.hpp"
+
+
 
 #define VECZERO D3DXVECTOR3(0,0,0)
 //////////////////////////////////
@@ -26,7 +25,6 @@ enum CamState
 //				球面カメラとFPSカメラを作らなきゃいけないことに気付いた
 //
 /////////////////////////////////////////////////////////////
-typedef boost::coroutines2::asymmetric_coroutine<void()> routine;
 
 class CCamera : public ObjBase
 {
@@ -44,8 +42,8 @@ public:
 	//---------------------------------------
 	// カメラのインスタンス
 	/*static CCamera* Instance(){
-	static CCamera _Instance;
-	return &_Instance;
+		static CCamera _Instance;
+		return &_Instance;
 	}*/
 
 	//----------------------------
@@ -59,16 +57,16 @@ public:
 	void Draw();
 	//----------------------------
 	// --- オブジェクトの削除
-	void Release() {};
+	void Release();
 	//----------------------------
 	// --- ポーズ画面
-	void Pause() {};
+	void Pause(){};
 	//----------------------------
 	// --- 表示画面
-	void UIDraw() {};
+	void UIDraw(){};
 	//----------------------------
 	// --- 最終処理全削除用
-	bool AllRelaseObj() { return true; };
+	bool AllRelaseObj(){ return true; };
 
 	//---------------------------------------
 	// カメラの座標の取得
@@ -84,10 +82,10 @@ public:
 	//---------------------------------------
 	// カメラの移動更新
 	void CameraMove();
-
+	
 	//---------------------------------------
 	// カメラの注視点の設定
-	void SetLookAt(const D3DXVECTOR3 look);
+	void SetLookAt(D3DXVECTOR3 look);
 
 	//---------------------------------------
 	// カメラのZ回転
@@ -99,7 +97,7 @@ public:
 
 	//----------------------------------------
 	// --- オブジェクトの描画(あとから用)
-	void LateDraw() {};
+	void LateDraw();
 
 	//----------------------------------------
 	// --- コリジョンの設定
@@ -138,10 +136,6 @@ private:
 	//---------------------------------------
 	// 行列計算→クオータニオン
 	void MatrixToQuaternion();
-
-	//---------------------------------------
-	// 座標補間移動関数
-	void LerpFunc(boost::coroutines2::coroutine<void()>::pull_type& yield);
 
 	//---------------------------------------
 	// ベクトル間の角度を算出
@@ -184,9 +178,7 @@ private:
 
 	OBJMGR Master;
 
-	float time = 0.0f;
-	D3DXVECTOR3 Next;
-	bool looplerp = false;
+
 
 };
 

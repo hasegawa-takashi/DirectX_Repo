@@ -20,7 +20,8 @@ CSky::~CSky(void)
 // 初期化
 void CSky::Init()
 {
-	m_ModelMesh.Initialize(PATH_MESHSKY);
+	m_ModelMesh = new CMeshRender;
+	m_ModelMesh->Initialize(PATH_MESHSKY);
 	// カメラオブジェクトの取得
 	CObjManager::Instance()->SerchObj(ID_CAMERA, CameraObj);
 
@@ -44,7 +45,7 @@ void CSky::LateUpdate()
 
 	m_mtxWorld = world;
 
-	m_ModelMesh.Update(m_mtxWorld);
+	m_ModelMesh->Update(m_mtxWorld);
 
 }
 
@@ -52,22 +53,25 @@ void CSky::LateUpdate()
 void CSky::Draw()
 {
 	// 何もしない
+	LPDIRECT3DDEVICE9 pD = CWindow::Instance()->GetDevice();
+	pD->SetRenderState(D3DRS_LIGHTING, FALSE);
+	pD->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+	m_ModelMesh->Render();
+	pD->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+	pD->SetRenderState(D3DRS_LIGHTING, TRUE);
+
 }
 
 // 半透明描画
 void CSky::LateDraw()
 {
-	LPDIRECT3DDEVICE9 pD = CWindow::Instance()->GetDevice();
-	pD->SetRenderState(D3DRS_LIGHTING, FALSE);
-	pD->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-	m_ModelMesh.Render();
-	pD->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	pD->SetRenderState(D3DRS_LIGHTING, TRUE);
+	
 
 }
 
 // 解放
 void CSky::Release()
 {
-	m_ModelMesh.Finalize();
+	m_ModelMesh->Finalize();
+	delete m_ModelMesh;
 }

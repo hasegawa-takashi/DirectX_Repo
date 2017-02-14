@@ -5,6 +5,8 @@
 #include<math.h>
 #include <queue>
 #include <string>
+#include <functional>
+
 //-------------------------------------------------------
 //
 //	Objectのデストラクタ
@@ -131,8 +133,9 @@ void CObjManager::LateDraw()
 	}*/
 
 	// ここでソートをかける
-	
+	//std::sort(TranslucentObj.begin(), TranslucentObj.end(), std::greater<std::pair<float, ObjBase*>>());
 
+	// 半透明オブジェクトの描画
 	for (auto itr = TranslucentObj.begin(); itr != TranslucentObj.end(); itr++)
 	{
 		
@@ -191,7 +194,7 @@ void CObjManager::Release()
 	}
 
 	// 多分これは必要ないと思う
-	CObjManager::Instance()->AllRelaseObj();
+	//CObjManager::Instance()->AllRelaseObj();
 }
 
 //-------------------------------------------------------
@@ -230,39 +233,34 @@ bool CObjManager::PushObj( ObjBase* obj , UINT ID)
 	{
 		return false;
 	}
-	
-
 	Numb++;
 
 	// === 同じIDのmapに増やす場合 === //
 	for (auto itr = ObjList.begin(); itr != ObjList.end(); itr++)
 	{
-
 		auto mapitr = itr->rbegin();
-
 		if (mapitr->first == ID)
 		{
 			itr->insert(std::make_pair(ID, obj));
-
 			mapitr->second->SetidentNumb(Numb);
-
+			// 登録済みのIDと同じIDがあった場合ここで終了する
 			return true;
 		}
 	}
 
+
 	// === listに増やして挿入する場合 === //
 
 	// 変数の初期化
-	OBJMGR hoge;
-	// いったん0で登録用のペアを設定
-	hoge.insert(std::make_pair(ID, obj));
+	OBJMGR hoge = { std::make_pair(ID, obj) };
 	// 代入
 	ObjList.push_back(hoge);
 	
+	//	配列の一番後ろのobjに番号の割り振り
 	auto itr = ObjList.back();
 	auto mapitr = itr.rbegin();
 	mapitr->second->SetidentNumb(Numb);
-
+	flag = true;
 	return flag;
 }
 
@@ -286,6 +284,7 @@ bool CObjManager::PopObj(int Type,int ID)
 			{
 				if (mapitr->second->GetidentNumb() == ID)
 				{
+					
 					itr->erase(mapitr);
 					return true;
 				}
@@ -346,6 +345,12 @@ bool CObjManager::AllRelaseObj()
 		for (auto mapitr = itr->begin(); mapitr != itr->end(); mapitr++)
 		{
 			mapitr->second->Release();
+			//-------------------------------------
+			// --- EnemyMgrをデリート時にエラー
+			delete mapitr->second;
+			
+			if ( ObjList.empty() )
+				return true;
 			
 		}
 	}
@@ -416,66 +421,65 @@ bool CObjManager::CollisonCheck(UINT ID, int Colltype, ColBox &obb1)
 	}
 
 
-	for (auto itr = ObjList.begin(); itr != ObjList.end(); itr++)
+	for (auto& itr = ObjList.begin(); itr != ObjList.end(); itr++)
 	{
 		
+		for (auto& mapitr = itr->begin(); mapitr != itr->end(); mapitr++)
 		{
-			auto mapitr = itr->begin();
 
-			for (auto mapitr = itr->begin(); mapitr != itr->end(); mapitr++)
+
+			D3DXVECTOR3 vCross = D3DXVECTOR3(0, 0, 0);
+			// 検索
+			switch (Colltype)
 			{
-
-
-				D3DXVECTOR3 vCross = D3DXVECTOR3(0, 0, 0);
-				// 検索
-				switch (Colltype)
+			case COL_SPHERE:
+				if (CollisionBSphere(obb1, mapitr->second->GetCol()) && mapitr->first == ID)
 				{
-				case COL_SPHERE:
-					if (CollisionBSphere(obb1, mapitr->second->GetCol()) && mapitr->first == ID)
-					{
-						ObjList.erase(itr);
-						return true;
-					}
-					break;
-
-				case COL_AABB:
-					break;
-
-				case COL_OBB:
-					if (CollisionOBB(obb1, mapitr->second->GetCol()) && mapitr->first == ID)
-					{
-						ObjList.erase(itr);
-						return true;
-					}
-					break;
-
-				case COL_RAY:
-					m_ModelMesh = mapitr->second->GetRender();
-
-					if (m_ModelMesh.Intersect(obb1.m_Pos, obb1.Ray, true, &vCross) && mapitr->first == ID)
-					{
-						obb1.ResultPos.x = vCross.x;
-						obb1.ResultPos.y = vCross.y;
-						obb1.ResultPos.z = vCross.z;
-						obb1.m_SetObjId = mapitr->first;
-						obb1.IdentNumb = mapitr->second->GetidentNumb();
-
-						return true;
-					}
-					break;
-
-				case COL_RAY_SPHERE:
-					if (calcRaySphere(obb1, mapitr->second->GetCol()) && mapitr->first == ID)
-					{
-						obb1.m_SetObjId = mapitr->first;
-						obb1.IdentNumb = mapitr->second->GetidentNumb();
-						return true;
-					}
-					break;
-
-				default:
-					break;
+					ObjList.erase(itr);
+					return true;
 				}
+				break;
+
+			case COL_AABB:
+				break;
+
+			case COL_OBB:
+				if (CollisionOBB(obb1, mapitr->second->GetCol()) && mapitr->first == ID)
+				{
+					ObjList.erase(itr);
+					return true;
+				}
+				break;
+
+			case COL_RAY:
+				m_ModelMesh = mapitr->second->GetRender();
+
+				if (m_ModelMesh == NULL)
+					break;
+
+				if (m_ModelMesh->Intersect(obb1.m_Pos, obb1.Ray, true, &vCross) && mapitr->first == ID)
+				{
+					obb1.ResultPos.x = vCross.x;
+					obb1.ResultPos.y = vCross.y;
+					obb1.ResultPos.z = vCross.z;
+					obb1.m_SetObjId = mapitr->first;
+					obb1.IdentNumb = mapitr->second->GetidentNumb();
+
+					return true;
+				}
+				break;
+
+			case COL_RAY_SPHERE:
+				if (calcRaySphere(obb1, mapitr->second->GetCol()) && mapitr->first == ID)
+				{
+					obb1.m_SetObjId = mapitr->first;
+					obb1.IdentNumb = mapitr->second->GetidentNumb();
+					return true;
+				}
+				break;
+
+			default:
+				break;
 			}
 		}
 	}
@@ -748,8 +752,6 @@ float CObjManager::CameraDistance(D3DXVECTOR3 SetPos)
 
 	// カメラの現在のポジションの取得
 	D3DXVECTOR3 vp{ hoge._41, hoge._42, hoge._43 };
-
-	CDebug::Instance()->Conversion(_T("\nViewPos::"), vp);
 
 	D3DXVECTOR3 VecDir = SetPos - vp;
 

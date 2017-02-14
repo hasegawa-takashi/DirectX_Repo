@@ -4,6 +4,7 @@
 #include<list>
 #include<map>
 #include<string>
+#include<vector>
 
 #include"MeshRender.h"
 
@@ -89,7 +90,7 @@ public:
 	virtual ColBox GetCol() = 0;
 
 	// 一つの固有であるもの
-	virtual CMeshRender GetRender(){ return m_ModelMesh; }
+	virtual CMeshRender* GetRender(){ return m_ModelMesh; }
 	virtual void SetidentNumb(int ID){ ObjNumb = ID; }
 	virtual int GetidentNumb(){ return ObjNumb; }
 	virtual void SetPos(D3DXVECTOR3 pos){ m_Pos = pos; }
@@ -100,14 +101,14 @@ protected:
 	// === 継承用メッセージ === //
 
 	D3DXMATRIX m_mtxWorld;		// ワールド行列
-	CMeshRender m_ModelMesh;	// モデル描画用
+	CMeshRender *m_ModelMesh;	// モデル描画用
 	int ObjNumb;				// モデルの固有番号
 	D3DXVECTOR3 m_Pos;			// ポジション
 
 };
 
 typedef std::multimap< int, ObjBase* > OBJMGR;
-typedef std::list<std::pair<float, ObjBase*> > RenderSort;
+typedef std::vector<std::pair<float, ObjBase*> > RenderSort;
 //////////////////////////////////////////////////////////////
 //
 //		objectmanager
@@ -149,6 +150,9 @@ public:
 	//----------------------------
 	// --- オブジェクトの削除
 	void Release();
+	//----------------------------
+	// --- オブジェクトの全削除
+	bool AllRelaseObj();
 	
 
 	// === ここまでオブジェクト処理 === //
@@ -168,10 +172,6 @@ public:
 	// --- オブジェクトの交換
 	bool ChangeObj(int Numb, ObjBase*);
 
-	//----------------------------
-	// --- オブジェクトの全削除
-	bool AllRelaseObj();
-
 	//---------------------------
 	// --- オブジェクトへの命名
 	// --- 色々あっていらない可能性が出てきた
@@ -186,7 +186,7 @@ public:
 	void MonSter(){ Numb = 0;  }
 
 	// === ここから継承の変数宣言 === //
-	CMeshRender m_ModelMesh;	// 描画用の変数クラス
+	CMeshRender *m_ModelMesh;	// 描画用の変数クラス
 
 	// === ここから先当たり判定関係 === //
 	// === 上手い作り方がわからなかったのでここで一括で当たり判定を構成 === //
@@ -203,7 +203,7 @@ public:
 	ColBox GetCol() {};
 
 	// === ここから先描画系 === //
-	CMeshRender GetRender() {};
+	CMeshRender* GetRender() {};
 
 	// === 描画補助用 === //
 	// --- 半透明Objのリスト

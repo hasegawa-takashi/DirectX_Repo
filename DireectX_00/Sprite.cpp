@@ -24,6 +24,8 @@ void CSprite::Update()
 
 void CSprite::Render()
 {
+
+
 	//頂点フォーマット設定
 	CWindow::Instance()->GetDevice()->SetFVF(FVF_VERTEX_2D);
 
@@ -34,6 +36,7 @@ void CSprite::Render()
 	//ポリゴン描画
 	if (FAILED(CWindow::Instance()->GetDevice()->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_POLYGON, &Spritebox.vertex_2d, sizeof(VERTEX_2D))))
 	{
+		Spritebox.Createflag = false;
 		return;
 	}
 
@@ -41,9 +44,12 @@ void CSprite::Render()
 
 void CSprite::Release()
 {
-	if (Spritebox.m_Texture != NULL)
+	if (Spritebox.Createflag == true)
+	{
 		Spritebox.m_Texture->Release();
-
+		Spritebox.m_Texture = NULL;
+		Spritebox.Createflag = false;
+	}
 }
 
 HRESULT CSprite::CreateMakeVertex2DPolygon(LPCTSTR  TexFile, float nX, float nY, float Width, float Height, int fade)
@@ -81,7 +87,19 @@ HRESULT CSprite::CreateMakeVertex2DPolygon(LPCTSTR  TexFile, float nX, float nY,
 	Spritebox.vertex_2d[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 	
 	
+	Spritebox.Createflag = true;
 
 	return S_OK;
+
+}
+
+void CSprite::SetFade(int nowfade)
+{
+	Spritebox.Fade = nowfade;
+
+	Spritebox.vertex_2d[0].col = D3DCOLOR_RGBA(255, 255, 255, Spritebox.Fade);
+	Spritebox.vertex_2d[1].col = D3DCOLOR_RGBA(255, 255, 255, Spritebox.Fade);
+	Spritebox.vertex_2d[2].col = D3DCOLOR_RGBA(255, 255, 255, Spritebox.Fade);
+	Spritebox.vertex_2d[3].col = D3DCOLOR_RGBA(255, 255, 255, Spritebox.Fade);
 
 }

@@ -21,7 +21,7 @@ public:
 
 	ColBox GetCol(){ return Collision; }
 
-	CMeshRender GetRender(){ return m_ModelMesh; }
+	CMeshRender* GetRender(){ return m_ModelMesh; }
 
 	void SetPos(D3DXVECTOR3 pos){ m_Pos = pos; }
 
@@ -31,7 +31,6 @@ public:
 
 private:
 	ColBox Collision;			// “–‚½‚è”»’è—p
-	CMeshRender m_ModelMesh;	// ƒ‚ƒfƒ‹•`‰æ—p
 	D3DXVECTOR3 m_Pos;
 };
 

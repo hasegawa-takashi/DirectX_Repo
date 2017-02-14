@@ -2,30 +2,28 @@
   TrainingBot.cpp
   TitleUI.cpp
   Title.cpp
-j:\dxproj\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
-  j:\dxproj\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
+j:\directx_repo\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
+  j:\directx_repo\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
   Sprite.cpp
   Sort.cpp
   Sky.cpp
   Score.cpp
   RenderMgr.cpp
   Player.cpp
-j:\dxproj\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
-  j:\dxproj\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
+j:\directx_repo\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
+  j:\directx_repo\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
   Particle.cpp
-j:\dxproj\direectx_00\particle.cpp(1): warning C4005: '_CRT_SECURE_NO_WARNINGS': マクロが再定義されました。
-  j:\dxproj\direectx_00\particle.cpp(1): note: コマンド ラインの引数: '_CRT_SECURE_NO_WARNINGS' の前の定義を確認してください
   ObjManager.cpp
   MyHierarchy.cpp
   MeshRender.cpp
   Main.cpp
-j:\dxproj\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
-  j:\dxproj\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
+j:\directx_repo\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
+  j:\directx_repo\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
   Input.cpp
   Goal.cpp
   GameWnd.cpp
-j:\dxproj\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
-  j:\dxproj\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
+j:\directx_repo\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
+  j:\directx_repo\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
   GameMain.cpp
   FPS.cpp
   コードを生成中...
@@ -35,15 +33,14 @@ j:\dxproj\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マク�
   Fade.cpp
   EnemyMgr.cpp
   End.cpp
-j:\dxproj\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
-  j:\dxproj\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
+j:\directx_repo\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
+  j:\directx_repo\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
   Debug.cpp
   Camera.cpp
-j:\dxproj\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
-  j:\dxproj\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
+j:\directx_repo\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
+  j:\directx_repo\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
   Billbord.cpp
   Ballet.cpp
   コードを生成中...
-Effekseer.lib(Effekseer.Vector3D.obj) : warning LNK4099: PDB 'effekseer.pdb' が 'Effekseer.lib(Effekseer.Vector3D.obj)' で、または 'J:\DxProj\Debug\effekseer.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-  DireectX_00.vcxproj -> J:\DxProj\Debug\DireectX_00.exe
-  DireectX_00.vcxproj -> J:\DxProj\Debug\DireectX_00.pdb (Full PDB)
+  DireectX_00.vcxproj -> J:\DirectX_Repo\Debug\DireectX_00.exe
+  DireectX_00.vcxproj -> J:\DirectX_Repo\Debug\DireectX_00.pdb (Full PDB)

@@ -5,7 +5,6 @@
 #include"MeshRender.h"
 #include"Debug.h"
 
-
 ///////////////////////////////////////////////////////////////////////////////////////
 //
 //	カメラのコンストラクタ
@@ -21,20 +20,13 @@ CCamera::CCamera()
 	m_fAspect = (float)SCREEN_WIDTH / SCREEN_HEIGHT;
 	m_fZNear = NEAR_CLIP;
 	m_fZFar = FAR_CLIP;
-
+	
 	m_isNeedUpdate = true;
 	m_CamType = Cam_PREVIEW;
 
 	D3DXMatrixIdentity(&m_mtxView);
 	D3DXMatrixIdentity(&m_mtxProjection);
 	D3DXMatrixIdentity(&m_camPoseMat);
-
-	m_Distance = 10.0f;
-	m_camAngleUnit = 0.08f;
-	m_offsetZ = 0.0f;
-	m_camZrot = 0.0f;
-	m_CorrectionVal = D3DXVECTOR3(0, 0, 1);
-
 
 }
 
@@ -52,9 +44,21 @@ CCamera::~CCamera()
 //
 void CCamera::Init()
 {
+	
+
+	m_Pos = D3DXVECTOR3(0,3,-5);
+	m_DirDef = VECZERO;
+	m_Upvec = D3DXVECTOR3(0,1,0);
+
+	m_Distance = 10.0f;
+	m_camAngleUnit = 0.08f;
+	m_offsetZ = 0.0f;
+	m_camZrot = 0.0f;
+	m_CorrectionVal = D3DXVECTOR3(0,0,1);
+
 	ObjNumb = CObjManager::Instance()->RenameObj(ID_CAMERA);
 
-	CObjManager::Instance()->SerchObj(ID_PLAYER, Master);
+	CObjManager::Instance()->SerchObj(ID_PLAYER,Master);
 
 }
 
@@ -64,7 +68,7 @@ void CCamera::Init()
 //
 void CCamera::Update()
 {
-
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -97,7 +101,6 @@ void CCamera::LateUpdate()
 
 	case Cam_TPVIEW:
 		TPSCamera();
-		//QuaternionRot();
 		break;
 
 	case Cam_PREVIEW:
@@ -118,22 +121,36 @@ void CCamera::LateUpdate()
 //
 void CCamera::Draw()
 {
-	// 補間
-
-
-	// カメラ情報の設定
-	D3DXMatrixLookAtLH(&m_mtxView, &NowPos, &m_lookAt, &m_Upvec);
+	D3DXMatrixLookAtLH(&m_mtxView,&NowPos,&m_lookAt,&m_Upvec);
 	D3DXMatrixPerspectiveFovLH(&m_mtxProjection, m_fFovy, m_fAspect, m_fZNear, m_fZFar);
 
 	CWindow::Instance()->GetDevice()->SetTransform(D3DTS_PROJECTION, &m_mtxProjection);
 	CWindow::Instance()->GetDevice()->SetTransform(D3DTS_VIEW, &m_mtxView);
-
+	
 	m_Move = VECZERO;
 	m_CameraMove = VECZERO;
-
+	
 
 	//カメラデバック
 	CDebug::Instance()->Conversion(_T("\nCameraPos"), NowPos);
+
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+//
+//	カメラの描画関係（あとから用）
+//
+void CCamera::LateDraw()
+{
+	
+}
+
+///////////////////////////////////////////////////////////////////////////////////////
+//
+//	カメラの終了処理
+//
+void CCamera::Release()
+{
 
 }
 
@@ -153,27 +170,24 @@ D3DXVECTOR3 CCamera::GetCameraPos()
 void CCamera::CameraMove()
 {
 	// カメラの制御
-	if (CInput::GetMouseAxis(MOUSE_X) >= 0.5f) {
+	if (CInput::GetMouseAxis(MOUSE_X)) {
 		m_CameraMove.x -= (CInput::GetMouseAxis(MOUSE_X) * 0.001f);
-
-		m_isNeedUpdate = true;
 	}
 
-	if (CInput::GetMouseAxis(MOUSE_Y) >= 0.5f) {
+	if (CInput::GetMouseAxis(MOUSE_Y)) {
 		m_CameraMove.y -= (CInput::GetMouseAxis(MOUSE_Y) * 0.001f);
-
-		m_isNeedUpdate = true;
 	}
 
 	// 回転移動分
 	m_DirDef.x += m_CameraMove.x;
 	m_DirDef.y += m_CameraMove.y;
 	m_offsetZ += m_CameraMove.z;
-
+	
 	// 平行移動分
 	if (!Master.empty())
 		m_Move = Master.begin()->second->GetPos();
 
+	m_isNeedUpdate = true;
 
 }
 
@@ -195,7 +209,7 @@ double CCamera::AngleOf2Vector(D3DXVECTOR3 A, D3DXVECTOR3 B)
 	//cosθからθを求める
 	double sita = acos(cos_sita);
 
-
+	
 	sita = sita * 180.0 / D3DX_PI;
 
 	return sita;
@@ -213,9 +227,13 @@ void CCamera::FPSCamera()
 		// 更新の必要無し
 		return;
 	}
-
+	
 	m_OldPos = m_Pos;
 	m_Pos = Master.begin()->second->GetPos();
+
+
+
+
 
 }
 
@@ -226,14 +244,14 @@ void CCamera::FPSCamera()
 void CCamera::TPSCamera()
 {
 
-	if (m_isNeedUpdate == false) {
-		// 更新の必要無し
-		return;
-	}
+	//if (m_isNeedUpdate == false) {
+	//	// 更新の必要無し
+	//	return;
+	//}
 
 	D3DXVECTOR3 LookatPos = Master.begin()->second->GetPos();
 
-	m_lookAt = LookatPos + D3DXVECTOR3(0.0f, 1.5f, 0.5f);
+	m_lookAt = LookatPos + D3DXVECTOR3(0.0f,1.5f,0.5f);
 
 	// カメラをZ軸回転で姿勢行列
 	D3DXMATRIX mtxZrot;
@@ -246,7 +264,7 @@ void CCamera::TPSCamera()
 	m_camPoseMat._23 = 0.0f;
 
 	D3DXVECTOR3 DL;
-	D3DXVec3TransformCoord(&DL, &m_DirDef, &m_camPoseMat);
+	D3DXVec3TransformCoord(&DL,&m_DirDef,&m_camPoseMat);
 
 	if (DL.x != 0.0f || DL.y != 0.0f || DL.z != 0.0f)
 	{
@@ -254,13 +272,13 @@ void CCamera::TPSCamera()
 
 		D3DXVECTOR3* camZAxis = (D3DXVECTOR3*)m_camPoseMat.m[2];
 		D3DXVec3Cross(&RotAxis, &DL, camZAxis);
-
+		
 		D3DXQUATERNION TransQ;
-		D3DXQuaternionRotationAxis(&TransQ, &RotAxis, m_camAngleUnit);
+		D3DXQuaternionRotationAxis(&TransQ,&RotAxis,m_camAngleUnit);
 
 		D3DXMATRIX TransRotMat;
-		D3DXMatrixRotationQuaternion(&TransRotMat, &TransQ);
-		D3DXVec3TransformCoord(&m_Pos, &m_Pos, &TransRotMat);
+		D3DXMatrixRotationQuaternion(&TransRotMat,&TransQ);
+		D3DXVec3TransformCoord(&m_Pos,&m_Pos,&TransRotMat);
 
 		// 移動後のカメラ姿勢の更新
 		D3DXVECTOR3 X, Y, Z;
@@ -268,9 +286,9 @@ void CCamera::TPSCamera()
 		Z = -m_Pos;
 		D3DXVec3Normalize(&Z, &Z);
 
-		memcpy(&Y, m_camPoseMat.m[1], sizeof(D3DXVECTOR3));
-		D3DXVec3Cross(&X, &Y, &Z);
-		D3DXVec3Normalize(&X, &X);
+		memcpy(&Y,m_camPoseMat.m[1],sizeof(D3DXVECTOR3));
+		D3DXVec3Cross(&X,&Y,&Z);
+		D3DXVec3Normalize(&X,&X);
 
 		D3DXVec3Cross(&Y, &Z, &X);
 		D3DXVec3Normalize(&Y, &Y);
@@ -306,17 +324,13 @@ void CCamera::TPSCamera()
 
 	m_isNeedUpdate = false;
 
-	Next = m_Pos + m_Move;
-
-
-	routine::pull_type lerp(LerpFunc);
-
+	NowPos = m_Pos + m_Move;
 
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
 //
-//	完全固定カメラ
+//	プレビュー？用のカメラ
 //
 void CCamera::PreviewCamera()
 {
@@ -345,7 +359,7 @@ void CCamera::RotZ(float radian) {
 //
 //	カメラの注視点の設定
 //
-void CCamera::SetLookAt(const D3DXVECTOR3 look)
+void CCamera::SetLookAt(D3DXVECTOR3 look)
 {
 	m_lookAt = look;
 }
@@ -381,39 +395,11 @@ void CCamera::MatrixToQuaternion()
 
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
-//
-//	補間コルーチンの代わり
-//
-void CCamera::LerpFunc(boost::coroutines2::coroutine<void()>::pull_type& yield)
-{
-
-	float time = 0.0f;
-
-	for (time = 0; time <= 1.0f; time += 0.1f)
-	{
-		if (m_isNeedUpdate)
-			break;
-
-		D3DXVec3Lerp(&NowPos, &m_Pos, &Next, time);
-		yield;
-	}
-
-	// 終了
-
-}
-
 ColBox CCamera::GetCol()
-{
-	return Collision;
-}
+{return Collision; }
 
 D3DXVECTOR3 CCamera::GetView()
-{
-	return (m_lookAt - NowPos);
-}
+{ return (m_lookAt - NowPos); }
 
 void CCamera::SetCameraType(int Type)
-{
-	m_CamType = Type;
-}
+{ m_CamType = Type; }
