@@ -22,11 +22,19 @@ CCamera::CCamera()
 	m_fZFar = FAR_CLIP;
 	
 	m_isNeedUpdate = true;
-	m_CamType = Cam_PREVIEW;
+	m_CamType = Cam_TPVIEW;
 
 	D3DXMatrixIdentity(&m_mtxView);
 	D3DXMatrixIdentity(&m_mtxProjection);
 	D3DXMatrixIdentity(&m_camPoseMat);
+
+
+	m_Distance = 10.0f;
+	m_camAngleUnit = 0.08f;
+	m_offsetZ = 0.0f;
+	m_camZrot = 0.0f;
+	m_CorrectionVal = D3DXVECTOR3(0, 0, 1);
+
 
 }
 
@@ -44,18 +52,6 @@ CCamera::~CCamera()
 //
 void CCamera::Init()
 {
-	
-
-	m_Pos = D3DXVECTOR3(0,3,-5);
-	m_DirDef = VECZERO;
-	m_Upvec = D3DXVECTOR3(0,1,0);
-
-	m_Distance = 10.0f;
-	m_camAngleUnit = 0.08f;
-	m_offsetZ = 0.0f;
-	m_camZrot = 0.0f;
-	m_CorrectionVal = D3DXVECTOR3(0,0,1);
-
 	ObjNumb = CObjManager::Instance()->RenameObj(ID_CAMERA);
 
 	CObjManager::Instance()->SerchObj(ID_PLAYER,Master);
@@ -231,10 +227,6 @@ void CCamera::FPSCamera()
 	m_OldPos = m_Pos;
 	m_Pos = Master.begin()->second->GetPos();
 
-
-
-
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -244,10 +236,10 @@ void CCamera::FPSCamera()
 void CCamera::TPSCamera()
 {
 
-	//if (m_isNeedUpdate == false) {
-	//	// 更新の必要無し
-	//	return;
-	//}
+	if (m_isNeedUpdate == false) {
+		// 更新の必要無し
+		return;
+	}
 
 	D3DXVECTOR3 LookatPos = Master.begin()->second->GetPos();
 
