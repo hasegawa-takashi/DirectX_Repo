@@ -208,10 +208,19 @@ void CMeshRender::RenderMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase , L
 		for (DWORD i = 0; i < pMeshContainer->dwBone ; ++i)
 		{
 			dwBlendMatrix = 0;
+
 			for (DWORD k = 0; k < pMeshContainer->dwBone; ++k)
 			{
-				if (pBoneCombi[i].BoneId[k] != UINT_MAX)
-					dwBlendMatrix = k;
+				try
+				{
+ 					if (pBoneCombi[i].BoneId[k] != UINT_MAX)
+						dwBlendMatrix = k;
+				}
+				catch (const std::exception&)
+				{
+					break;
+				}
+				
 			}
 
 			CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_VERTEXBLEND, dwBlendMatrix);

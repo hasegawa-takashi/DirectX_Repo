@@ -84,13 +84,13 @@
   <ItemGroup>
     <ClCompile Include="Ballet.cpp" />
     <ClCompile Include="Billbord.cpp" />
+    <ClCompile Include="Calculation.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="End.cpp" />
     <ClCompile Include="EnemyMgr.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Field.cpp" />
-    <ClCompile Include="FileMgr.cpp" />
     <ClCompile Include="FPS.cpp" />
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="GameWnd.cpp" />
@@ -103,9 +103,7 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderMgr.cpp" />
-    <ClCompile Include="Score.cpp" />
     <ClCompile Include="Sky.cpp" />
-    <ClCompile Include="Sort.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="TitleUI.cpp" />
@@ -115,13 +113,13 @@
   <ItemGroup>
     <ClInclude Include="Ballet.h" />
     <ClInclude Include="Billbord.h" />
+    <ClInclude Include="Calculation.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="End.h" />
     <ClInclude Include="EnemyMgr.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="Field.h" />
-    <ClInclude Include="FileMgr.h" />
     <ClInclude Include="FPS.h" />
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="GameWnd.h" />
@@ -135,9 +133,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderMgr.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="Score.h" />
     <ClInclude Include="Sky.h" />
-    <ClInclude Include="Sort.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="TitleUI.h" />

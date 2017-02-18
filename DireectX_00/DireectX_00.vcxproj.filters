@@ -89,6 +89,9 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{55af9cec-99be-4a0b-aaab-d3cff08a5ff7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Calculation">
+      <UniqueIdentifier>{a2338d89-b885-4f69-8745-e0e4ccf7f18b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Title.cpp">
@@ -163,14 +166,14 @@
     <ClCompile Include="Goal.cpp">
       <Filter>Goal</Filter>
     </ClCompile>
-    <ClCompile Include="Score.cpp" />
     <ClCompile Include="TitleUI.cpp">
       <Filter>Title\TitleUI</Filter>
     </ClCompile>
-    <ClCompile Include="FileMgr.cpp" />
-    <ClCompile Include="Sort.cpp" />
     <ClCompile Include="Debug.cpp">
       <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculation.cpp">
+      <Filter>Calculation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,14 +250,14 @@
     <ClInclude Include="Goal.h">
       <Filter>Goal</Filter>
     </ClInclude>
-    <ClInclude Include="Score.h" />
     <ClInclude Include="TitleUI.h">
       <Filter>Title\TitleUI</Filter>
     </ClInclude>
-    <ClInclude Include="FileMgr.h" />
-    <ClInclude Include="Sort.h" />
     <ClInclude Include="Debug.h">
       <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Calculation.h">
+      <Filter>Calculation</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

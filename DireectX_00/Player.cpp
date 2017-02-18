@@ -1,8 +1,8 @@
-#include "Player.h"
+#include"Player.h"
 #include"Input.h"
 #include"RenderMgr.h"
-#include"Camera.h"
 #include"Scene.h"
+#include"Calculation.h"
 
 // 定数宣言
 #define DEFINE_VEC3 D3DXVECTOR3(0,0,0)
@@ -21,7 +21,7 @@ Player::Player()
 
 	// 変数初期化
 	m_Pos = D3DXVECTOR3(0, 0, 0);
-	m_Dir = 0.0f;;
+	m_Dir = 0.0f;
 	//m_CameraMove = DEFINE_VEC3;
 	m_Speed = 0.3f;
 	m_Dash = 0.2f;
@@ -117,7 +117,7 @@ void Player::Update()
 	Shot();
 
 	// 向きの更新
-	ChangeDir();
+	ChangeTPSDir();
 
 	// キャラの移動
 	m_Pos.x = m_mtxWorld._41 -= (m_mtxWorld.m[2][0] * m_MoveSpeed.z);
@@ -361,9 +361,9 @@ void Player::LastRun()
 ////////////////////////////////////////////////////////////////////////
 //		
 //	プレイヤーの向きを変える更新処理
-//
+//	ACT用
 ////////////////////////////////////////////////////////////////////////
-void Player::ChangeDir()
+void Player::ChangeACTDir()
 {
 	if (m_Move)
 	{
@@ -376,7 +376,7 @@ void Player::ChangeDir()
 		D3DXMATRIX rot;
 		D3DXVECTOR3 View;
 
-		View = (m_Pos - CameraObj->GetCameraPos());
+		View = (m_Pos - CameraObj->GetPos());
 
 		D3DXMatrixRotationY(&rot, D3DXToRadian(m_Dir));
 		D3DXVec3TransformCoord(&View, &View, &rot);
@@ -420,6 +420,17 @@ void Player::ChangeDir()
 			m_ModelMesh->SwitchAnimSet(1);
 		}
 	}
+
+}
+
+////////////////////////////////////////////////////////////////////////
+//		
+//	プレイヤーの向きを変える更新処理
+//	TPS用
+////////////////////////////////////////////////////////////////////////
+void Player::ChangeTPSDir()
+{
+	D3DXMATRIX dir = CameraObj->GetZVec();
 }
 
 ////////////////////////////////////////////////////////////////////////

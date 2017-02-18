@@ -100,7 +100,8 @@ private:
 	void Move();						// 移動用
 	void Shot();						// 射撃用
 	void TransBorn();					// ボーンの捻じ曲げ
-	void ChangeDir();					// 向きのきりかえよう
+	void ChangeACTDir();				// 向きのきりかえよう
+	void ChangeTPSDir();				// 向きのきりかえよう
 	void CheckFloor();					// 床との判定処理
 	void Reset();
 };

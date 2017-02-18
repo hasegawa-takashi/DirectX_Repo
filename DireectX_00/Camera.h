@@ -28,36 +28,25 @@ enum CamState
 
 class CCamera : public ObjBase
 {
-
 public:
-
 	//---------------------------------------
 	// カメラのデストラクタ
 	~CCamera();
-
 	//---------------------------------------
 	// カメラのコンストラクタ
 	CCamera();
-
-	//---------------------------------------
-	// カメラのインスタンス
-	/*static CCamera* Instance(){
-		static CCamera _Instance;
-		return &_Instance;
-	}*/
-
 	//----------------------------
 	// --- オブジェクトの初期化
 	void Init();
 	//----------------------------
 	// --- オブジェクトの更新
-	void Update();
+	void Update() {};
 	//----------------------------
 	// --- オブジェクトの描画
 	void Draw();
 	//----------------------------
 	// --- オブジェクトの削除
-	void Release();
+	void Release() {};
 	//----------------------------
 	// --- ポーズ画面
 	void Pause(){};
@@ -69,24 +58,18 @@ public:
 	bool AllRelaseObj(){ return true; };
 
 	//---------------------------------------
-	// カメラの座標の取得
-	D3DXVECTOR3 GetCameraPos();
-
-	//---------------------------------------
 	// カメラの向き
-	D3DXMATRIX GetCameraView()
-	{
-		return m_mtxView;
-	}
+	D3DXMATRIX GetCameraView(){return m_mtxView;}
 
 	//---------------------------------------
 	// カメラの移動更新
 	void CameraMove();
-	
+
 	//---------------------------------------
 	// カメラの注視点の設定
 	void SetLookAt(D3DXVECTOR3 look);
-
+	void SetLookAt(D3DXVECTOR3 lookAt, D3DXVECTOR3 Correct);
+	
 	//---------------------------------------
 	// カメラのZ回転
 	void RotZ(float radian);
@@ -97,25 +80,35 @@ public:
 
 	//----------------------------------------
 	// --- オブジェクトの描画(あとから用)
-	void LateDraw();
+	void LateDraw() {};
 
 	//----------------------------------------
 	// --- コリジョンの設定
-	ColBox GetCol();
+	ColBox GetCol(){return Collision;};
 
 	//----------------------------------------
 	// --- View行列の取得
-	D3DXVECTOR3 GetView();
+	D3DXVECTOR3 GetView(){ return (m_lookAt - NowPos); }
 
 	//----------------------------------------
 	// --- カメラタイプの設定
-	void SetCameraType(int Type);
+	void SetCameraType(int Type){m_CamType = Type;}
 
 	//----------------------------------------
 	// --- Posの取得
 	void SetPos(D3DXVECTOR3 Pos);
 
+	//----------------------------------------
+	// --- Z方向の姿勢行列
+	D3DXMATRIX GetZVec();
+
 private:
+	//---------------------------------------
+	// 対象とカメラの差
+	void ZDistRenge();
+	//---------------------------------------
+	// ビュー行列の更新
+	void UpdateViewMat();
 
 	//---------------------------------------
 	// FPSカメラ
@@ -130,16 +123,16 @@ private:
 	void PreviewCamera();
 
 	//---------------------------------------
-	// クオータニオン→行列計算
-	void QuaternionToMatrix();
-
-	//---------------------------------------
-	// 行列計算→クオータニオン
-	void MatrixToQuaternion();
-
-	//---------------------------------------
 	// ベクトル間の角度を算出
 	double AngleOf2Vector(D3DXVECTOR3 A, D3DXVECTOR3 B);
+
+	//----------------------------------------
+	// 変数の初期化
+	void OffSetVar();
+
+	//----------------------------------------
+	// カメラの入力
+	void CameraInput();
 
 	// --- ここから変数宣言 --- //
 	int m_CamType;
@@ -162,13 +155,13 @@ private:
 
 	float m_Distance;				// カメラと注視点の距離
 	float m_camZrot;				// カメラZ軸での回転差分
-	float m_camAngleUnit;			// 移動時の回転単位
+	float m_camAngleUnit;			// 移動時の回転単位 = カメラの移動速度
 	float m_offsetZ;				// オフセット値
 
-	float		m_fFovy;	// 視野角
-	float		m_fAspect;	// アスペクト比
-	float		m_fZNear;	// 前方クリップ距離
-	float		m_fZFar;	// 後方クリップ距離
+	float		m_fFovy;			// 視野角
+	float		m_fAspect;			// アスペクト比
+	float		m_fZNear;			// 前方クリップ距離
+	float		m_fZFar;			// 後方クリップ距離
 
 	D3DXMATRIX	m_mtxView;			// ビューマトリクス
 	D3DXMATRIX	m_mtxProjection;	// プロジェクションマトリクス
