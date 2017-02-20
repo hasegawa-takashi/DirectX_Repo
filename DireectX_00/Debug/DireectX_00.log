@@ -1,4 +1,43 @@
-﻿  Player.cpp
-d:\directx_git\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': macro redefinition
-  d:\directx_git\direectx_00\window.h(16): note: see previous definition of 'DIRECTINPUT_VERSION'
-  DireectX_00.vcxproj -> D:\Directx_Git\Debug\DireectX_00.exe
+﻿  Window.cpp
+  TrainingBot.cpp
+  TitleUI.cpp
+  Title.cpp
+j:\directx_repo\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
+  j:\directx_repo\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
+  Sprite.cpp
+  Sky.cpp
+  RenderMgr.cpp
+  Player.cpp
+j:\directx_repo\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
+  j:\directx_repo\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
+  ObjManager.cpp
+  MyHierarchy.cpp
+  MeshRender.cpp
+  Main.cpp
+j:\directx_repo\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
+  j:\directx_repo\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
+  Input.cpp
+  Goal.cpp
+  GameWnd.cpp
+j:\directx_repo\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
+  j:\directx_repo\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
+  GameMain.cpp
+  FPS.cpp
+  Field.cpp
+  Fade.cpp
+  EnemyMgr.cpp
+  コードを生成中...
+  コンパイル中...
+  End.cpp
+j:\directx_repo\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
+  j:\directx_repo\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
+  Debug.cpp
+  Camera.cpp
+j:\directx_repo\direectx_00\input.h(11): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
+  j:\directx_repo\direectx_00\window.h(16): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
+  Calculation.cpp
+  Billbord.cpp
+  Ballet.cpp
+  コードを生成中...
+  DireectX_00.vcxproj -> J:\DirectX_Repo\Debug\DireectX_00.exe
+  DireectX_00.vcxproj -> J:\DirectX_Repo\Debug\DireectX_00.pdb (Full PDB)

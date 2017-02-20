@@ -431,6 +431,9 @@ void Player::ChangeACTDir()
 void Player::ChangeTPSDir()
 {
 	D3DXMATRIX dir = CameraObj->GetZVec();
+
+	
+
 }
 
 ////////////////////////////////////////////////////////////////////////
