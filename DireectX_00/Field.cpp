@@ -49,11 +49,11 @@ void CField::Update()
 void CField::Draw()
 {
 
-	CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_SPECULARENABLE, TRUE);	// ‹¾–Ê”½ŽË‚ð–³Œø
+	GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_SPECULARENABLE, TRUE);	// ‹¾–Ê”½ŽË‚ð–³Œø
 	if (m_bLoad)
 		m_ModelMesh->Render();
 
-	CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_SPECULARENABLE, FALSE);	// ‹¾–Ê”½ŽË‚ð–³Œø
+	GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_SPECULARENABLE, FALSE);	// ‹¾–Ê”½ŽË‚ð–³Œø
 }
 
 // ‰ð•ú

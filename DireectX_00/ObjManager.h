@@ -76,15 +76,15 @@ public:
 	// === 継承するメッセージ === //
 
 	// それぞれの更新処理のため必須
-	virtual void Init() = 0;
-	virtual void Update() = 0;
-	virtual void LateUpdate() = 0;
-	virtual void Draw() = 0;
-	virtual void LateDraw() = 0;
-	virtual void UIDraw() = 0;
-	virtual void Release() = 0;
-	virtual void Pause() = 0;
-	virtual bool AllRelaseObj() = 0;
+	virtual void Init() {};
+	virtual void Update() {};
+	virtual void LateUpdate() {};
+	virtual void Draw() {};
+	virtual void LateDraw() {};
+	virtual void UIDraw() {};
+	virtual void Release() {};
+	virtual void Pause() {};
+	virtual bool AllRelaseObj() { return true; }
 
 	// 複数ある可能性があるもの
 	virtual ColBox GetCol() = 0;
@@ -237,6 +237,14 @@ private:
 
 	int Numb;
 };
+
+//=============================================================================
+// デバイス呼び出し用
+//=============================================================================
+inline CObjManager* GetObjMgr()
+{
+	return CObjManager::Instance();
+}
 
 
 //====================================================================================

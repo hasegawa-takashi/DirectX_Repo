@@ -92,6 +92,9 @@
     <Filter Include="Calculation">
       <UniqueIdentifier>{a2338d89-b885-4f69-8745-e0e4ccf7f18b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Directx">
+      <UniqueIdentifier>{ba08778d-09be-42cf-9553-9ffb210261a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Title.cpp">
@@ -105,9 +108,6 @@
     </ClCompile>
     <ClCompile Include="ObjManager.cpp">
       <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderMgr.cpp">
-      <Filter>Render</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>main</Filter>
@@ -175,6 +175,12 @@
     <ClCompile Include="Calculation.cpp">
       <Filter>Calculation</Filter>
     </ClCompile>
+    <ClCompile Include="DxDevice.cpp">
+      <Filter>Directx</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderMgr.cpp">
+      <Filter>Directx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Title.h">
@@ -188,9 +194,6 @@
     </ClInclude>
     <ClInclude Include="ObjManager.h">
       <Filter>Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderMgr.h">
-      <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Camera</Filter>
@@ -258,6 +261,12 @@
     </ClInclude>
     <ClInclude Include="Calculation.h">
       <Filter>Calculation</Filter>
+    </ClInclude>
+    <ClInclude Include="DxDevice.h">
+      <Filter>Directx</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderMgr.h">
+      <Filter>Directx</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

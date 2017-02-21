@@ -152,9 +152,9 @@ void Player::Draw()
 	//D3DXMatrixRotationYawPitchRoll();
 
 	// ƒLƒƒƒ‰ƒNƒ^[‚Ì•`‰æ
-	CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_SPECULARENABLE, FALSE);	// ‹¾–Ê”½ŽË‚ð–³Œø
+	GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_SPECULARENABLE, FALSE);	// ‹¾–Ê”½ŽË‚ð–³Œø
 	m_ModelMesh->Render();
-	CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_SPECULARENABLE, TRUE);	
+	GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_SPECULARENABLE, TRUE);
 
 	// ’e‚Ì•`‰æ
 	for (auto itr = _vecbullet_L.begin(); itr != _vecbullet_L.end(); ++itr)

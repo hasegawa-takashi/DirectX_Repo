@@ -36,7 +36,7 @@ bool CMeshRender::Initialize(LPCTSTR pszFName)
 	// 階層構造メッシュの読み込み
 	// 3Dモデルの読み込み
 	HRESULT hr = D3DXLoadMeshHierarchyFromX(pszFName,
-		D3DXMESH_MANAGED, CWindow::Instance()->GetDevice(),
+		D3DXMESH_MANAGED, GetDxMgr()->GetDxDevice(),
 		&m_Hierarchy, NULL,
 		&m_pFrameRoot, &m_pAnimCtrl);
 	if (FAILED(hr)) 
@@ -103,7 +103,7 @@ void CMeshRender::Update(D3DXMATRIX& world)
 		m_pAnimCtrl->AdvanceTime(d, NULL);
 	}
 	// マトリックスの更新
-	CWindow::Instance()->GetDevice()->SetTransform(D3DTS_WORLD, &world);
+	GetDxMgr()->GetDxDevice()->SetTransform(D3DTS_WORLD, &world);
 	if (m_pFrameRoot)
 	{
 		UpdateFrameMatrices(m_pFrameRoot, &world);
@@ -223,17 +223,17 @@ void CMeshRender::RenderMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase , L
 				
 			}
 
-			CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_VERTEXBLEND, dwBlendMatrix);
+			GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_VERTEXBLEND, dwBlendMatrix);
 			for (DWORD k = 0; k < pMeshContainer->dwWeight; ++k)
 			{
 				DWORD id = pBoneCombi[i].BoneId[k];
 				if (id != UINT_MAX)
 				{
-					CWindow::Instance()->GetDevice()->SetTransform(D3DTS_WORLDMATRIX(k), &(pMeshContainer->pBoneOffsetMatrix[id] * *pMeshContainer->ppBoneMatrix[id]));
+					GetDxMgr()->GetDxDevice()->SetTransform(D3DTS_WORLDMATRIX(k), &(pMeshContainer->pBoneOffsetMatrix[id] * *pMeshContainer->ppBoneMatrix[id]));
 				}
 			}
-			CWindow::Instance()->GetDevice()->SetMaterial(&pMeshContainer->pMaterials[pBoneCombi[i].AttribId].MatD3D);
-			CWindow::Instance()->GetDevice()->SetTexture(0, pMeshContainer->ppTextures[pBoneCombi[i].AttribId]);
+			GetDxMgr()->GetDxDevice()->SetMaterial(&pMeshContainer->pMaterials[pBoneCombi[i].AttribId].MatD3D);
+			GetDxMgr()->GetDxDevice()->SetTexture(0, pMeshContainer->ppTextures[pBoneCombi[i].AttribId]);
 			dwPrevBoneID = pBoneCombi[i].AttribId;
 			pMeshContainer->MeshData.pMesh->DrawSubset(i);
 		}
@@ -242,11 +242,11 @@ void CMeshRender::RenderMeshContainer(LPD3DXMESHCONTAINER pMeshContainerBase , L
 	}
 
 	// スキンなしモデル
-	CWindow::Instance()->GetDevice()->SetTransform(D3DTS_WORLD, &pFrame->CombinedTransformationMatrix);
+	GetDxMgr()->GetDxDevice()->SetTransform(D3DTS_WORLD, &pFrame->CombinedTransformationMatrix);
 	for (DWORD iAttrib = 0; iAttrib < pMeshContainer->NumMaterials; ++iAttrib) {
 		DWORD dwAttrib = pMeshContainer->pAttributeTable[iAttrib].AttribId;
-		CWindow::Instance()->GetDevice()->SetMaterial(&pMeshContainer->pMaterials[dwAttrib].MatD3D);
-		CWindow::Instance()->GetDevice()->SetTexture(0, pMeshContainer->ppTextures[dwAttrib]);
+		GetDxMgr()->GetDxDevice()->SetMaterial(&pMeshContainer->pMaterials[dwAttrib].MatD3D);
+		GetDxMgr()->GetDxDevice()->SetTexture(0, pMeshContainer->ppTextures[dwAttrib]);
 		pMeshContainer->MeshData.pMesh->DrawSubset(dwAttrib);
 	}
 

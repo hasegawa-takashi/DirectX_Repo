@@ -27,14 +27,14 @@ void CSprite::Render()
 
 
 	//頂点フォーマット設定
-	CWindow::Instance()->GetDevice()->SetFVF(FVF_VERTEX_2D);
+	GetDxMgr()->GetDxDevice()->SetFVF(FVF_VERTEX_2D);
 
 	//テクスチャの設定
-	if (FAILED(CWindow::Instance()->GetDevice()->SetTexture(0, Spritebox.m_Texture)))
+	if (FAILED(GetDxMgr()->GetDxDevice()->SetTexture(0, Spritebox.m_Texture)))
 		return;
 
 	//ポリゴン描画
-	if (FAILED(CWindow::Instance()->GetDevice()->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_POLYGON, &Spritebox.vertex_2d, sizeof(VERTEX_2D))))
+	if (FAILED(GetDxMgr()->GetDxDevice()->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_POLYGON, &Spritebox.vertex_2d, sizeof(VERTEX_2D))))
 	{
 		Spritebox.Createflag = false;
 		return;
@@ -58,7 +58,7 @@ HRESULT CSprite::CreateMakeVertex2DPolygon(LPCTSTR  TexFile, float nX, float nY,
 
 	Spritebox.Fade = fade;
 
-	hr = D3DXCreateTextureFromFile(CWindow::Instance()->GetDevice()
+	hr = D3DXCreateTextureFromFile(GetDxMgr()->GetDxDevice()
 		, TexFile
 		, &Spritebox.m_Texture);
 	

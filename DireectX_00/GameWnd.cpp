@@ -2,15 +2,10 @@
 // インクルード
 //=============================================================================
 #include "GameWnd.h"
-#include<tchar.h>
-#include"Title.h"
-#include"Sprite.h"
-#include"mleak.h"
 
 //=============================================================================
 // Define
 //=============================================================================
-#define FRAME_RATE		(1000/60)	// フレームレート
 
 //=============================================================================
 // プロトタイプ宣言
@@ -32,48 +27,57 @@ bool CGameWnd::Init(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, i
 	HRESULT Createflag = E_FAIL;
 	FpsCnt = 0;
 
-	// インスタンスの前置き
-	window = CWindow::Instance();
-	// ウインドウの作成とD3Dデバイスの初期化
-	Createflag = window->MakeWin(hInstance, hPrevInst, lpCmdLine, iCmdShow);
-	if (Createflag == E_FAIL)return false;
+	try
+	{
+		// タイマの分解能をセット
+		timeBeginPeriod(1);
 
-	CInput::Init(window->GethwndDevice());
+		// ウインドウの作成
+		Createflag = GetWinMgr()->MakeWin(hInstance, hPrevInst, lpCmdLine, iCmdShow);
+		if (Createflag == E_FAIL) { GetWinMgr()->MessageBox(_T("Winの作成失敗")); return false; }
 
-	// 入力コンテキストを指定されたウィンドウに関連付けます
-	//::ImmAssociateContext(window->GethwndDevice(), NULL);
-	
-	// Windowのスクリーンモードの設定(今は出来ないただの木偶です)
-	
-	// タイマの分解能をセット
-	timeBeginPeriod(1);
+		// DirectxDeviceの設定
+		GetDxMgr()->CreateDxDevice();
 
-	// インスタンスの初期化
-	CSceneMgr::Instance()->Init();
+		// Directxの描画周りの設定
+		GetRenderMgr()->Init();
 
-	// 一番最初のタイトルのプッシュ
-	CSceneMgr::Instance()->PushScene(new CTitle);
+		// Dxinputの設定
+		CInput::Init(GetWinMgr()->GethwndDevice());
 
-	// Objマネージャーの初期化
-	CObjManager::Instance()->Init();
+		// インスタンスの初期化
+		GetSceneMgr()->Init();
 
-	// 描画用マネージャーの初期化
-	CFPS::Instance()->Init();
+		// 一番最初のタイトルのプッシュ
+		GetSceneMgr()->PushScene(new CTitle);
 
-	CDebug::Instance()->Init();
+		// Objマネージャーの初期化
+		GetObjMgr()->Init();
 
-	return true;
+		// 描画用マネージャーの初期化
+		CFPS::Instance()->Init();
+
+		CDebug::Instance()->Init();
+
+		return true;
+	}
+	catch (const std::exception&)
+	{
+		return false;
+	}
+
+
 
 }
-
+//=============================================================================
+// ゲームの起動
+//=============================================================================
 void CGameWnd::Run()
 {
 
 	// ゲームメインループ
 	while (1)
 	{
-		
-
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
 			if (msg.message == WM_QUIT)
@@ -89,19 +93,14 @@ void CGameWnd::Run()
 		}
 		else
 		{
-
 			CFPS::Instance()->Update();
 			FpsCnt= CFPS::Instance()->SetFps();
-			
 			if ((FpsCnt) >= (1000 / 60))
 			{
 				CSceneMgr::Instance()->Update();
 				CInput::Update();
 				CSceneMgr::Instance()->Draw();
-
-
 				CFPS::Instance()->FpsCntUp();
-
 			}
 		}
 
@@ -110,22 +109,17 @@ void CGameWnd::Run()
 
 }
 
+//=============================================================================
+// 終了処理
+//=============================================================================
 void CGameWnd::Release(HINSTANCE hInstance)
 {
 	::timeEndPeriod(1);				// タイマの分解能を元に戻す
 	
 	CDebug::Instance()->Release();
-
 	CInput::Fin();
-	fps->Release();
-
-	//CObjManager::Instance()->Release();
-
+	CFPS::Instance()->Release();
 	CSceneMgr::Instance()->Release();
+	GetWinMgr()->ReleaseWin(hInstance);
 
-	window->ReleaseWin(hInstance);
-
-	/*scene = NULL;;
-	objmgr = NULL;
-	window = NULL;*/
 }

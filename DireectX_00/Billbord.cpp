@@ -37,10 +37,10 @@ void CBillbord::Render()
 {
 	D3DXMATRIX mtxView, mtxScale, mtxTranslate;
 
-	CWindow::Instance()->GetDevice()->GetTransform(D3DTS_VIEW,&mtxView);
+	GetDxMgr()->GetDxDevice()->GetTransform(D3DTS_VIEW,&mtxView);
 
 	// ライティングを無効にする
-	CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
+	GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	// ワールドマトリックスの初期化
 	D3DXMatrixIdentity(&billbox.g_mtxWorldBillboard);
@@ -81,22 +81,22 @@ void CBillbord::Render()
 	D3DXMatrixMultiply(&billbox.g_mtxWorldBillboard, &billbox.g_mtxWorldBillboard, &mtxTranslate);
 
 	// ワールドマトリックスの設定
-	CWindow::Instance()->GetDevice()->SetTransform(D3DTS_WORLD, &billbox.g_mtxWorldBillboard);
+	GetDxMgr()->GetDxDevice()->SetTransform(D3DTS_WORLD, &billbox.g_mtxWorldBillboard);
 
 	// 頂点バッファをデバイスのデータストリームにバインド
-	CWindow::Instance()->GetDevice()->SetStreamSource(0, billbox.g_pD3DVtxBuffBillboard, 0, sizeof(VERTEX_3D));
+	GetDxMgr()->GetDxDevice()->SetStreamSource(0, billbox.g_pD3DVtxBuffBillboard, 0, sizeof(VERTEX_3D));
 
 	// 頂点フォーマットの設定
-	CWindow::Instance()->GetDevice()->SetFVF(FVF_VERTEX_3D);
+	GetDxMgr()->GetDxDevice()->SetFVF(FVF_VERTEX_3D);
 
 	// テクスチャの設定
-	CWindow::Instance()->GetDevice()->SetTexture(0, billbox.g_pD3DTextureBillboard);
+	GetDxMgr()->GetDxDevice()->SetTexture(0, billbox.g_pD3DTextureBillboard);
 
 	// ポリゴンの描画
-	CWindow::Instance()->GetDevice()->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
+	GetDxMgr()->GetDxDevice()->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
 
 	// ラインティングを有効にする
-	CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
+	GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
 
 HRESULT CBillbord::CreateMake3DBillbord(
@@ -108,16 +108,16 @@ HRESULT CBillbord::CreateMake3DBillbord(
 	float TexPosUp,
 	float TexPosDown)
 {
-	D3DXCreateTextureFromFile(CWindow::Instance()->GetDevice() ,						// デバイスへのポインタ
+	D3DXCreateTextureFromFile(GetDxMgr()->GetDxDevice(),						// デバイスへのポインタ
 		TexFile,			// ファイルの名前
 		&billbox.g_pD3DTextureBillboard);	// 読み込むメモリ
 
-	if (FAILED(CWindow::Instance()->GetDevice()->CreateVertexBuffer(sizeof(VERTEX_3D) * NUM_VERTEX,	// 頂点データ用に確保するバッファサイズ(バイト単位)
-		D3DUSAGE_WRITEONLY,			// 頂点バッファの使用法　
-		FVF_VERTEX_3D,				// 使用する頂点フォーマット
-		D3DPOOL_MANAGED,			// リソースのバッファを保持するメモリクラスを指定
+	if (FAILED(GetDxMgr()->GetDxDevice()->CreateVertexBuffer(sizeof(VERTEX_3D) * NUM_VERTEX,	// 頂点データ用に確保するバッファサイズ(バイト単位)
+		D3DUSAGE_WRITEONLY,					// 頂点バッファの使用法　
+		FVF_VERTEX_3D,						// 使用する頂点フォーマット
+		D3DPOOL_MANAGED,					// リソースのバッファを保持するメモリクラスを指定
 		&billbox.g_pD3DVtxBuffBillboard,	// 頂点バッファインターフェースへのポインタ
-		NULL)))						// NULLに設定
+		NULL)))								// NULLに設定
 	{
 		return E_FAIL;
 	}

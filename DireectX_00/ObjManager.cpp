@@ -746,7 +746,7 @@ bool CObjManager::LateRenderPush( ObjBase* render)
 float CObjManager::CameraDistance(D3DXVECTOR3 SetPos)
 {
 	D3DXMATRIX ViewPos;
-	CWindow::Instance()->GetDevice()->GetTransform(D3DTS_VIEW, &ViewPos);
+	GetDxMgr()->GetDxDevice()->GetTransform(D3DTS_VIEW, &ViewPos);
 	D3DXMATRIX hoge = ViewPos;
 	D3DXMatrixInverse(&hoge, NULL, &hoge);
 

@@ -85,29 +85,24 @@ void CFade::DrawFade()
 	
 	if (FadeOutflag || FadeInflag)
 	{
-
-		if (SUCCEEDED(CWindow::Instance()->GetDevice()->BeginScene()))
+		if (SUCCEEDED(GetDxMgr()->GetDxDevice()->BeginScene()))
 		{
-
 			// “§‰ß‚·‚é•û
-			CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-			CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-			CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-			CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
+			GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+			GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+			GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+			GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
 			sprite->Render();
 
-			CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-			CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+			GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
+			GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
 
 
-			CWindow::Instance()->GetDevice()->EndScene();
+			GetDxMgr()->GetDxDevice()->EndScene();
 		}
-		CWindow::Instance()->GetDevice()->Present(NULL, NULL, NULL, NULL);
+		GetDxMgr()->GetDxDevice()->Present(NULL, NULL, NULL, NULL);
 	}
-
-
-
 }
 
 void CFade::SetFade()

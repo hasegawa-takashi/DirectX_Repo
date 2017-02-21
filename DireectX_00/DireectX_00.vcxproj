@@ -87,6 +87,7 @@
     <ClCompile Include="Calculation.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Debug.cpp" />
+    <ClCompile Include="DxDevice.cpp" />
     <ClCompile Include="End.cpp" />
     <ClCompile Include="EnemyMgr.cpp" />
     <ClCompile Include="Fade.cpp" />
@@ -116,6 +117,7 @@
     <ClInclude Include="Calculation.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="DxDevice.h" />
     <ClInclude Include="End.h" />
     <ClInclude Include="EnemyMgr.h" />
     <ClInclude Include="Fade.h" />

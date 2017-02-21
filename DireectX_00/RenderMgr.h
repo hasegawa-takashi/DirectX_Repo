@@ -8,10 +8,7 @@
 
 //	インクルード
 #include"Window.h"
-#include<list>
-#include<vector>
-//#include"Camera.h"
-
+#include"DxDevice.h"
 
 #define	NUM_VERTEX		(4)		// 頂点数
 #define	NUM_POLYGON		(2)		// ポリゴン数
@@ -29,33 +26,41 @@ class CRenderMgr
 {
 
 public:
-	~CRenderMgr();
-	CRenderMgr(){};
+	~CRenderMgr() {};
 
-
+	CRenderMgr() {};
 	//---------------------------------------
 	// オブジェクトマネージャーのインスタンス
-	/*static CRenderMgr* Instance(void) {
+	static CRenderMgr* Instance(void) {
 		static CRenderMgr _instance;
 		return &_instance;
-	}*/
-
-	//---------------------------------------
-	// ライトの設定
-	void LightMode();
+	}
 
 	//---------------------------------------
 	// 描画の初期化
 	void Init();
-	//---------------------------------------
-	// 描画の終了処理
-	void Relase(){};
 	
+	//---------------------------------------
+	// 描画前の準備
+	void  RenderTransStart();
+	//---------------------------------------
+	// 描画前の終了
+	void  RenderEnd();
 
 private:
+
+	D3DXMATRIX	m_MatView;		// ビュー マトリックス
+	D3DXMATRIX	m_MatProj;		// 射影マトリックス
+
 };
 
-
+//=============================================================================
+// デバイス呼び出し用
+//=============================================================================
+inline CRenderMgr* GetRenderMgr()
+{
+	return CRenderMgr::Instance();
+}
 
 //====================================================================================
 //									EOF

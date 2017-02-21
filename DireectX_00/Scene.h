@@ -10,19 +10,20 @@
 // CSceneBass
 //==========================================================
 class CSceneBase {
+
 public:
 	CSceneBase(){}
 	virtual ~CSceneBase(){}
 
 	// 継承するメッセージ
-	virtual void Init() = 0;
-	virtual void Update() = 0;
-	virtual void LateUpdate() = 0;
-	virtual void Draw() = 0;
-	virtual void LateDraw() = 0;
-	virtual void UIDraw() = 0;
-	virtual void Release() = 0;
-	virtual void Pause() = 0;
+	virtual void Init()			{}
+	virtual void Update()		{}
+	virtual void LateUpdate()	{}
+	virtual void Draw()			{}
+	virtual void LateDraw()		{}
+	virtual void UIDraw()		{}
+	virtual void Release()		{}
+	virtual void Pause()		{}
 };
 
 //==========================================================
@@ -98,18 +99,12 @@ public:
 			return false;
 		}
 
-		CFade::Instance()->SetFade();
-		
-		CFade::Instance()->FadeOut();
-
 		if (!PopScene())
 			return false;
 
 		if (!PushScene(scene))
 			return false;
 		
-
-
 		return true;
 	}
 
@@ -121,9 +116,6 @@ public:
 	void CSceneMgr::Update() {
 		if (m_SceneVec.empty())
 			return;
-		/*for( auto itr = m_SceneVec.begin(); itr != m_SceneVec.end(); itr++ ) {
-			( *itr )->Update();
-			}*/
 
 		if (CFade::Instance()->FadeIn())
 		{
@@ -144,40 +136,25 @@ public:
 		if (m_SceneVec.empty())
 			return;
 
-
-		HRESULT hr = CWindow::Instance()->GetDevice()->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(128, 128, 255), 1.0f, 0);
-
-		hr;
-
-		if (SUCCEEDED(CWindow::Instance()->GetDevice()->BeginScene()))
+		HRESULT hr = GetDxMgr()->GetDxDevice()->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(128, 128, 255), 1.0f, 0);
+		
+		if (SUCCEEDED(GetDxMgr()->GetDxDevice()->BeginScene()))
 		{
-
 			// 通常描画
 			m_SceneVec.back()->Draw();
-
-			// 透過する方
-			CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-			CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-			CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-			CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-
+			// 透過処理
+			GetRenderMgr()->RenderTransStart();
+			// 後からの描画
 			m_SceneVec.back()->LateDraw();
-
+			// UI等の最後の描画
 			m_SceneVec.back()->UIDraw();
+			// 描画の終了
+			GetRenderMgr()->RenderEnd();
 
-			CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-			CWindow::Instance()->GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-
-			
-			CWindow::Instance()->GetDevice()->EndScene();
 		}
-
 		CFade::Instance()->DrawFade();
-
 		CDebug::Instance()->Render();
-
-		CWindow::Instance()->GetDevice()->Present(NULL, NULL, NULL, NULL);
-		
+		GetDxMgr()->GetDxDevice()->Present(NULL, NULL, NULL, NULL);
 	}
 
 	//-------------------------------------------------------
@@ -212,3 +189,11 @@ private:
 protected:
 
 };
+
+//=============================================================================
+// デバイス呼び出し用
+//=============================================================================
+inline CSceneMgr* GetSceneMgr()
+{
+	return CSceneMgr::Instance();
+}

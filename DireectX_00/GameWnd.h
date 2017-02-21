@@ -15,6 +15,9 @@
 #include"ObjManager.h"
 #include"FPS.h"
 #include"Input.h"
+#include"Title.h"
+#include"Sprite.h"
+#include"mleak.h"
 
 //=============================================================================
 // マクロ定義
@@ -30,11 +33,6 @@ class CGameWnd{
 private:
 
 	bool m_bWinmode;						//フルスクリーンorウインドウズ
-
-	CWindow *window;						//ウインドウズのクラス
-	CSceneMgr *scene;						//Scene遷移用のオブジェクト
-	CObjManager *objmgr;					//オブジェクトのマネージャー
-	CFPS *fps;								//fps用のクラス
 
 	CGameWnd(){};							//デストラクタ1
 	MSG msg;

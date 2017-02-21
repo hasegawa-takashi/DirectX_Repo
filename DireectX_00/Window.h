@@ -10,10 +10,8 @@
 //	インクルード
 //=============================================================================
 #include<Windows.h>
-#include<d3dx9.h>
 #include<tchar.h>
-
-#define DIRECTINPUT_VERSION (0x0800)	//警告対処法
+#include"DxDevice.h"
 
 //=============================================================================
 // ライブラリのリンク
@@ -48,21 +46,12 @@ private:
 
 	bool bWinmode;						//フルスクリーンorウインドウズ
 
-	LPDIRECT3D9			g_pD3D;			// Direct3Dオブジェクト
-	LPDIRECT3DDEVICE9	g_pD3DDevice;	// デバイスオブジェクト(描画に必要)
-	D3DPRESENT_PARAMETERS d3dpp;
-	//LPD3DXFONT					m_pFont;		// D3DXFont オブジェクト
-
-	D3DXMATRIX					m_MatView;		// ビュー マトリックス
-	D3DXMATRIX					m_MatProj;		// 射影マトリックス
-
-	HWND						m_hWnd;			// ウィンドウ ハンドル
 	int							m_nWidth;		// 表示領域幅
 	int							m_nHeight;		// 表示領域高さ
 
 	CWindow* cWnd;
-
 	CWindow(){};
+
 public:
 
 	// WindowのSingleton
@@ -72,10 +61,8 @@ public:
 	}
 
 	// グラフィックデバイスのゲッター
-	LPDIRECT3DDEVICE9 GetDevice(){ return g_pD3DDevice; }
-
-	// グラフィックデバイスのゲッター
-	HWND GethwndDevice(){return hWnd;}
+	const HWND GethwndDevice() { return hWnd; }
+	const bool GetWindowMode() { return bWinmode; }
 
 	//	Windowの作成
 	HRESULT MakeWin(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
@@ -96,10 +83,17 @@ public:
 	// ディストラクタ・コンストラクタ
 	~CWindow(){};
 
-
 protected:
 
 };
+
+//=============================================================================
+// デバイス呼び出し用
+//=============================================================================
+inline CWindow* GetWinMgr()
+{
+	return CWindow::Instance();
+}
 
 
 

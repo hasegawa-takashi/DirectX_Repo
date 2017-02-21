@@ -110,8 +110,8 @@ void CCamera::Draw()
 	D3DXMatrixLookAtLH(&m_mtxView,&NowPos,&m_lookAt,&m_Upvec);
 	D3DXMatrixPerspectiveFovLH(&m_mtxProjection, m_fFovy, m_fAspect, m_fZNear, m_fZFar);
 
-	CWindow::Instance()->GetDevice()->SetTransform(D3DTS_PROJECTION, &m_mtxProjection);
-	CWindow::Instance()->GetDevice()->SetTransform(D3DTS_VIEW, &m_mtxView);
+	GetDxMgr()->GetDxDevice()->SetTransform(D3DTS_PROJECTION, &m_mtxProjection);
+	GetDxMgr()->GetDxDevice()->SetTransform(D3DTS_VIEW, &m_mtxView);
 	
 	m_Move = VECZERO;
 	m_CameraMove = VECZERO;
@@ -353,15 +353,11 @@ void CCamera::CameraMove()
 	if (!Master.empty())
 	{
 		m_Move = Master.begin()->second->GetPos();
-
 		D3DXVECTOR3 LookatPos = Master.begin()->second->GetPos();
-
 		// ï‚ê≥
 		float ForVec = m_DirDef.z * 1.5f; // ÉJÉÅÉâÇÃå¸Ç´
-
 		m_lookAt = LookatPos + (D3DXVECTOR3(0.0f, -ForVec, -1.5f));
 		//m_lookAt = LookatPos;
-
 		NowPos = m_Pos + m_Move;
 	}
 }
@@ -372,7 +368,6 @@ void CCamera::CameraMove()
 //
 D3DXMATRIX CCamera::GetZVec()
 {
-
 	D3DXMATRIX Out;
 	D3DXMatrixIdentity(&Out);
 	CCalculation::CalcLookAtMatrixFix(&Out,&NowPos,&m_lookAt,&m_Upvec);

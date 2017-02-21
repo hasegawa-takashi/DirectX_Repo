@@ -53,7 +53,7 @@ void CSky::LateUpdate()
 void CSky::Draw()
 {
 	// ‰½‚à‚µ‚È‚¢
-	LPDIRECT3DDEVICE9 pD = CWindow::Instance()->GetDevice();
+	LPDIRECT3DDEVICE9 pD = GetDxMgr()->GetDxDevice();
 	pD->SetRenderState(D3DRS_LIGHTING, FALSE);
 	pD->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 	m_ModelMesh->Render();
