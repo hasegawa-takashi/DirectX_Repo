@@ -10,18 +10,6 @@ CSprite::~CSprite()
 {
 }
 
-void CSprite::Init()
-{
-	
-
-}
-
-void CSprite::Update()
-{
-
-
-}
-
 void CSprite::Render()
 {
 

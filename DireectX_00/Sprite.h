@@ -19,6 +19,11 @@ struct SpriteBox
 	bool Createflag;
 };
 
+//////////////////////////////////////////////////////////////
+//
+//		•½–Ê•`‰æ—pƒNƒ‰ƒX
+//
+/////////////////////////////////////////////////////////////
 class CSprite
 {
 private:
@@ -27,8 +32,6 @@ public:
 	CSprite();
 	~CSprite();
 
-	void Init();
-	void Update();
 	void Render();
 	void Release();
 

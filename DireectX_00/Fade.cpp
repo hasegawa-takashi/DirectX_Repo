@@ -1,30 +1,13 @@
 #include "Fade.h"
 
 
-#define PATH_FADETEXTURE	_T("../data/Texture/Fade.png")
-#define MAX_FADE	(255)
-#define FADE_SPEED	(1.0f)
+#define PATH_FADETEXTURE _T("../data/Texture/Fade.png")
+const int MAX_FADE = 255;
+const float FADE_SPEED = 1.0f;
 
 CFade::CFade()
 {
-	
-
-}
-
-
-CFade::~CFade()
-{
-	delete sprite;
-
-}
-
-bool CFade::FadeIn()
-{
-	if (!FadeInflag)
-		return true;
-
-	
-	spritebox.Fade -= (int)FADE_SPEED;
+	Fadenum = 255;
 
 	sprite->CreateMakeVertex2DPolygon(
 		PATH_FADETEXTURE,
@@ -32,13 +15,37 @@ bool CFade::FadeIn()
 		0,
 		SCREEN_WIDTH,
 		SCREEN_HEIGHT,
-		spritebox.Fade);
+		Fadenum);
+}
 
-	if (spritebox.Fade <= 0)
+
+CFade::~CFade()
+{
+	delete sprite;
+}
+
+
+// Update
+void CFade::Update()
+{
+	sprite->SetFade(Fadenum);
+}
+
+// FADE•`‰æ—p
+void CFade::UIDraw()
+{
+	sprite->Render();
+}
+
+bool CFade::FadeIn()
+{
+	Fadenum -= (int)FADE_SPEED;
+
+	sprite->SetFade(Fadenum);
+
+	if (Fadenum <= 0)
 	{
-		spritebox.Fade = 0;
-		FadeInflag = false;
-
+		Fadenum = 0;
 		return true;
 	}
 
@@ -48,74 +55,14 @@ bool CFade::FadeIn()
 
 bool CFade::FadeOut()
 {
-	if (!FadeOutflag)
+	Fadenum += (int)FADE_SPEED;
+	sprite->SetFade(Fadenum);
+
+	if (Fadenum >= 255)
+	{
+		Fadenum = 255;
 		return true;
-
-	for (int loop = 0; loop < MAX_FADE; loop++)
-	{
-
-		spritebox.Fade += (int)FADE_SPEED;
-
-		sprite->CreateMakeVertex2DPolygon(
-			PATH_FADETEXTURE,
-			0,
-			0,
-			SCREEN_WIDTH,
-			SCREEN_HEIGHT,
-			spritebox.Fade);
-
-		if (spritebox.Fade >= 255)
-		{
-			spritebox.Fade = 255;
-			FadeInflag = true;
-			FadeOutflag = false;
-			return true;
-		}
-
-		DrawFade();
-
 	}
+
 	return false;
-
-}
-
-void CFade::DrawFade()
-{
-	//CWindow::Instance()->GetDevice()->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(128, 128, 255), 1.0f, 0); 
-	
-	if (FadeOutflag || FadeInflag)
-	{
-		if (SUCCEEDED(GetDxMgr()->GetDxDevice()->BeginScene()))
-		{
-			// “§‰ß‚·‚é•û
-			GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-			GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-			GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
-			GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
-
-			sprite->Render();
-
-			GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-			GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
-
-
-			GetDxMgr()->GetDxDevice()->EndScene();
-		}
-		GetDxMgr()->GetDxDevice()->Present(NULL, NULL, NULL, NULL);
-	}
-}
-
-void CFade::SetFade()
-{
-	sprite = new CSprite();
-
-	sprite->CreateMakeVertex2DPolygon(
-		PATH_FADETEXTURE,
-		0,
-		0,
-		SCREEN_WIDTH,
-		SCREEN_HEIGHT,
-		0);
-
-	FadeOutflag = true;
 }

@@ -2,35 +2,35 @@
 
 #include"Sprite.h"
 
-class CFade
+//////////////////////////////////////////////////////////////
+//
+//		FadeIn,Outのクラス
+//
+/////////////////////////////////////////////////////////////
+class CFade : public ObjBase
 {
 public:
 
 	~CFade();
-
-	bool FadeIn();
-
-	bool FadeOut();
-
-	void DrawFade();
-
-	static CFade* Instance(){
-		static CFade _Instance;
-		return &_Instance;
-	}
-
-	void SetFade();
-
-private:
-
-	bool FadeInflag;
-	bool FadeOutflag;
-
 	CFade();
 
-	SpriteBox spritebox;
+	// Update
+	void Update();
+	// FADE描画用
+	void UIDraw();
 
+private:
+	//==============================
+	//	変数
+	int Fadenum;	// 現在のFade
+	// SpriteClass
 	CSprite *sprite;
 
-};
+	//==============================
+	//	関数
+	// FadeInを呼ぶクラス
+	bool FadeIn();
+	// FadeOutを呼ぶクラス
+	bool FadeOut();
 
+};

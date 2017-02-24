@@ -21,6 +21,7 @@ enum ObjName
 	ID_CAMERA,		// カメラ用
 	ID_GOAL,		// ゴール用
 	ID_OTHER,		// その他の番号
+	ID_FADE,		// Fade用オブジェクト
 	MAX_ID
 };
 

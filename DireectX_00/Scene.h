@@ -116,15 +116,10 @@ public:
 	void CSceneMgr::Update() {
 		if (m_SceneVec.empty())
 			return;
+		m_SceneVec.back()->Update();
 
-		if (CFade::Instance()->FadeIn())
-		{
-			m_SceneVec.back()->Update();
-
-			m_SceneVec.back()->LateUpdate();
-		}
-
-
+		m_SceneVec.back()->LateUpdate();
+		
 	}
 
 	//-------------------------------------------------------
@@ -152,7 +147,7 @@ public:
 			GetRenderMgr()->RenderEnd();
 
 		}
-		CFade::Instance()->DrawFade();
+
 		CDebug::Instance()->Render();
 		GetDxMgr()->GetDxDevice()->Present(NULL, NULL, NULL, NULL);
 	}
