@@ -118,4 +118,5 @@ bool CDxDevice::CreateDxDevice()
 		return false;
 	}
 
+	return true;
 }
