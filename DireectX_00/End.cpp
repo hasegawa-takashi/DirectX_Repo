@@ -16,11 +16,10 @@ void CEnd::Init() {
 	for (int loop = 0; loop < MAX_TEXTURE_END; ++loop)
 	{
 		sprite[loop] = new CSprite;
-		sprite[loop]->Init();
-
-		sprite[loop]->CreateMakeVertex2DPolygon( _T("../data/Texture/GameOver.png"), 0, 0, 800, 600, 255);
-		sprite[loop]->CreateMakeVertex2DPolygon( _T("../data/Texture/PushEnter.png"), 0, 0, 800, 600, 255);
 	}
+
+	sprite[0]->CreateMakeVertex2DPolygon(_T("../data/Texture/GameOver.png"), 0, 0, 800, 600, 255);
+	sprite[1]->CreateMakeVertex2DPolygon(_T("../data/Texture/PushEnter.png"), 0, 0, 800, 600, 255);
 
 	fade = 255;
 }

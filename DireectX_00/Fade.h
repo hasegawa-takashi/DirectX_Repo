@@ -22,9 +22,8 @@ public:
 private:
 	//==============================
 	//	•Ï”
-	int Fadenum;	// Œ»İ‚ÌFade
-	// SpriteClass
-	CSprite *sprite;
+	int Fadenum;		// Œ»İ‚ÌFade
+	CSprite *sprite;	// SpriteClass
 
 	//==============================
 	//	ŠÖ”

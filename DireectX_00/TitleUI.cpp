@@ -18,8 +18,6 @@ void CTitleUI::Init()
 	{
 		auto p = new CSprite;
 		sprite[loop] = p;
-		sprite[loop]->Init();
-
 	}
 
 	fade[0] = 255;

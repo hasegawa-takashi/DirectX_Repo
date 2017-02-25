@@ -8,7 +8,11 @@
 
 CTitle::CTitle() 
 {
+	CObjManager::Instance()->MonSter();
 
+	CObjManager::Instance()->PushObj(new CTitleUI, ID_OTHER);
+
+	CObjManager::Instance()->PushObj(new CCamera, ID_CAMERA);
 }
 
 
@@ -20,11 +24,7 @@ CTitle::~CTitle()
 void CTitle::Init() {
 
 
-	CObjManager::Instance()->MonSter();
-
-	CObjManager::Instance()->PushObj(new CTitleUI, ID_OTHER);
-
-	CObjManager::Instance()->PushObj(new CCamera, ID_CAMERA);
+	
 
 }
 
