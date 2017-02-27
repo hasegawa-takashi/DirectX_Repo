@@ -16,6 +16,9 @@ CFade::CFade()
 		SCREEN_WIDTH,
 		SCREEN_HEIGHT,
 		Fadenum);
+
+	ObjNumb = GetObjMgr()->RenameObj(ID_FADE);
+
 }
 
 

@@ -105,6 +105,7 @@ protected:
 	CMeshRender *m_ModelMesh;	// モデル描画用
 	int ObjNumb;				// モデルの固有番号
 	D3DXVECTOR3 m_Pos;			// ポジション
+	bool NonDeleteObj;			// 破壊不可Obj
 
 };
 

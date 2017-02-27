@@ -165,7 +165,6 @@ public:
 			delete p;
 		}
 		m_SceneVec.clear();
-		delete fade;
 	}
 		
 
@@ -183,7 +182,6 @@ public:
 
 private:
 	std::list<CSceneBase*> m_SceneVec;
-	CFade *fade;
 protected:
 
 };

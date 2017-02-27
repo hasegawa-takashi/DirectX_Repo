@@ -344,9 +344,8 @@ bool CObjManager::AllRelaseObj()
 	{
 		for (auto mapitr = itr->begin(); mapitr != itr->end(); mapitr++)
 		{
+
 			mapitr->second->Release();
-			//-------------------------------------
-			// --- EnemyMgrをデリート時にエラー
 			delete mapitr->second;
 			
 			if ( ObjList.empty() )
@@ -710,14 +709,7 @@ bool CObjManager::calcRaySphere(ColBox &obb1, ColBox &obb2)
 	obb1.ResultPos.x = obb1.m_Pos.x + a1 * obb1.Ray.x;
 	obb1.ResultPos.y = obb1.m_Pos.y + a1 * obb1.Ray.y;
 	obb1.ResultPos.z = obb1.m_Pos.z + a1 * obb1.Ray.z;
-
-	/*
-	q2x = obb1.m_Pos.x + a2 * obb1.Ray.x;
-	q2y = obb1.m_Pos.y + a2 * obb1.Ray.y;
-	q2z = obb1.m_Pos.z + a2 * obb1.Ray.z;
-	*/
-
-
+	
 	return true;
 }
 
