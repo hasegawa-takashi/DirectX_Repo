@@ -96,6 +96,7 @@ public:
 	virtual int GetidentNumb(){ return ObjNumb; }
 	virtual void SetPos(D3DXVECTOR3 pos){ m_Pos = pos; }
 	virtual D3DXVECTOR3 GetPos(){ return m_Pos; }
+	virtual bool GetDestFlag() { return NonDeleteObj; }
 
 protected:
 
@@ -105,7 +106,7 @@ protected:
 	CMeshRender *m_ModelMesh;	// モデル描画用
 	int ObjNumb;				// モデルの固有番号
 	D3DXVECTOR3 m_Pos;			// ポジション
-	bool NonDeleteObj;			// 破壊不可Obj
+	bool NonDeleteObj = false;	// 破壊不可Obj
 
 };
 

@@ -62,7 +62,3 @@ void CTitle::UIDraw()
 void CTitle::Release() {
 	CObjManager::Instance()->AllRelaseObj();
 }
-
-void CTitle::Pause() {
-	// タイトルでポーズはないよ
-}

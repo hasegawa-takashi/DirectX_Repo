@@ -345,12 +345,14 @@ bool CObjManager::AllRelaseObj()
 		for (auto mapitr = itr->begin(); mapitr != itr->end(); mapitr++)
 		{
 
-			mapitr->second->Release();
-			delete mapitr->second;
-			
-			if ( ObjList.empty() )
+			if (ObjList.empty())
 				return true;
-			
+
+			if (!mapitr->second->GetDestFlag())
+			{
+				mapitr->second->Release();
+				delete mapitr->second;
+			}
 		}
 	}
 

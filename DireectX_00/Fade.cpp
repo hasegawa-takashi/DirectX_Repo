@@ -1,12 +1,14 @@
 #include "Fade.h"
 
-
 #define PATH_FADETEXTURE _T("../data/Texture/Fade.png")
 const int MAX_FADE = 255;
 const float FADE_SPEED = 1.0f;
 
 CFade::CFade()
 {
+	
+
+
 	Fadenum = 255;
 
 	sprite->CreateMakeVertex2DPolygon(
@@ -18,7 +20,7 @@ CFade::CFade()
 		Fadenum);
 
 	ObjNumb = GetObjMgr()->RenameObj(ID_FADE);
-
+	NonDeleteObj = true;
 }
 
 
@@ -40,7 +42,7 @@ void CFade::UIDraw()
 	sprite->Render();
 }
 
-bool CFade::FadeIn()
+void CFade::FadeIn()
 {
 	Fadenum -= (int)FADE_SPEED;
 
@@ -49,14 +51,11 @@ bool CFade::FadeIn()
 	if (Fadenum <= 0)
 	{
 		Fadenum = 0;
-		return true;
 	}
-
-	return false;
 
 }
 
-bool CFade::FadeOut()
+void CFade::FadeOut()
 {
 	Fadenum += (int)FADE_SPEED;
 	sprite->SetFade(Fadenum);
@@ -64,8 +63,9 @@ bool CFade::FadeOut()
 	if (Fadenum >= 255)
 	{
 		Fadenum = 255;
-		return true;
+		// Ž©•ª‚ÅŽ©•ª‚ðŽE‚·
+		GetObjMgr()->PopObj(ObjNumb, ID_FADE);
+
 	}
 
-	return false;
 }

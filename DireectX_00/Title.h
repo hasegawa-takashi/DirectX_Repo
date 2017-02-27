@@ -16,7 +16,6 @@ public:
 	virtual void LateDraw() override;
 	virtual void UIDraw() override;
 	virtual void Release() override;
-	virtual void Pause() override;
 
 private:
 

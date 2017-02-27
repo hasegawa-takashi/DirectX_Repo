@@ -1,6 +1,7 @@
 #pragma once
 
 #include"Sprite.h"
+#include<thread>
 
 //////////////////////////////////////////////////////////////
 //
@@ -28,8 +29,11 @@ private:
 	//==============================
 	//	関数
 	// FadeInを呼ぶクラス
-	bool FadeIn();
+	void FadeIn();
 	// FadeOutを呼ぶクラス
-	bool FadeOut();
+	void FadeOut();
+	// threadのFade用
+	std::thread Fadethread;
+	
 
 };
