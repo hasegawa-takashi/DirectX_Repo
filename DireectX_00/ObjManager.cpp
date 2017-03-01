@@ -284,7 +284,8 @@ bool CObjManager::PopObj(int Type,int ID)
 			{
 				if (mapitr->second->GetidentNumb() == ID)
 				{
-					
+					// 削除の追加
+					delete mapitr->second;
 					itr->erase(mapitr);
 					return true;
 				}
@@ -348,7 +349,7 @@ bool CObjManager::AllRelaseObj()
 			if (ObjList.empty())
 				return true;
 
-			if (!mapitr->second->GetDestFlag())
+			if (mapitr->second->GetNonDestFlag() == false)
 			{
 				mapitr->second->Release();
 				delete mapitr->second;
@@ -364,11 +365,42 @@ bool CObjManager::AllRelaseObj()
 
 //-------------------------------------------------------
 //
+//	Objectの論理的削除
+//
+//-------------------------------------------------------
+std::list<ObjBase*>  CObjManager::ExculdeObj()
+{
+
+	std::list<ObjBase*> excludeObjlist;
+
+	for (auto itr = ObjList.begin(); itr != ObjList.end(); itr++)
+	{
+		for (auto mapitr = itr->begin(); mapitr != itr->end();)
+		{
+			if ( mapitr->second->GetNonDestFlag() )
+			{
+				excludeObjlist.push_back(mapitr->second);
+				mapitr = itr->erase(mapitr);
+			}
+			else
+			{
+				mapitr++;
+			}
+
+		}
+	}
+
+	return std::move(excludeObjlist);
+
+}
+
+//-------------------------------------------------------
+//
 //	Objectを命名するためのクラス
 //  ちょっと面倒でポインタの位置を名前として使用
 //
 //-------------------------------------------------------
-int CObjManager::RenameObj(UINT ID)
+int CObjManager::RenameObj(UINT ID , ObjName &SetObj)
 {
 	if (ObjList.empty())
 	{
@@ -380,27 +412,28 @@ int CObjManager::RenameObj(UINT ID)
 	switch (ID)
 	{
 	case ID_PLAYER:
-		name = ID_PLAYER;
+		name = SetObj = ID_PLAYER;
 		break;
 
 	case ID_ENEMY:
-		name = ID_ENEMY;
+		name = SetObj = ID_ENEMY;
 		break;
 
 	case ID_FIELD:
-		name = ID_FIELD;
+		name = SetObj = ID_FIELD;
 		break;
 
 	case ID_BALLET:
-		name = ID_BALLET;
+		name = SetObj = ID_BALLET;
 		break;
 
 	case ID_CAMERA:
-		name = ID_CAMERA;
+		name = SetObj = ID_CAMERA;
 		break;
 
 	case ID_OTHER:
-		name = (int)&ObjList.back();
+		SetObj = ID_OTHER;
+		name =  (int)&ObjList.back();
 		break;
 
 	default:

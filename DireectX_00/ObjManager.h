@@ -88,7 +88,7 @@ public:
 	virtual bool AllRelaseObj() { return true; }
 
 	// 複数ある可能性があるもの
-	virtual ColBox GetCol() = 0;
+	virtual ColBox GetCol() { return Collision; }
 
 	// 一つの固有であるもの
 	virtual CMeshRender* GetRender(){ return m_ModelMesh; }
@@ -96,15 +96,17 @@ public:
 	virtual int GetidentNumb(){ return ObjNumb; }
 	virtual void SetPos(D3DXVECTOR3 pos){ m_Pos = pos; }
 	virtual D3DXVECTOR3 GetPos(){ return m_Pos; }
-	virtual bool GetDestFlag() { return NonDeleteObj; }
+	virtual bool GetNonDestFlag() { return NonDeleteObj; }
+	virtual int GetIDNumb() { return (int)ObjID; }
 
 protected:
 
 	// === 継承用メッセージ === //
-
+	ColBox Collision;			// 当たり判定用
 	D3DXMATRIX m_mtxWorld;		// ワールド行列
 	CMeshRender *m_ModelMesh;	// モデル描画用
 	int ObjNumb;				// モデルの固有番号
+	ObjName ObjID;				// モデルのID番号
 	D3DXVECTOR3 m_Pos;			// ポジション
 	bool NonDeleteObj = false;	// 破壊不可Obj
 
@@ -178,12 +180,18 @@ public:
 	//---------------------------
 	// --- オブジェクトへの命名
 	// --- 色々あっていらない可能性が出てきた
-	int RenameObj(UINT ID);
+	int RenameObj(UINT ID, ObjName &SetObj);
 	
 	//---------------------------
 	// --- オブジェクトの捜索
 	void SerchObj(UINT ID, OBJMGR& obj);
 	
+	//-----------------------------------------------------------
+	// --- オブジェクトのポインタをリストから外す
+	/* 除外フラグの立っているオブジェクトをListから外し、
+		その除外オブジェクトをリストにして返す*/
+	std::list<ObjBase*> ExculdeObj();
+
 	//--------------------------------
 	// --- どうしようもない物の初期化
 	void MonSter(){ Numb = 0;  }

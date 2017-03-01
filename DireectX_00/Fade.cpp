@@ -6,26 +6,25 @@ const float FADE_SPEED = 1.0f;
 
 CFade::CFade()
 {
-	
-
-
 	Fadenum = 255;
 
-	sprite->CreateMakeVertex2DPolygon(
-		PATH_FADETEXTURE,
-		0,
-		0,
-		SCREEN_WIDTH,
-		SCREEN_HEIGHT,
-		Fadenum);
+	sprite = new CSprite;
 
-	ObjNumb = GetObjMgr()->RenameObj(ID_FADE);
+	sprite->CreateMakeVertex2DPolygon(PATH_FADETEXTURE,0,0,SCREEN_WIDTH,SCREEN_HEIGHT,Fadenum);
+
+	ObjNumb = GetObjMgr()->RenameObj(ID_FADE, ObjID);
 	NonDeleteObj = true;
+
+	// ‰Šú‰»
+	Fadefunc = std::bind(&CFade::FadeIn,this);
+
 }
 
 
 CFade::~CFade()
 {
+	
+	Fadefunc.~function();
 	delete sprite;
 }
 
@@ -33,6 +32,7 @@ CFade::~CFade()
 // Update
 void CFade::Update()
 {
+	Fadefunc();
 	sprite->SetFade(Fadenum);
 }
 
@@ -46,26 +46,29 @@ void CFade::FadeIn()
 {
 	Fadenum -= (int)FADE_SPEED;
 
-	sprite->SetFade(Fadenum);
+	//sprite->SetFade(Fadenum);
 
 	if (Fadenum <= 0)
 	{
+		Fadefunc = std::bind(&CFade::FadeOut, this);
 		Fadenum = 0;
 	}
-
 }
 
 void CFade::FadeOut()
 {
-	Fadenum += (int)FADE_SPEED;
-	sprite->SetFade(Fadenum);
 
-	if (Fadenum >= 255)
+	while (true)
 	{
-		Fadenum = 255;
-		// Ž©•ª‚ÅŽ©•ª‚ðŽE‚·
-		GetObjMgr()->PopObj(ObjNumb, ID_FADE);
+		Fadenum += (int)FADE_SPEED;
+		//prite->SetFade(Fadenum);
 
+		// FadeI—¹
+		if (Fadenum >= 255)
+		{
+			Fadenum = 255;
+			// Ž©•ª‚ÅŽ©•ª‚ðŽE‚·
+			GetObjMgr()->PopObj(ObjNumb, ID_FADE);
+		}
 	}
-
 }

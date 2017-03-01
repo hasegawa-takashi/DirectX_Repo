@@ -1,7 +1,7 @@
 #pragma once
 
 #include"Sprite.h"
-#include<thread>
+#include<functional>
 
 //////////////////////////////////////////////////////////////
 //
@@ -12,8 +12,8 @@ class CFade : public ObjBase
 {
 public:
 
-	~CFade();
 	CFade();
+	~CFade();
 
 	// Update
 	void Update();
@@ -32,8 +32,7 @@ private:
 	void FadeIn();
 	// FadeOutを呼ぶクラス
 	void FadeOut();
-	// threadのFade用
-	std::thread Fadethread;
+	// functionのFade用(返り値無し)
+	std::function< void(void) > Fadefunc;
 	
-
 };

@@ -5,7 +5,7 @@ CGameMain::CGameMain()
 	CObjManager::Instance()->MonSter();
 
 	CObjManager::Instance()->PushObj(new CCamera, ID_CAMERA);
-	CObjManager::Instance()->PushObj(new Player, ID_PLAYER);
+ 	CObjManager::Instance()->PushObj(new Player, ID_PLAYER);
 	CObjManager::Instance()->PushObj(new CEnemyMgr, ID_ENEMY);
 	CObjManager::Instance()->PushObj(new CField, ID_FIELD);
 	CObjManager::Instance()->PushObj(new CSky, ID_OTHER);

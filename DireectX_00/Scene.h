@@ -102,12 +102,25 @@ public:
 			return false;
 		}
 
+		//GetObjMgr()->PushObj(new CFade,ID_FADE);
+
+		// 引き継ぎたいリストの作成
+		// 現在のシーンから外す
+		std::list<ObjBase*> ExcludeObjList = GetObjMgr()->ExculdeObj();
+		
+		// シーンの削除
 		if (!PopScene())
 			return false;
 
+		// シーンの挿入
 		if (!PushScene(scene))
 			return false;
 		
+		for (auto& pObj:ExcludeObjList )
+		{
+			GetObjMgr()->PushObj(pObj,pObj->GetIDNumb());
+		}
+
 		return true;
 	}
 

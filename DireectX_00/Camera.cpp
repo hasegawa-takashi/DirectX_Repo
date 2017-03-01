@@ -34,7 +34,7 @@ CCamera::CCamera()
 	m_camAngleUnit = 0.1f;
 	m_CorrectionVal = D3DXVECTOR3(0, 0, 1);
 
-	ObjNumb = GetObjMgr()->RenameObj(ID_CAMERA);
+	ObjNumb = GetObjMgr()->RenameObj(ID_CAMERA, ObjID);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////

@@ -24,7 +24,7 @@ void CField::Init()
 	/*if (m_bLoad) {
 		SetMesh(&m_mesh);
 	}*/
-	ObjNumb = CObjManager::Instance()->RenameObj(ID_FIELD);
+	ObjNumb = CObjManager::Instance()->RenameObj(ID_FIELD,ObjID);
 
 	D3DXMatrixIdentity(&m_mtxWorld);
 

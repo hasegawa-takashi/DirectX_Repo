@@ -72,6 +72,6 @@ void CSky::LateDraw()
 // ‰ð•ú
 void CSky::Release()
 {
-	m_ModelMesh->Finalize();
+	//m_ModelMesh->Finalize();
 	delete m_ModelMesh;
 }

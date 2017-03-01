@@ -53,10 +53,6 @@ public:
 	D3DXVECTOR3 GetDir(){ return m_NowDir; }
 
 	//----------------------------------------
-	// --- コリジョンの設定
-	ColBox GetCol(){ return Collision; }
-
-	//----------------------------------------
 	// --- ゲームクリア
 	void LastRun();
 
@@ -87,8 +83,6 @@ private:
 
 	float m_dwPrev;						// 経過時間計測用
 	double m_dAnimTime;					// アニメーション時間
-
-	ColBox Collision;					// 当たり判定用
 
 	BulletBox balletpram_L;				// L武器
 	BulletBox balletpram_R;				// R武器

@@ -84,7 +84,7 @@ Player::~Player()
 void Player::Init()
 {
 	// プレイヤーのなまえずけ　
-	ObjNumb = CObjManager::Instance()->RenameObj(ID_PLAYER);
+	ObjNumb = CObjManager::Instance()->RenameObj(ID_PLAYER,ObjID);
 
 	// カメラオブジェクトの取得。
 	// 型キャストにて無理やり変換をかけている。
