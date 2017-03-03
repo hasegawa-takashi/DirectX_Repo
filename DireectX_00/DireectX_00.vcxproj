@@ -84,6 +84,7 @@
   <ItemGroup>
     <ClCompile Include="Ballet.cpp" />
     <ClCompile Include="Billbord.cpp" />
+    <ClCompile Include="BlackoutFade.cpp" />
     <ClCompile Include="Calculation.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Debug.cpp" />
@@ -104,6 +105,7 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderMgr.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Sky.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Title.cpp" />
@@ -114,6 +116,7 @@
   <ItemGroup>
     <ClInclude Include="Ballet.h" />
     <ClInclude Include="Billbord.h" />
+    <ClInclude Include="BlackoutFade.h" />
     <ClInclude Include="Calculation.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Debug.h" />

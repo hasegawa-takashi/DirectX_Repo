@@ -2,6 +2,7 @@
 
 #include"Sprite.h"
 #include<functional>
+#include"Scene.h"
 
 //////////////////////////////////////////////////////////////
 //
@@ -14,13 +15,13 @@ public:
 
 	CFade();
 	~CFade();
-
+	
 	// Update
 	void Update();
 	// FADE描画用
 	void UIDraw();
 
-private:
+protected:
 	//==============================
 	//	変数
 	int Fadenum;		// 現在のFade
@@ -29,9 +30,10 @@ private:
 	//==============================
 	//	関数
 	// FadeInを呼ぶクラス
-	void FadeIn();
+	void FadeIn() {};
 	// FadeOutを呼ぶクラス
-	void FadeOut();
+	void FadeOut() {};
+
 	// functionのFade用(返り値無し)
 	std::function< void(void) > Fadefunc;
 	

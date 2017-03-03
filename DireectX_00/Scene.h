@@ -56,130 +56,56 @@ public:
 
 	//-------------------------------------------------------
 	//
-	//	シーンの新規挿入
+	//	シーンの新規挿入 TODO プライベートへ隠ぺい予定
 	//
 	//-------------------------------------------------------
-	bool CSceneMgr::PushScene(CSceneBase* scene) {
-		// 現在の処理をポーズに
-		if (!m_SceneVec.empty()) {
-			m_SceneVec.back()->Pause();
-		}
-
-		// シーンを配列の後ろに挿入
-		m_SceneVec.push_back(scene);
-		m_SceneVec.back()->Init();
-
-		return true;
-	}
+	bool CSceneMgr::CreateScene();
 
 	//-------------------------------------------------------
 	//
-	//	シーンの削除
+	//	シーンの削除	TODO プライベートへ隠ぺい予定
 	//
 	//-------------------------------------------------------
-	bool CSceneMgr::PopScene() {
-		// シーンがない場合終了
-		if (m_SceneVec.empty()) {
-			return false;
-		}
-
-		// シーンの削除
-		m_SceneVec.back()->Release();
-		delete m_SceneVec.back();
-		m_SceneVec.pop_back();
-
-		return true;
-	}
+	bool CSceneMgr::DeleteScene();
 
 	//-------------------------------------------------------
 	//
 	//	シーンの交換
 	//
 	//-------------------------------------------------------
-	bool CSceneMgr::ChangeScene(CSceneBase* scene) {
-		// 現在のシーンがない場合終了
-		if (m_SceneVec.empty()) {
-			return false;
-		}
-
-		GetObjMgr()->PushObj(new CFade,ID_FADE);
-
-		// 引き継ぎたいリストの作成
-		// 現在のシーンから外す
-		std::list<ObjBase*> ExcludeObjList = GetObjMgr()->ExculdeObj();
-		
-		// シーンの削除
-		if (!PopScene())
-			return false;
-
-		// シーンの挿入
-		if (!PushScene(scene))
-			return false;
-		
-		for (auto& pObj:ExcludeObjList )
-		{
-			GetObjMgr()->PushObj(pObj,pObj->GetIDNumb());
-		}
-
-		return true;
-	}
+	bool CSceneMgr::ChangeScene();
 
 	//-------------------------------------------------------
 	//
 	//	登録シーンの更新
 	//
 	//-------------------------------------------------------
-	void CSceneMgr::Update() {
-		if (m_SceneVec.empty())
-			return;
-		m_SceneVec.back()->Update();
-
-		m_SceneVec.back()->LateUpdate();
-		
-	}
+	void CSceneMgr::Update();
 
 	//-------------------------------------------------------
 	//
 	//	登録シーン描画
 	//
 	//-------------------------------------------------------
-	void CSceneMgr::Draw() {
-		if (m_SceneVec.empty())
-			return;
-
-		HRESULT hr = GetDxMgr()->GetDxDevice()->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(128, 128, 255), 1.0f, 0);
-		
-		if (SUCCEEDED(GetDxMgr()->GetDxDevice()->BeginScene()))
-		{
-			// 通常描画
-			m_SceneVec.back()->Draw();
-			// 透過処理
-			GetRenderMgr()->RenderTransStart();
-			// 後からの描画
-			m_SceneVec.back()->LateDraw();
-			// UI等の最後の描画
-			m_SceneVec.back()->UIDraw();
-			// 描画の終了
-			GetRenderMgr()->RenderEnd();
-
-		}
-
-		CDebug::Instance()->Render();
-		GetDxMgr()->GetDxDevice()->Present(NULL, NULL, NULL, NULL);
-	}
+	void CSceneMgr::Draw();
 
 	//-------------------------------------------------------
 	//
 	//	シーンmgrの終了処理
 	//
 	//-------------------------------------------------------
-	void CSceneMgr::Release() {
-		for (auto& p : m_SceneVec) {
-			delete p;
-		}
-		m_SceneVec.clear();
+	void CSceneMgr::Release();
+	
+	//-------------------------------------------------------
+	//
+	//	次のSceneを設定
+	//
+	//-------------------------------------------------------
+	template <typename T>
+	void PushScene()
+	{
+		m_SceneCreatorFunctionList.push_back([]()->CSceneBase* {return new T; });
 	}
-		
 
 private:
 
@@ -187,14 +113,12 @@ private:
 
 protected:
 	bool m_Run;
-
-
-
 	//===== メンバ変数 =====
 public:
 
 private:
-	std::list<CSceneBase*> m_SceneVec;
+	std::list<CSceneBase*(*)()> m_SceneCreatorFunctionList; // 待機シーン生成関数リスト
+	CSceneBase* m_pCurrentScene = nullptr;				// 次に入れるScene
 protected:
 
 };

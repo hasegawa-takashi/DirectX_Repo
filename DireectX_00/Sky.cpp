@@ -25,7 +25,7 @@ void CSky::Init()
 	// カメラオブジェクトの取得
 	CObjManager::Instance()->SerchObj(ID_CAMERA, CameraObj);
 
-	CObjManager::Instance()->LateRenderPush(this);
+	//CObjManager::Instance()->LateRenderPush(this);
 
 }
 

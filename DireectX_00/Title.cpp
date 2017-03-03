@@ -5,6 +5,7 @@
 #include"Title.h"
 #include"TitleUI.h"
 #include"Camera.h"
+#include"BlackoutFade.h"
 
 CTitle::CTitle() 
 {
@@ -31,7 +32,8 @@ void CTitle::Update() {
 
 	if (CInput::GetKeyPress(DIK_SPACE))
 	{
-		CSceneMgr::Instance()->ChangeScene(new CGameMain);
+		GetSceneMgr()->PushScene<CGameMain>();
+		GetObjMgr()->PushObj(new CBlackoutFade,ID_FADE);
 	}
 
 

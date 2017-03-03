@@ -27,7 +27,7 @@ void CEnd::Init() {
 void CEnd::Update() {
 	if (CInput::GetKeyPress(DIK_SPACE))
 	{
-		CSceneMgr::Instance()->ChangeScene(new CTitle);
+		GetSceneMgr()->PushScene<CTitle>();
 	}
 
 	if (fade >= 255)

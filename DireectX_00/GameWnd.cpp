@@ -21,7 +21,7 @@
 bool CGameWnd::Init(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int iCmdShow)
 {
 	_CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF | _CRTDBG_ALLOC_MEM_DF);
-	//_CrtSetBreakAlloc(193);
+	//_CrtSetBreakAlloc(1014);
 	
 	// 変数宣言
 	HRESULT Createflag = E_FAIL;
@@ -49,7 +49,8 @@ bool CGameWnd::Init(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, i
 		GetSceneMgr()->Init();
 
 		// 一番最初のタイトルのプッシュ
-		GetSceneMgr()->PushScene(new CTitle);
+		GetSceneMgr()->PushScene<CTitle>();
+		GetSceneMgr()->ChangeScene();
 
 		// Objマネージャーの初期化
 		GetObjMgr()->Init();

@@ -33,7 +33,7 @@ void CObjManager::Init()
 		{
 			mapitr->second->Init();
 
-			if (ObjList.empty())
+			if (ObjList.empty() || itr->empty())
 				return;
 		}
 	}
@@ -52,13 +52,17 @@ void CObjManager::Update()
 
 	for (auto itr = ObjList.begin(); itr != ObjList.end() ; itr++)
 	{
-		for (auto mapitr = itr->begin() ; mapitr != itr->end() ; mapitr++)
+		if (itr->empty())
+			continue;
+		for (auto mapitr = itr->begin() ; mapitr != itr->end()  ; mapitr++)
 		{
 			mapitr->second->Update();
 
-			if (ObjList.empty())
+			if (ObjList.empty() ) 
 				return;
 
+			//if (itr->empty())
+				//return;
 		}
 	}
 }
@@ -78,8 +82,8 @@ void CObjManager::LateUpdate()
 		for (auto mapitr = itr->begin(); mapitr != itr->end(); mapitr++)
 		{
 			mapitr->second->LateUpdate();
-			
-			if (ObjList.empty())
+
+			if (ObjList.empty() || itr->empty())
 				return;
 		}
 	}
@@ -102,7 +106,7 @@ void CObjManager::Draw()
 		{
 			mapitr->second->Draw();
 
-			if (ObjList.empty())
+			if (ObjList.empty() || itr->empty())
 				return;
 		}
 	}
@@ -165,7 +169,7 @@ void CObjManager::UIDraw()
 		{
 			mapitr->second->UIDraw();
 
-			if (ObjList.empty())
+			if (ObjList.empty() || itr->empty())
 				return;
 		}
 	}
@@ -179,22 +183,22 @@ void CObjManager::UIDraw()
 //-------------------------------------------------------
 void CObjManager::Release()
 {
-	if (ObjList.empty())
-		return;
+	//if (ObjList.empty())
+	//	return;
 
-	for (auto itr = ObjList.begin(); itr != ObjList.end(); itr++)
-	{
-		for (auto mapitr = itr->begin(); mapitr != itr->end(); mapitr++)
-		{
-			mapitr->second->Release();
+	//for (auto itr = ObjList.begin(); itr != ObjList.end(); itr++)
+	//{
+	//	for (auto mapitr = itr->begin(); mapitr != itr->end(); mapitr++)
+	//	{
+	//		mapitr->second->Release();
 
-			if (ObjList.empty())
-				return;
-		}
-	}
+	//		if (ObjList.empty() || itr->empty())
+	//			return;
+	//	}
+	//}
 
 	// ‘½•ª‚±‚ê‚Í•K—v‚È‚¢‚Æv‚¤
-	//CObjManager::Instance()->AllRelaseObj();
+	CObjManager::Instance()->AllRelaseObj();
 }
 
 //-------------------------------------------------------
@@ -234,6 +238,7 @@ bool CObjManager::PushObj( ObjBase* obj , UINT ID)
 		return false;
 	}
 	Numb++;
+
 
 	// === “¯‚¶ID‚Ìmap‚É‘‚â‚·ê‡ === //
 	for (auto itr = ObjList.begin(); itr != ObjList.end(); itr++)

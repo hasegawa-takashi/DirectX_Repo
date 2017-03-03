@@ -181,6 +181,12 @@
     <ClCompile Include="RenderMgr.cpp">
       <Filter>Directx</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackoutFade.cpp">
+      <Filter>Render\Fade</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Title.h">
@@ -267,6 +273,9 @@
     </ClInclude>
     <ClInclude Include="RenderMgr.h">
       <Filter>Directx</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackoutFade.h">
+      <Filter>Render\Fade</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
