@@ -102,7 +102,7 @@ public:
 			return false;
 		}
 
-		//GetObjMgr()->PushObj(new CFade,ID_FADE);
+		GetObjMgr()->PushObj(new CFade,ID_FADE);
 
 		// 引き継ぎたいリストの作成
 		// 現在のシーンから外す

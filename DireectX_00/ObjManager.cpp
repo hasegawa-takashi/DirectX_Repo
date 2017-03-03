@@ -286,7 +286,7 @@ bool CObjManager::PopObj(int Type,int ID)
 				{
 					// íœ‚Ì’Ç‰Á
 					delete mapitr->second;
-					itr->erase(mapitr);
+					mapitr = itr->erase(mapitr);
 					return true;
 				}
 			}
@@ -431,9 +431,17 @@ int CObjManager::RenameObj(UINT ID , ObjName &SetObj)
 		name = SetObj = ID_CAMERA;
 		break;
 
+	case ID_GOAL:
+		name = SetObj = ID_GOAL;
+		break;
+
 	case ID_OTHER:
 		SetObj = ID_OTHER;
 		name =  (int)&ObjList.back();
+		break;
+
+	case ID_FADE:
+		name = SetObj = ID_FADE;
 		break;
 
 	default:

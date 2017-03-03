@@ -8,6 +8,7 @@ CFade::CFade()
 {
 	Fadenum = 255;
 
+	sprite = nullptr;
 	sprite = new CSprite;
 
 	sprite->CreateMakeVertex2DPolygon(PATH_FADETEXTURE,0,0,SCREEN_WIDTH,SCREEN_HEIGHT,Fadenum);
@@ -23,7 +24,6 @@ CFade::CFade()
 
 CFade::~CFade()
 {
-	
 	Fadefunc.~function();
 	delete sprite;
 }
@@ -32,8 +32,8 @@ CFade::~CFade()
 // Update
 void CFade::Update()
 {
-	Fadefunc();
 	sprite->SetFade(Fadenum);
+	Fadefunc();
 }
 
 // FADE•`‰æ—p
@@ -68,7 +68,8 @@ void CFade::FadeOut()
 		{
 			Fadenum = 255;
 			// Ž©•ª‚ÅŽ©•ª‚ðŽE‚·
-			GetObjMgr()->PopObj(ObjNumb, ID_FADE);
+			GetObjMgr()->PopObj(ID_FADE, ObjNumb);
+			break;
 		}
 	}
 }

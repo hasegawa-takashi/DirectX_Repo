@@ -22,9 +22,6 @@ CTitle::~CTitle()
 
 void CTitle::Init() {
 
-
-	
-
 }
 
 void CTitle::Update() {
