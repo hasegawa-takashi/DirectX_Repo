@@ -16,77 +16,72 @@ CCollision::~CCollision()
 
 //=============================================================================
 // コリジョン判定呼び出し用の関数
+// TODO OBJのeraseの呼び出し方
 //=============================================================================
 bool CCollision::CollisonCheck(UINT ID, int Colltype, ColBox &obb1)
 {
-	if (ObjList.empty())
+	//指定IDのobjlistの取得
+	m_ObjList = GetObjMgr()->SerchObj(ID);
+
+	for (auto p : m_ObjList)
 	{
-		return false;
-	}
-
-
-	for (auto& itr = ObjList.begin(); itr != ObjList.end(); itr++)
-	{
-
-		for (auto& mapitr = itr->begin(); mapitr != itr->end(); mapitr++)
+		D3DXVECTOR3 vCross = D3DXVECTOR3(0, 0, 0);
+		// 検索
+		switch (Colltype)
 		{
-
-
-			D3DXVECTOR3 vCross = D3DXVECTOR3(0, 0, 0);
-			// 検索
-			switch (Colltype)
+		case COL_SPHERE:
+			if (CollisionBSphere(obb1, p->GetCol()))
 			{
-			case COL_SPHERE:
-				if (CollisionBSphere(obb1, mapitr->second->GetCol()) && mapitr->first == ID)
-				{
-					ObjList.erase(itr);
-					return true;
-				}
-				break;
-
-			case COL_AABB:
-				break;
-
-			case COL_OBB:
-				if (CollisionOBB(obb1, mapitr->second->GetCol()) && mapitr->first == ID)
-				{
-					ObjList.erase(itr);
-					return true;
-				}
-				break;
-
-			case COL_RAY:
-				m_ModelMesh = mapitr->second->GetRender();
-
-				if (m_ModelMesh == NULL)
-					break;
-
-				if (m_ModelMesh->Intersect(obb1.m_Pos, obb1.Ray, true, &vCross) && mapitr->first == ID)
-				{
-					obb1.ResultPos.x = vCross.x;
-					obb1.ResultPos.y = vCross.y;
-					obb1.ResultPos.z = vCross.z;
-					obb1.m_SetObjId = mapitr->first;
-					obb1.IdentNumb = mapitr->second->GetidentNumb();
-
-					return true;
-				}
-				break;
-
-			case COL_RAY_SPHERE:
-				if (calcRaySphere(obb1, mapitr->second->GetCol()) && mapitr->first == ID)
-				{
-					obb1.m_SetObjId = mapitr->first;
-					obb1.IdentNumb = mapitr->second->GetidentNumb();
-					return true;
-				}
-				break;
-
-			default:
-				break;
+				delete p;
+				m_ObjList.erase(p);
+				return true;
 			}
+			break;
+
+		case COL_AABB:
+			break;
+
+		case COL_OBB:
+			if (CollisionOBB(obb1, p->GetCol()))
+			{
+				delete p;
+				m_ObjList.erase(p);
+				return true;
+			}
+			break;
+
+		case COL_RAY:
+			m_ModelMesh = p->GetRender();
+
+			if (m_ModelMesh == NULL)
+				break;
+
+			if (m_ModelMesh->Intersect(obb1.m_Pos, obb1.Ray, true, &vCross) )
+			{
+				obb1.ResultPos.x = vCross.x;
+				obb1.ResultPos.y = vCross.y;
+				obb1.ResultPos.z = vCross.z;
+				obb1.m_SetObjId = ID;
+				obb1.IdentNumb = p->GetidentNumb();
+
+				return true;
+			}
+			break;
+
+		case COL_RAY_SPHERE:
+			if (calcRaySphere(obb1, p->GetCol()))
+			{
+				obb1.m_SetObjId = ID;
+				obb1.IdentNumb = p->GetidentNumb();
+				return true;
+			}
+			break;
+
+		default:
+			break;
 		}
 	}
+
 	return false;
 
 }

@@ -218,7 +218,7 @@ bool CObjManager::AllRelaseObj()
 	{
 		m_ObjListArray[loop]->AllDeleteObj();
 	}
-
+	Numb = 10;
 	return true;
 
 }
@@ -263,7 +263,6 @@ array<ObjList*, MAX_ID> CObjManager::ExculdeObj()
 //
 //	Objectを命名するためのクラス
 //  ちょっと面倒でポインタの位置を名前として使用
-//	TODO : 被らない適当な数値の割り振り
 //	
 //-------------------------------------------------------
 int CObjManager::RenameObj(UINT ID , ObjName &SetObj)
@@ -274,36 +273,43 @@ int CObjManager::RenameObj(UINT ID , ObjName &SetObj)
 	switch (ID)
 	{
 	case ID_PLAYER:
-		name = SetObj = ID_PLAYER;
+		name = Numb;
+		SetObj = ID_PLAYER;
 		break;
 
 	case ID_ENEMY:
-		name = SetObj = ID_ENEMY;
+		name = Numb;
+		SetObj = ID_ENEMY;
 		break;
 
 	case ID_FIELD:
-		name = SetObj = ID_FIELD;
+		name = Numb; 
+		SetObj = ID_FIELD;
 		break;
 
 	case ID_BALLET:
-		name = SetObj = ID_BALLET;
+		name = Numb; 
+		SetObj = ID_BALLET;
 		break;
 
 	case ID_CAMERA:
-		name = SetObj = ID_CAMERA;
+		name = Numb; 
+		SetObj = ID_CAMERA;
 		break;
 
 	case ID_GOAL:
-		name = SetObj = ID_GOAL;
+		name = Numb; 
+		SetObj = ID_GOAL;
 		break;
 
 	case ID_OTHER:
 		SetObj = ID_OTHER;
-		name =  (int)&ObjList.back();
+		name = Numb;
 		break;
 
 	case ID_FADE:
-		name = SetObj = ID_FADE;
+		SetObj = ID_FADE;
+		name = Numb;
 		break;
 
 	default:

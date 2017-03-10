@@ -41,7 +41,7 @@ public:
 
 
 
-class CCollision 
+class CCollision
 {
 public:
 	//----------------------------
@@ -67,6 +67,9 @@ public:
 	ColBox GetCol() {};
 
 private:
+
+	list<ObjBase*> m_ObjList;	// オブジェクト用
+	CMeshRender *m_ModelMesh;	// 描画用の変数クラス
 
 	//----------------------------
 	// --- 球体判定

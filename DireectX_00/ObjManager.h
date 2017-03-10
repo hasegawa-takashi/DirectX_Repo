@@ -363,7 +363,7 @@ public:
 
 	//--------------------------------
 	// --- どうしようもない物の初期化
-	void MonSter(){ Numb = 0;  }
+	//void MonSter(){ Numb = 0;  }
 
 	// === ここから継承の変数宣言 === //
 	CMeshRender *m_ModelMesh;	// 描画用の変数クラス
@@ -387,7 +387,7 @@ private:
 
 	array<ObjList*,MAX_ID> m_ObjListArray;	//
 
-	int Numb;
+	unsigned int Numb = 10;						// 固有ID用
 };
 
 //=============================================================================
