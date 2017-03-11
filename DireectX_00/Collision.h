@@ -40,7 +40,12 @@ public:
 };
 
 
-
+//////////////////////////////////////////////////////////////
+//
+//		CCollision
+//			判定の呼び出し用
+//
+/////////////////////////////////////////////////////////////
 class CCollision
 {
 public:
@@ -55,38 +60,114 @@ public:
 	// === ここから先当たり判定関係 === //
 	// === 上手い作り方がわからなかったのでここで一括で当たり判定を構成 === //
 
+
+	virtual list<ObjBase*> ISCollision(const Sphere*) = 0;
+	virtual list<ObjBase*> ISCollision(const AABB*) = 0;
+	virtual list<ObjBase*> ISCollision(const OBB*) = 0;
+	virtual list<ObjBase*> ISCollision(const RaySphere*) = 0;
+	virtual list<ObjBase*> ISCollision(const Raycast*) = 0;
+
 	//--------------------------------------
 	// --- オブジェクトの検索用+判定も
 	// --- 第一引数 :: 探すオブジェクトのID
 	// --- 第二引数 :: 検索の方法
-	bool CollisonCheck(UINT ID, int Colltype, ColBox &obb1);
-	float LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 = 0);
-
+	//bool CollisonCheck(UINT ID, int Colltype, ColBox &obb1);
+	
 	//---------------------------
 	// --- OBBの引っ張ってくる設定
-	ColBox GetCol() {};
+	//ColBox GetCol() {};
+
+protected:
+
+	list<ObjBase*> m_TargetObjList;	// 対象オブジェクト用
+	list<ObjBase*> m_ReturnTargetObjList;
+	CMeshRender *m_ModelMesh;	// 描画用の変数クラス
 
 private:
+	
+};
 
-	list<ObjBase*> m_ObjList;	// オブジェクト用
-	CMeshRender *m_ModelMesh;	// 描画用の変数クラス
+//////////////////////////////////////////////////////////////
+//
+//		Sphere
+//			球体の当たり判定用
+//
+/////////////////////////////////////////////////////////////
+class Sphere : public CCollision
+{
+public:
+	Sphere() {};
+	~Sphere() {};
 
 	//----------------------------
 	// --- 球体判定
-	bool CollisionBSphere(ColBox &obb1, ColBox &obb2);
+	list<ObjBase*> ISCollision(ColBox &obb1, UINT ID);
+};
+
+//////////////////////////////////////////////////////////////
+//
+//		AABB
+//			固定矩形の当たり判定
+//
+/////////////////////////////////////////////////////////////
+class AABB : public CCollision
+{
+public:
+	AABB() {};
+	~AABB() {};
 
 	//----------------------------
 	// --- AABB判定
-	bool CollisionAABB(ObjBase* pObj, UINT ID);
+	list<ObjBase*> ISCollision(ColBox &obb1, ColBox &obb2, UINT ID);
+};
 
-	//----------------------------
-	// --- OBB判定
-	bool CollisionOBB(ColBox &obb1, ColBox &obb2);
+//////////////////////////////////////////////////////////////
+//
+//		OBB
+//			回転矩形の当たり判定
+//
+/////////////////////////////////////////////////////////////
+class OBB : public CCollision
+{
+public:
+	OBB() {};
+	~OBB() {};
 
-	//----------------------------
-	// --- Ray+Spher
-	bool calcRaySphere(ColBox &obb1, ColBox &obb2);
+	list<ObjBase*> ISCollision(ColBox &obb1, ColBox &obb2, UINT ID);
 
+private:
+	float LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 = 0);
 
 };
 
+//////////////////////////////////////////////////////////////
+//
+//		RaySphere
+//			Rayと球の当たり判定
+//
+/////////////////////////////////////////////////////////////
+class RaySphere : public CCollision
+{
+public:
+	RaySphere() {};
+	~RaySphere() {};
+
+	list<ObjBase*> ISCollision(ColBox &obb1, ColBox &obb2, UINT ID);
+};
+
+//////////////////////////////////////////////////////////////
+//
+//		Sphere
+//			球体の当たり判定用
+//
+/////////////////////////////////////////////////////////////
+class Raycast : public CCollision
+{
+public:
+	Raycast() {};
+	~Raycast() {};
+
+	//----------------------------
+	// --- 球体判定
+	list<ObjBase*> ISCollision(ColBox &obb1, UINT ID);
+};
