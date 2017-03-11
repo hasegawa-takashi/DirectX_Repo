@@ -39,7 +39,7 @@ list<ObjBase*> Sphere::ISCollision(ColBox &obb1, UINT ID)
 //=============================================================================
 // AABBîªíËÅ@TODO ñ¢é¿ëï
 //=============================================================================
-list<ObjBase*> AABB::ISCollision(ColBox &obb1, ColBox &obb2, UINT ID)
+list<ObjBase*> AABB::ISCollision(ColBox &obb1, UINT ID)
 {
 	return m_ReturnTargetObjList;
 }
@@ -47,7 +47,7 @@ list<ObjBase*> AABB::ISCollision(ColBox &obb1, ColBox &obb2, UINT ID)
 //=============================================================================
 // OBBîªíË
 //=============================================================================
-list<ObjBase*> OBB::ISCollision(ColBox &obb1, ColBox &obb2, UINT ID)
+list<ObjBase*> OBB::ISCollision(ColBox &obb1, UINT ID)
 {
 	m_TargetObjList = GetObjMgr()->SerchObj(ID);
 
@@ -76,25 +76,25 @@ list<ObjBase*> OBB::ISCollision(ColBox &obb1, ColBox &obb2, UINT ID)
 		Norma1_Z.y = obb1.WorldMtx._32;
 		Norma1_Z.z = obb1.WorldMtx._33;
 
-		Norma2_X.x = obb2.WorldMtx._11;
-		Norma2_X.y = obb2.WorldMtx._12;
-		Norma2_X.z = obb2.WorldMtx._13;
+		Norma2_X.x = p->GetRender.WorldMtx._11;
+		Norma2_X.y = p->GetRender.WorldMtx._12;
+		Norma2_X.z = p->GetRender.WorldMtx._13;
 
-		Norma2_Y.x = obb2.WorldMtx._21;
-		Norma2_Y.y = obb2.WorldMtx._22;
-		Norma2_Y.z = obb2.WorldMtx._23;
+		Norma2_Y.x = p->GetRender.WorldMtx._21;
+		Norma2_Y.y = p->GetRender.WorldMtx._22;
+		Norma2_Y.z = p->GetRender.WorldMtx._23;
 
-		Norma2_Z.x = obb2.WorldMtx._31;
-		Norma2_Z.y = obb2.WorldMtx._32;
-		Norma2_Z.z = obb2.WorldMtx._33;
+		Norma2_Z.x = p->GetRender.WorldMtx._31;
+		Norma2_Z.y = p->GetRender.WorldMtx._32;
+		Norma2_Z.z = p->GetRender.WorldMtx._33;
 
 		D3DXVECTOR3 NAe1 = Norma1_X, Ae1 = NAe1 * obb1.m_fLength[0];
 		D3DXVECTOR3 NAe2 = Norma1_Y, Ae2 = NAe2 * obb1.m_fLength[1];
 		D3DXVECTOR3 NAe3 = Norma1_Z, Ae3 = NAe3 * obb1.m_fLength[2];
-		D3DXVECTOR3 NBe1 = Norma2_X, Be1 = NBe1 * obb2.m_fLength[0];
-		D3DXVECTOR3 NBe2 = Norma2_Y, Be2 = NBe2 * obb2.m_fLength[1];
-		D3DXVECTOR3 NBe3 = Norma2_Z, Be3 = NBe3 * obb2.m_fLength[2];
-		D3DXVECTOR3 Interval = obb1.m_Pos - obb2.m_Pos;
+		D3DXVECTOR3 NBe1 = Norma2_X, Be1 = NBe1 * p->GetRender.m_fLength[0];
+		D3DXVECTOR3 NBe2 = Norma2_Y, Be2 = NBe2 * p->GetRender.m_fLength[1];
+		D3DXVECTOR3 NBe3 = Norma2_Z, Be3 = NBe3 * p->GetRender.m_fLength[2];
+		D3DXVECTOR3 Interval = obb1.m_Pos - p->GetRender.m_Pos;
 
 		// ï™ó£é≤ : Ae1
 		FLOAT rA = D3DXVec3Length(&Ae1);
@@ -236,20 +236,20 @@ float OBB::LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *
 //=============================================================================
 // RayÇ∆ãÖëÃÇÃîªíË
 //=============================================================================
-list<ObjBase*> RaySphere::ISCollision(ColBox &obb1, ColBox &obb2, UINT ID)
+list<ObjBase*> RaySphere::ISCollision(ColBox &obb1, UINT ID)
 {
 	m_TargetObjList = GetObjMgr()->SerchObj(ID);
 
 	for (auto p : m_TargetObjList)
 	{
 
-		float px = obb2.m_Pos.x - obb1.m_Pos.x;
-		float py = obb2.m_Pos.y - obb1.m_Pos.y;
-		float pz = obb2.m_Pos.z - obb1.m_Pos.z;
+		float px = p->GetRender.m_Pos.x - obb1.m_Pos.x;
+		float py = p->GetRender.m_Pos.y - obb1.m_Pos.y;
+		float pz = p->GetRender.m_Pos.z - obb1.m_Pos.z;
 
 		float A = obb1.Ray.x * obb1.Ray.x + obb1.Ray.y * obb1.Ray.y + obb1.Ray.z* obb1.Ray.z;
 		float B = obb1.Ray.x * px + obb1.Ray.y * py + obb1.Ray.z * pz;
-		float C = px * px + py * py + pz * pz - obb2.Radius * obb2.Radius;
+		float C = px * px + py * py + pz * pz - p->GetRender.Radius * p->GetRender.Radius;
 
 		if (A == 0.0f)
 			continue; // ÉåÉCÇÃí∑Ç≥Ç™0
@@ -279,7 +279,7 @@ list<ObjBase*> RaySphere::ISCollision(ColBox &obb1, ColBox &obb2, UINT ID)
 //=============================================================================
 // RayÇ∆ãÖëÃÇÃîªíË
 //=============================================================================
-list<ObjBase*> RaySphere::ISCollision(ColBox &obb1, ColBox &obb2, UINT ID)
+list<ObjBase*> Raycast::ISCollision(ColBox &obb1, UINT ID)
 {
 	m_TargetObjList = GetObjMgr()->SerchObj(ID);
 
