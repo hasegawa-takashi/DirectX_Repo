@@ -14,13 +14,14 @@
     <ProjectGuid>{5A6C007F-688B-4FAA-BC32-ED13F0536B75}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>DireectX_00</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -82,11 +83,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Ballet.cpp" />
     <ClCompile Include="Billbord.cpp" />
     <ClCompile Include="BlackoutFade.cpp" />
     <ClCompile Include="Calculation.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="DxDevice.cpp" />
     <ClCompile Include="End.cpp" />
@@ -107,6 +108,7 @@
     <ClCompile Include="RenderMgr.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Sky.cpp" />
+    <ClCompile Include="SoundMgr.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="TitleUI.cpp" />
@@ -114,11 +116,11 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Ballet.h" />
     <ClInclude Include="Billbord.h" />
     <ClInclude Include="BlackoutFade.h" />
     <ClInclude Include="Calculation.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="DxDevice.h" />
     <ClInclude Include="End.h" />
@@ -139,6 +141,7 @@
     <ClInclude Include="RenderMgr.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Sky.h" />
+    <ClInclude Include="SoundMgr.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="TitleUI.h" />

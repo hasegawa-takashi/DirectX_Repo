@@ -56,9 +56,6 @@
     <Filter Include="Render\Billbord">
       <UniqueIdentifier>{f5da2df3-ac04-4c7f-b97f-4312e9c06794}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Ballet">
-      <UniqueIdentifier>{6738204b-29a5-4cf3-993b-90dc22b12961}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Particle">
       <UniqueIdentifier>{b5448a53-e7ac-4ec4-8a88-0f93910e4f8d}</UniqueIdentifier>
     </Filter>
@@ -94,6 +91,9 @@
     </Filter>
     <Filter Include="Directx">
       <UniqueIdentifier>{ba08778d-09be-42cf-9553-9ffb210261a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{cee67cee-1197-456b-b2ed-1443b0249117}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -145,9 +145,6 @@
     <ClCompile Include="Billbord.cpp">
       <Filter>Render\Billbord</Filter>
     </ClCompile>
-    <ClCompile Include="Ballet.cpp">
-      <Filter>Ballet</Filter>
-    </ClCompile>
     <ClCompile Include="Particle.cpp">
       <Filter>Particle</Filter>
     </ClCompile>
@@ -186,6 +183,12 @@
     </ClCompile>
     <ClCompile Include="BlackoutFade.cpp">
       <Filter>Render\Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Calculation</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundMgr.cpp">
+      <Filter>Sound</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,7 +231,6 @@
     <ClInclude Include="FPS.h">
       <Filter>FPS</Filter>
     </ClInclude>
-    <ClInclude Include="mleak.h" />
     <ClInclude Include="Scene.h">
       <Filter>Manager</Filter>
     </ClInclude>
@@ -237,9 +239,6 @@
     </ClInclude>
     <ClInclude Include="Billbord.h">
       <Filter>Render\Billbord</Filter>
-    </ClInclude>
-    <ClInclude Include="Ballet.h">
-      <Filter>Ballet</Filter>
     </ClInclude>
     <ClInclude Include="Particle.h">
       <Filter>Particle</Filter>
@@ -276,6 +275,15 @@
     </ClInclude>
     <ClInclude Include="BlackoutFade.h">
       <Filter>Render\Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Calculation</Filter>
+    </ClInclude>
+    <ClInclude Include="mleak.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundMgr.h">
+      <Filter>Sound</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
