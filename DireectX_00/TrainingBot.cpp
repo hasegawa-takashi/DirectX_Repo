@@ -66,11 +66,6 @@ bool TrainingBot::AllRelaseObj()
 	return true;
 }
 
-ColBox TrainingBot::GetCol()
-{
-	return Collision;
-		
-}
 
 CMeshRender* TrainingBot::GetRender()
 {

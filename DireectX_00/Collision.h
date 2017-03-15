@@ -1,7 +1,20 @@
 #pragma once
-#include "ObjManager.h"
 
+#include"ObjManager.h"
 
+#include<d3dx9.h>
+#include<list>
+#include<map>
+
+// 前方宣言
+class ObjBase;
+class CMeshRender;
+// コリジョンの判定の種類別前方宣言
+class Sphere;
+class AABB;
+class OBB;
+class RaySphere;
+class Raycast;
 
 enum CollisionType
 {
@@ -56,35 +69,35 @@ public:
 	//----------------------------
 	// --- デストラクタ
 	~CCollision();
-	
+
 	// === ここから先当たり判定関係 === //
 	// === 上手い作り方がわからなかったのでここで一括で当たり判定を構成 === //
 
 
-	virtual list<ObjBase*> ISCollision(const Sphere*) = 0;
-	virtual list<ObjBase*> ISCollision(const AABB*) = 0;
-	virtual list<ObjBase*> ISCollision(const OBB*) = 0;
-	virtual list<ObjBase*> ISCollision(const RaySphere*) = 0;
-	virtual list<ObjBase*> ISCollision(const Raycast*) = 0;
+	virtual std::list<ObjBase*> ISCollision(const Sphere*) = 0;
+	virtual std::list<ObjBase*> ISCollision(const AABB*) = 0;
+	virtual std::list<ObjBase*> ISCollision(const OBB*) = 0;
+	virtual std::list<ObjBase*> ISCollision(const RaySphere*) = 0;
+	virtual std::list<ObjBase*> ISCollision(const Raycast*) = 0;
 
 	//--------------------------------------
 	// --- オブジェクトの検索用+判定も
 	// --- 第一引数 :: 探すオブジェクトのID
 	// --- 第二引数 :: 検索の方法
 	//bool CollisonCheck(UINT ID, int Colltype, ColBox &obb1);
-	
+
 	//---------------------------
 	// --- OBBの引っ張ってくる設定
 	//ColBox GetCol() {};
 
 protected:
 
-	list<ObjBase*> m_TargetObjList;	// 対象オブジェクト用
-	list<ObjBase*> m_ReturnTargetObjList;
+	std::list<ObjBase*> m_TargetObjList;	// 対象オブジェクト用
+	std::list<ObjBase*> m_ReturnTargetObjList;
 	CMeshRender *m_ModelMesh;	// 描画用の変数クラス
 
 private:
-	
+
 };
 
 //////////////////////////////////////////////////////////////
@@ -101,7 +114,7 @@ public:
 
 	//----------------------------
 	// --- 球体判定
-	list<ObjBase*> ISCollision(ColBox &obb1, UINT ID);
+	std::list<ObjBase*> ISCollision(ColBox &obb1, UINT ID);
 };
 
 //////////////////////////////////////////////////////////////
@@ -118,7 +131,7 @@ public:
 
 	//----------------------------
 	// --- AABB判定
-	list<ObjBase*> ISCollision(ColBox &obb1, UINT ID);
+	std::list<ObjBase*> ISCollision(ColBox &obb1, UINT ID);
 };
 
 //////////////////////////////////////////////////////////////
@@ -133,7 +146,7 @@ public:
 	OBB() {};
 	~OBB() {};
 
-	list<ObjBase*> ISCollision(ColBox &obb1, UINT ID);
+	std::list<ObjBase*> ISCollision(ColBox &obb1, UINT ID);
 
 private:
 	float LenSegOnSeparateAxis(D3DXVECTOR3 *Sep, D3DXVECTOR3 *e1, D3DXVECTOR3 *e2, D3DXVECTOR3 *e3 = 0);
@@ -152,7 +165,7 @@ public:
 	RaySphere() {};
 	~RaySphere() {};
 
-	list<ObjBase*> ISCollision(ColBox &obb1, UINT ID);
+	std::list<ObjBase*> ISCollision(ColBox &obb1, UINT ID);
 };
 
 //////////////////////////////////////////////////////////////
@@ -169,5 +182,7 @@ public:
 
 	//----------------------------
 	// --- 球体判定
-	list<ObjBase*> ISCollision(ColBox &obb1, UINT ID);
+	std::list<ObjBase*> ISCollision(ColBox &obb1, UINT ID);
 };
+
+

@@ -5,14 +5,16 @@
 #include<map>
 #include<string>
 #include<vector>
+#include<memory>
 #include<array>
-#include"Collision.h"
 #include"MeshRender.h"
+#include"Collision.h"
 
 // 
 using namespace std;
 
-// グローバル
+// 前方宣言
+class ColBox;
 
 // IDの種類
 enum ObjName
@@ -263,13 +265,13 @@ public:
 
 	//----------------------------
 	// --- 破壊フラグの取得
-	list<ObjBase*> GetExculdeObj() {
+	std::list<ObjBase*> GetExculdeObj() {
 
-		list<ObjBase*> GetObj;
+		std::list<ObjBase*> GetObj;
 
 		for (auto p : m_ObjList)
 		{
-			if(p->GetNonDestFlag)
+			if( p->GetNonDestFlag() )
 				GetObj.push_back(p);
 		}
 
@@ -359,7 +361,7 @@ public:
 	// --- オブジェクトのポインタをリストから外す
 	/* 除外フラグの立っているオブジェクトをListから外し、
 		その除外オブジェクトをリストにして返す*/
-	array<ObjList*, MAX_ID>  ExculdeObj();
+	std::list<std::list<ObjBase*>>  ExculdeObj();
 
 	//--------------------------------
 	// --- どうしようもない物の初期化

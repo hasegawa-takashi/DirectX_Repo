@@ -6,7 +6,7 @@
 void CDebug::Init()
 {
 	//•¶ŽšƒtƒHƒ“ƒg‚ÌÝ’è
-	LPCWSTR Font = TEXT("tahoma");
+	LPCSTR Font = _T("tahoma");
 	if (FAILED(D3DXCreateFont(GetDxMgr()->GetDxDevice(), 14, 7, FW_BOLD, NULL, FALSE, SHIFTJIS_CHARSET, OUT_DEFAULT_PRECIS, PROOF_QUALITY, FIXED_PITCH | FF_MODERN, Font, &pFont)))
 	{
 		return;

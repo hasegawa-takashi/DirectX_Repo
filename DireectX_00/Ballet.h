@@ -53,9 +53,6 @@ public:
 	// --- 最終処理全削除用
 	bool AllRelaseObj(){ return true; };
 
-	//----------------------------------------
-	// --- コリジョンの設定
-	ColBox GetCol(){ return Collision; }
 
 	//----------------------------------------
 	// --- Reload
@@ -80,8 +77,7 @@ private:
 	float m_MaxError;			// ブレの範囲
 
 	bool m_Load;				// モデル読み込みフラグ
-	ColBox Collision;			// コリジョン
-
+	
 	bool Hitflag;
 
 };

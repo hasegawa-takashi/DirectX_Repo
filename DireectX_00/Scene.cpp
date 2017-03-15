@@ -33,7 +33,7 @@ bool CSceneMgr::ChangeScene(/*CSceneBase* scene*/) {
 
 	// シーンをまたいで保持したいオブジェクトの取得
 	// 遷移のタイミングで削除するため
-	std::list<ObjBase*> ExcludeObjList = GetObjMgr()->ExculdeObj();
+	std::list<std::list<ObjBase*>> ExcludeObjList = GetObjMgr()->ExculdeObj();
 
 	// シーンの削除
 	if (!DeleteScene()) return false;
@@ -44,7 +44,11 @@ bool CSceneMgr::ChangeScene(/*CSceneBase* scene*/) {
 	// シーンの初期化
 	for (auto& pObj : ExcludeObjList)
 	{
-		GetObjMgr()->PushObj(pObj, pObj->GetIDNumb());
+		for (auto& pentityObj : pObj)
+		{
+			GetObjMgr()->PushObj(pentityObj, pentityObj->GetIDNumb());
+		}
+		
 	}
 	m_pCurrentScene->Init();
 

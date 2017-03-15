@@ -34,13 +34,19 @@ public:
 	//----------------------------
 	// --- 最終処理全削除用
 	bool AllRelaseObj(){ return true; };
-	//----------------------------------------
-	// --- コリジョンの設定
-	ColBox GetCol(){ return Collision; }
+	
 	
 private:
 	bool	m_bLoad;
-	ColBox Collision;
+	
+	struct BoxGrain
+	{
+		CMeshRender m_Blocklist;	// Cubeのモデル
+		float time;					// 時間
+		int power;					// 強さ
+	};
+
+	BoxGrain m_boxgrains[10];
 
 };
 

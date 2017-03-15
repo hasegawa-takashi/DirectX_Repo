@@ -61,7 +61,6 @@ private:
 
 	// カメラ用のオブジェク
 	CCamera *CameraObj;					// 型キャスト後のオブジェクト
-	OBJMGR CameraObjMgr;				// 型キャスト前のオブジェクト
 
 
 	int HitCnt;

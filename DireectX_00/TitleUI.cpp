@@ -25,15 +25,16 @@ void CTitleUI::Init()
 	fade[1] = 255;
 	sprite[1]->CreateMakeVertex2DPolygon(_T("../data/Texture/PushEnter.png"), 0, 0, 800, 600, fade[1]);
 
-	CObjManager::Instance()->SerchObj(ID_CAMERA, CameraObjMgr);
-	if (!CameraObjMgr.empty())
+	
+	// カメラオブジェクトのしゅとく
+	CameraList = GetObjMgr()->SerchObj(ID_CAMERA);
+	
+	for (auto& p : CameraList)
 	{
-		ObjBase* hoge = CameraObjMgr.begin()->second;
-		CameraObj = dynamic_cast<CCamera*>(hoge);
-
+		// Cameraの完全取得
+		CameraObj = dynamic_cast<CCamera*>(p);
 		CameraObj->SetCameraType(Cam_PREVIEW);
 	}
-
 
 
 }

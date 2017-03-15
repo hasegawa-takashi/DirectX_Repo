@@ -19,8 +19,6 @@ public:
 
 	bool AllRelaseObj(){ return true; };
 
-	ColBox GetCol(){ return Collision; }
-
 	CMeshRender* GetRender(){ return m_ModelMesh; }
 
 	void SetPos(D3DXVECTOR3 pos){ m_Pos = pos; }
@@ -30,7 +28,6 @@ public:
 	int GetidentNumb(){ return ObjNumb; }
 
 private:
-	ColBox Collision;			// “–‚½‚è”»’è—p
 	D3DXVECTOR3 m_Pos;
 };
 

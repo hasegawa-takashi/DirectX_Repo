@@ -5,12 +5,9 @@
 #include"Title.h"
 #include"TitleUI.h"
 #include"Camera.h"
-#include"BlackoutFade.h"
 
 CTitle::CTitle() 
 {
-	CObjManager::Instance()->MonSter();
-
 	CObjManager::Instance()->PushObj(new CTitleUI, ID_OTHER);
 	CObjManager::Instance()->PushObj(new CCamera, ID_CAMERA);
 }
@@ -32,8 +29,8 @@ void CTitle::Update() {
 
 	if (CInput::GetKeyPress(DIK_SPACE))
 	{
-		GetSceneMgr()->PushScene<CGameMain>();
-		GetObjMgr()->PushObj(new CBlackoutFade,ID_FADE);
+		GetSceneMgr()->PushScene(new CGameMain);
+		GetSceneMgr()->ChangeScene();
 	}
 
 

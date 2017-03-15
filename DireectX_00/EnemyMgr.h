@@ -29,7 +29,6 @@ public:
 	D3DXVECTOR3 m_Pos;
 	ColBox Collision;
 private:
-	OBJMGR EnemyMap;
 	//std::list<int> EnemyNumb;
 	D3DXVECTOR3 InitPos[MAX_BOT];
 

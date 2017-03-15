@@ -10,9 +10,7 @@ CGameMain::~CGameMain()
 }
 
 void CGameMain::Init() {
-
-	CObjManager::Instance()->MonSter();
-
+	
 	CObjManager::Instance()->PushObj(new CCamera, ID_CAMERA);
 	CObjManager::Instance()->PushObj(new Player, ID_PLAYER);
 	CObjManager::Instance()->PushObj(new CEnemyMgr, ID_ENEMY);

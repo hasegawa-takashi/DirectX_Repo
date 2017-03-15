@@ -10,10 +10,6 @@ class CSky : public ObjBase
 {
 private:
 
-	OBJMGR CameraObj;
-	ColBox Collision;
-
-
 public:
 	CSky();
 	virtual ~CSky(void);
@@ -30,9 +26,5 @@ public:
 	void Pause(){};
 	bool AllRelaseObj(){ return true; }
 	
-	//----------------------------------------
-	// --- ƒRƒŠƒWƒ‡ƒ“‚Ìİ’è
-	ColBox GetCol(){ return Collision; }
-
 
 };

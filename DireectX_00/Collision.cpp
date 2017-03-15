@@ -1,5 +1,10 @@
 #include "Collision.h"
 
+
+// 前方宣言
+class ObjBase;
+class CMeshRender;
+
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -22,7 +27,7 @@ list<ObjBase*> Sphere::ISCollision(ColBox &obb1, UINT ID)
 {
 	m_TargetObjList = GetObjMgr()->SerchObj(ID);
 
-	for (auto p : m_TargetObjList)
+	for (auto& p : m_TargetObjList)
 	{
 
 		if ((powf((obb1.m_Pos.x - p->GetCol.m_Pos.x), 2) + powf(obb1.m_Pos.y - obb1.m_Pos.y, 2) + powf((obb1.m_Pos.z - obb1.m_Pos.z), 2) <= powf((obb1.Radius + p->GetCol.Radius), 2)))
@@ -51,7 +56,7 @@ list<ObjBase*> OBB::ISCollision(ColBox &obb1, UINT ID)
 {
 	m_TargetObjList = GetObjMgr()->SerchObj(ID);
 
-	for (auto p : m_TargetObjList)
+	for (auto& p : m_TargetObjList)
 	{
 
 		// 各方向ベクトルの確保
@@ -240,7 +245,7 @@ list<ObjBase*> RaySphere::ISCollision(ColBox &obb1, UINT ID)
 {
 	m_TargetObjList = GetObjMgr()->SerchObj(ID);
 
-	for (auto p : m_TargetObjList)
+	for (auto& p : m_TargetObjList)
 	{
 
 		float px = p->GetRender.m_Pos.x - obb1.m_Pos.x;
@@ -283,7 +288,7 @@ list<ObjBase*> Raycast::ISCollision(ColBox &obb1, UINT ID)
 {
 	m_TargetObjList = GetObjMgr()->SerchObj(ID);
 
-	for (auto p : m_TargetObjList)
+	for (auto& p : m_TargetObjList)
 	{
 		D3DXVECTOR3 vCross = D3DXVECTOR3(0, 0, 0);
 		m_ModelMesh = p->GetRender();

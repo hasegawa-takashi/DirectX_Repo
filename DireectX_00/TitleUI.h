@@ -21,17 +21,12 @@ public:
 	void Pause();
 	bool AllRelaseObj();
 
-	// 複数ある可能性があるもの
-	ColBox GetCol(){ return Collison; }
-
 private:
 	CSprite *sprite[MAX_TEXTURE_TITLE];
 
-	ColBox Collison;
-
 	// カメラ用のオブジェク
-	CCamera *CameraObj;		// 型キャスト後のオブジェクト
-	OBJMGR CameraObjMgr;	// 型キャスト前のオブジェクト
+	CCamera *CameraObj;				// 型キャスト後のオブジェクト
+	std::list<ObjBase*> CameraList;	// カメラのlistの取得
 
 	bool PushFade;
 

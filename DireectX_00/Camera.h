@@ -81,11 +81,7 @@ public:
 	//----------------------------------------
 	// --- オブジェクトの描画(あとから用)
 	void LateDraw() {};
-
-	//----------------------------------------
-	// --- コリジョンの設定
-	ColBox GetCol(){return Collision;};
-
+	
 	//----------------------------------------
 	// --- View行列の取得
 	D3DXVECTOR3 GetView(){ return (m_lookAt - NowPos); }
@@ -166,10 +162,6 @@ private:
 	D3DXMATRIX	m_mtxView;			// ビューマトリクス
 	D3DXMATRIX	m_mtxProjection;	// プロジェクションマトリクス
 	D3DXMATRIX	m_camPoseMat;		// カメラの姿勢行列
-
-	ColBox Collision;				// 当たり判定用
-
-	OBJMGR Master;
 
 
 

@@ -226,33 +226,18 @@ bool CObjManager::AllRelaseObj()
 //-------------------------------------------------------
 //
 //	Object‚Ì˜_—“Iíœ
+//	TODO :: array‚Ìobj‚ğlist‚É‚Ü‚Æ‚ß‚½‚¢
 //
 //-------------------------------------------------------
-array<ObjList*, MAX_ID> CObjManager::ExculdeObj()
+std::list<std::list<ObjBase*>> CObjManager::ExculdeObj()
 {
 
-	array<ObjList*, MAX_ID> excludeObjlist;
-
-	/*for (auto itr = ObjList.begin(); itr != ObjList.end(); itr++)
-	{
-		for (auto mapitr = itr->begin(); mapitr != itr->end();)
-		{
-			if ( mapitr->second->GetNonDestFlag() )
-			{
-				excludeObjlist.push_back(mapitr->second);
-				mapitr = itr->erase(mapitr);
-			}
-			else
-			{
-				mapitr++;
-			}
-
-		}
-	}*/
+	std::list<std::list<ObjBase*>> excludeObjlist;
 
 	for (size_t loop = 0; loop < m_ObjListArray.size(); loop++)
 	{
-		m_ObjListArray[loop]->GetExculdeObj();
+		excludeObjlist.push_back( m_ObjListArray[loop]->GetExculdeObj() );
+		
 	}
 
 	return std::move(excludeObjlist);
