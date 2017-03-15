@@ -29,7 +29,7 @@ void CTitle::Update() {
 
 	if (CInput::GetKeyPress(DIK_SPACE))
 	{
-		GetSceneMgr()->PushScene(new CGameMain);
+		GetSceneMgr()->PushScene<CGameMain>();
 		GetSceneMgr()->ChangeScene();
 	}
 
