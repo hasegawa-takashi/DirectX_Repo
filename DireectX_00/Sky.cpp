@@ -22,10 +22,9 @@ void CSky::Init()
 {
 	m_ModelMesh = new CMeshRender;
 	m_ModelMesh->Initialize(PATH_MESHSKY);
+	
 	// カメラオブジェクトの取得
-	CObjManager::Instance()->SerchObj(ID_CAMERA, CameraObj);
-
-	//CObjManager::Instance()->LateRenderPush(this);
+	CameraObj = GetObjMgr()->SerchObj(ID_CAMERA);
 
 }
 
@@ -38,8 +37,12 @@ void CSky::Update()
 void CSky::LateUpdate()
 {
 	D3DXVECTOR3 pos;
-	pos = CameraObj.begin()->second->GetPos();
-	
+
+	for (auto& p : CameraObj)
+	{
+		pos = p->GetPos();
+	}
+
 	D3DXMATRIX world;
 	D3DXMatrixTranslation(&world, pos.x, pos.y, pos.z);
 

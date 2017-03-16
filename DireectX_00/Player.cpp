@@ -51,20 +51,12 @@ Player::Player()
 	m_mtxWorld._42 = m_Pos.y;
 	m_mtxWorld._43 = m_Pos.z;
 
-	Collision.m_Pos = m_Pos + D3DXVECTOR3(0, 1.0f, 0);
+	m_Collision.m_Pos = m_Pos + D3DXVECTOR3(0, 1.0f, 0);
 
-	Collision.m_fLength[0] = 0.5f;
-	Collision.m_fLength[1] = 1.5f;
-	Collision.m_fLength[2] = 0.3f;
+	m_Collision.m_fLength[0] = 0.5f;
+	m_Collision.m_fLength[1] = 1.5f;
+	m_Collision.m_fLength[2] = 0.3f;
 
-	// 弾の初期化
-	CBallet Ballet;
-	// 弾数だけかくほ～
-	for (size_t i = 0; i < MAX_BALLET; i++)
-	{
-		_vecbullet_L.push_back(Ballet);
-	}
-	
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -89,14 +81,11 @@ void Player::Init()
 	// カメラオブジェクトの取得。
 	// 型キャストにて無理やり変換をかけている。
 	// あまりいい方法ではないと思うのであまりやらないように注意するべき( ﾟДﾟ)
-	CObjManager::Instance()->SerchObj(ID_CAMERA, CameraObjMgr);
-	ObjBase* hoge = CameraObjMgr.begin()->second;
-	CameraObj = dynamic_cast<CCamera*>(hoge);
+	CameraObjlist = GetObjMgr()->SerchObj(ID_CAMERA);
 	
-	// 弾の初期化
-	for (auto itr = _vecbullet_L.begin(); itr != _vecbullet_L.end(); ++itr )
+	for (auto& p : CameraObjlist)
 	{
-		itr->Init();
+		CameraObj = dynamic_cast<CCamera*>(p);
 	}
 
 
@@ -130,11 +119,6 @@ void Player::Update()
 	// アニメーションメッシュの更新
 	m_ModelMesh->Update(m_mtxWorld);
 	
-	// 弾の更新
-	for (auto itr = _vecbullet_L.begin(); itr != _vecbullet_L.end(); ++itr)
-	{
-		itr->Update();
-	}
 
 	// こんなもの！
 	Reset();
@@ -156,14 +140,6 @@ void Player::Draw()
 	m_ModelMesh->Render();
 	GetDxMgr()->GetDxDevice()->SetRenderState(D3DRS_SPECULARENABLE, TRUE);
 
-	// 弾の描画
-	for (auto itr = _vecbullet_L.begin(); itr != _vecbullet_L.end(); ++itr)
-	{
-		if (itr->GetShotFlag())
-			continue;
-		itr->LateDraw();
-	}
-
 }
 
 void Player::LateDraw(){}
@@ -184,11 +160,6 @@ void Player::Release()
 		m_Load = false;
 	}
 
-	// 弾の終了処理
-	if (!_vecbullet_L.empty())
-	{
-		_vecbullet_L.clear();
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -305,28 +276,6 @@ void Player::TransBorn()
 ////////////////////////////////////////////////////////////////////////
 void Player::Shot()
 {
-	// 弾を撃つ
-	if (CInput::GetMousePress(0))
-	{
-		for (auto itr = _vecbullet_L.begin(); itr != _vecbullet_L.end(); ++itr)
-		{
-			if (!itr->GetShotFlag())
-				continue;
-			itr->CreateBallet(balletpram_L);
-
-		}
-	}
-
-	if (CInput::GetKeyPress(DIK_E)) {
-
-		for (auto itr = _vecbullet_L.begin(); itr != _vecbullet_L.end(); ++itr)
-		{
-			BalletCnt = 0;
-
-			itr->Reload();
-		}
-
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -394,22 +343,30 @@ void Player::ChangeACTDir()
 		memcpy(m_mtxWorld.m[2], &-ZVec, sizeof(D3DXVECTOR3));
 
 		// 壁の判定
-		Collision.m_Pos.x = (m_Pos.x + 0.0f);
-		Collision.m_Pos.y = (m_Pos.y + 1.0f);
-		Collision.m_Pos.z = (m_Pos.z + 0.0f);
+		m_Collision.m_Pos.x = (m_Pos.x + 0.0f);
+		m_Collision.m_Pos.y = (m_Pos.y + 1.0f);
+		m_Collision.m_Pos.z = (m_Pos.z + 0.0f);
 
-		Collision.Ray = ZVec;
+		m_Collision.Ray = ZVec;
 
 		m_NowDir = ZVec;
 
-		if (CObjManager::Instance()->CollisonCheck(ID_FIELD, COL_RAY, Collision))
+		std::list<ObjBase*> hitobj = m_colcall->ISCollision(m_raycast);
+
+		if (hitobj.empty())
 		{
-			D3DXVECTOR3 in = Collision.m_Pos - Collision.ResultPos;
-			FLOAT out = D3DXVec3Length(&in);
-			if (out < 0.5f)
+			for (auto& p : hitobj)
 			{
-				m_Pos.z = m_mtxWorld._43 = Collision.ResultPos.z;
-				m_MoveSpeed = DEFINE_VEC3;
+
+				if (p->GetIDNumb() != ID_FIELD)
+					continue;
+				D3DXVECTOR3 in = m_Collision.m_Pos - m_Collision.ResultPos;
+				FLOAT out = D3DXVec3Length(&in);
+				if (out < 0.5f)
+				{
+					m_Pos.z = m_mtxWorld._43 = m_Collision.ResultPos.z;
+					m_MoveSpeed = DEFINE_VEC3;
+				}
 			}
 		}
 
@@ -444,21 +401,33 @@ void Player::ChangeTPSDir()
 void Player::CheckFloor()
 {
 	// 床の設定
-	Collision.m_Pos.x = (m_Pos.x + 0.0f);
-	Collision.m_Pos.y = (m_Pos.y + 3.0f);
-	Collision.m_Pos.z = (m_Pos.z + 0.0f);
+	m_Collision.m_Pos.x = (m_Pos.x + 0.0f);
+	m_Collision.m_Pos.y = (m_Pos.y + 3.0f);
+	m_Collision.m_Pos.z = (m_Pos.z + 0.0f);
 
-	Collision.Ray.x = 0.0f;
-	Collision.Ray.y = -1.0f;
-	Collision.Ray.z = 0.0f;
+	m_Collision.Ray.x = 0.0f;
+	m_Collision.Ray.y = -1.0f;
+	m_Collision.Ray.z = 0.0f;
 
-	if (CObjManager::Instance()->CollisonCheck(ID_FIELD, COL_RAY, Collision))
+	std::list<ObjBase*> hitobj = m_colcall->ISCollision(m_raycast);
+
+	if (hitobj.empty())
 	{
-		m_Pos.y = m_mtxWorld._42 = Collision.ResultPos.y;
+		for (auto& p : hitobj)
+		{
+
+			if (p->GetIDNumb() != ID_FIELD)
+				continue;
+			m_Pos.y = m_mtxWorld._42 = m_Collision.ResultPos.y;
+		}
 	}
-	else{
+	else
+	{
 		m_mtxWorld._42 -= 0.1f;
 	}
+
+
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -470,5 +439,5 @@ void Player::Reset()
 {
 	// 差分の初期化
 	m_MoveSpeed = DEFINE_VEC3;
-	Collision.WorldMtx = m_mtxWorld;
+	m_Collision.WorldMtx = m_mtxWorld;
 }

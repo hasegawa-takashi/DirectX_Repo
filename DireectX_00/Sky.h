@@ -9,6 +9,7 @@
 class CSky : public ObjBase
 {
 private:
+	std::list<ObjBase*> CameraObj;	// ƒJƒƒ‰
 
 public:
 	CSky();

@@ -52,7 +52,7 @@ CCamera::~CCamera()
 //
 void CCamera::Init()
 {
-	CObjManager::Instance()->SerchObj(ID_PLAYER, Master);
+	LookTargetObj = GetObjMgr()->SerchObj(ID_PLAYER);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -187,8 +187,11 @@ void CCamera::FPSCamera()
 	}
 	
 	m_OldPos = m_Pos;
-	m_Pos = Master.begin()->second->GetPos();
 
+	for (auto& p : LookTargetObj)
+	{
+		m_Pos = p->GetPos();
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -346,20 +349,21 @@ void CCamera::OffSetVar()
 ///////////////////////////////////////////////////////////////////////////////////////
 //
 //	ÉJÉÅÉâÇÃí«è]à⁄ìÆ
+//	
 //
 void CCamera::CameraMove()
 {
-	// ïΩçsà⁄ìÆï™
-	if (!Master.empty())
+	for (auto& p : LookTargetObj)
 	{
-		m_Move = Master.begin()->second->GetPos();
-		D3DXVECTOR3 LookatPos = Master.begin()->second->GetPos();
+		m_Move = p->GetPos();
+		D3DXVECTOR3 LookatPos = p->GetPos();
 		// ï‚ê≥
 		float ForVec = m_DirDef.z * 1.5f; // ÉJÉÅÉâÇÃå¸Ç´
 		m_lookAt = LookatPos + (D3DXVECTOR3(0.0f, -ForVec, -1.5f));
 		//m_lookAt = LookatPos;
 		NowPos = m_Pos + m_Move;
 	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////

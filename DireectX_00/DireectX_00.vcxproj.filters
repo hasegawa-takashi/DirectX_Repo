@@ -181,9 +181,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="BlackoutFade.cpp">
-      <Filter>Render\Fade</Filter>
-    </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Calculation</Filter>
     </ClCompile>
@@ -275,9 +272,6 @@
     </ClInclude>
     <ClInclude Include="RenderMgr.h">
       <Filter>Directx</Filter>
-    </ClInclude>
-    <ClInclude Include="BlackoutFade.h">
-      <Filter>Render\Fade</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>Calculation</Filter>

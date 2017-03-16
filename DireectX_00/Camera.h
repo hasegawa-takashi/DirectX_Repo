@@ -164,6 +164,6 @@ private:
 	D3DXMATRIX	m_camPoseMat;		// ƒJƒƒ‰‚Ìp¨s—ñ
 
 
-
+	std::list<ObjBase*> LookTargetObj;	// ‹ü‚Ì‘ÎÛ
 };
 

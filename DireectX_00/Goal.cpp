@@ -15,13 +15,13 @@ void CGoal::Init()
 
 	D3DXMatrixIdentity(&m_mtxWorld);
 
-	Collision.m_Pos = D3DXVECTOR3(-58.0f, 1.0f, 142);
+	m_Collision.m_Pos = D3DXVECTOR3(-58.0f, 1.0f, 142);
 
-	Collision.m_fLength[0] = 5;
-	Collision.m_fLength[1] = 5;
-	Collision.m_fLength[2] = 5;
+	m_Collision.m_fLength[0] = 5;
+	m_Collision.m_fLength[1] = 5;
+	m_Collision.m_fLength[2] = 5;
 
-	Collision.WorldMtx = m_mtxWorld;
+	m_Collision.WorldMtx = m_mtxWorld;
 
 }
 

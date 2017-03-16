@@ -13,9 +13,6 @@
 // 
 using namespace std;
 
-// 前方宣言
-class ColBox;
-
 // IDの種類
 enum ObjName
 {
@@ -53,6 +50,17 @@ OBJMGRの構造
 /////////////////////////////////////////////////////////////
 class ObjBase
 {
+protected:
+
+	// === 継承用メッセージ === //
+	ColBox m_Collision;			// 当たり判定用
+	D3DXMATRIX m_mtxWorld;		// ワールド行列
+	CMeshRender *m_ModelMesh;	// モデル描画用
+	int ObjNumb;				// モデルの固有番号
+	ObjName ObjID;				// モデルのID番号
+	D3DXVECTOR3 m_Pos;			// ポジション
+	bool NonDeleteObj = false;	// 破壊不可Obj
+
 public:
 	ObjBase(){}
 	virtual ~ObjBase(){}
@@ -71,7 +79,7 @@ public:
 	virtual bool AllRelaseObj() { return true; }
 
 	// 複数ある可能性があるもの
-	virtual ColBox GetCol() { return Collision; }
+	virtual ColBox GetCol() {};
 
 	// 一つの固有であるもの
 	virtual CMeshRender* GetRender(){ return m_ModelMesh; }
@@ -81,17 +89,6 @@ public:
 	virtual D3DXVECTOR3 GetPos(){ return m_Pos; }
 	virtual bool GetNonDestFlag() { return NonDeleteObj; }
 	virtual int GetIDNumb() { return (int)ObjID; }
-
-protected:
-
-	// === 継承用メッセージ === //
-	ColBox Collision;			// 当たり判定用
-	D3DXMATRIX m_mtxWorld;		// ワールド行列
-	CMeshRender *m_ModelMesh;	// モデル描画用
-	int ObjNumb;				// モデルの固有番号
-	ObjName ObjID;				// モデルのID番号
-	D3DXVECTOR3 m_Pos;			// ポジション
-	bool NonDeleteObj = false;	// 破壊不可Obj
 
 };
 
@@ -261,6 +258,8 @@ public:
 			delete p;
 		}
 
+		return true;
+
 	};
 
 	//----------------------------
@@ -379,6 +378,9 @@ public:
 
 private:
 
+	//----------------------------
+	// コンストラクタ
+	CObjManager();
 
 	//----------------------------
 	// --- カメラとの距離を出す

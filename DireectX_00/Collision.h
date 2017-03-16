@@ -34,9 +34,8 @@ enum CollisionType
 //			当たり判定を持たせるオブジェクトには保持させること
 //
 /////////////////////////////////////////////////////////////
-class ColBox {
+struct ColBox {
 
-public:
 	// OBB判定
 	D3DXVECTOR3 m_Pos;              // 位置
 	D3DXVECTOR3 m_NormaDirect[3];   // 方向ベクトル

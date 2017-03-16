@@ -16,8 +16,6 @@
 CObjManager::CObjManager()
 {
 	
-	
-	
 }
 
 //-------------------------------------------------------
@@ -174,7 +172,7 @@ bool CObjManager::PushObj( ObjBase* obj , UINT ID)
 	// オブジェクトの新規挿入
 	m_ObjListArray[ID]->AddObject(obj);
 
-
+	return true;
 }
 
 //-------------------------------------------------------

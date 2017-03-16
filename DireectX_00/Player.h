@@ -56,12 +56,15 @@ public:
 	// --- ゲームクリア
 	void LastRun();
 
+	//----------------------------------------
+	// --- コリジョンを保持
+	virtual ColBox GetCol() override { return m_Collision; }
 
 private:
 
 	// カメラ用のオブジェク
 	CCamera *CameraObj;					// 型キャスト後のオブジェクト
-
+	std::list<ObjBase*> CameraObjlist;	// カメラ
 
 	int HitCnt;
 	int BalletCnt;						// 発射バレットの弾数
@@ -83,11 +86,8 @@ private:
 	float m_dwPrev;						// 経過時間計測用
 	double m_dAnimTime;					// アニメーション時間
 
-	BulletBox balletpram_L;				// L武器
-	BulletBox balletpram_R;				// R武器
-
-	std::vector<CBallet> _vecbullet_L;	// バレットのベクター
-	std::vector<CBallet> _vecbullet_R;	// バレットのベクター
+	CCollision *m_colcall;				// コライダーの付与
+	Raycast *m_raycast;					// Rayのせってお
 
 	// === ここから先private関数 === //
 	void Move();						// 移動用
