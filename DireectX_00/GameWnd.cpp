@@ -50,7 +50,7 @@ bool CGameWnd::Init(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, i
 
 		// 一番最初のタイトルのプッシュ
 		GetSceneMgr()->PushScene<CTitle>();
-		GetSceneMgr()->ChangeScene();
+		GetSceneMgr()->ChangeScene(false);
 
 		// Objマネージャーの初期化
 		GetObjMgr()->Init();

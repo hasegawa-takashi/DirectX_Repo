@@ -18,6 +18,7 @@ bool CSceneMgr::CreateScene() {
 //
 //-------------------------------------------------------
 bool CSceneMgr::DeleteScene() {
+	GetObjMgr()->Release();
 	SAFE_DELETE(m_pCurrentScene);
 	return true;
 }
@@ -27,46 +28,46 @@ bool CSceneMgr::DeleteScene() {
 //	シーンの交換
 //
 //-------------------------------------------------------
-bool CSceneMgr::ChangeScene(/*CSceneBase* scene*/) {
+bool CSceneMgr::ChangeScene(bool deleteExcludeObj) {
 	// 次のシーンが設定されていない
-	if (m_SceneCreatorFunctionList.empty()) return false;
+	if (m_SceneCreatorFunctionList.empty())
+		return false;
 
 	// シーンをまたいで保持したいオブジェクトの取得
 	// 遷移のタイミングで削除するため
-	std::list<std::list<ObjBase*>> ExcludeObjList = GetObjMgr()->ExculdeObj();
-
-	// シーンの削除
-	if (!DeleteScene()) return false;
-
-	// シーンの挿入
-	if (!CreateScene()) return false;
-
-	// シーンの初期化
-	for (auto& pObj : ExcludeObjList)
+	// ToDo削除回避
+	if (deleteExcludeObj == true)
 	{
-		for (auto& pentityObj : pObj)
+		std::list<std::list<ObjBase*>> ExcludeObjList = GetObjMgr()->ExculdeObj();
+		// シーンの削除
+		if (!DeleteScene()) return false;
+
+		// シーンの挿入
+		if (!CreateScene()) return false;
+
+		// シーンの初期化
+		for (auto& pObj : ExcludeObjList)
 		{
-			GetObjMgr()->PushObj(pentityObj, pentityObj->GetIDNumb());
-		}
+			for (auto& pentityObj : pObj)
+			{
+				GetObjMgr()->PushObj(pentityObj, pentityObj->GetIDNumb());
+			}
 		
+		}
 	}
+	else
+	{
+		// シーンの削除
+		if (!DeleteScene()) return false;
+
+		// シーンの挿入
+		if (!CreateScene()) return false;
+	}
+
 	m_pCurrentScene->Init();
 
 	return true;
 }
-
-//-------------------------------------------------------
-//
-//	次のSceneを設定
-//
-//-------------------------------------------------------
-template <typename T>
-void CSceneMgr::PushNextScne(CSceneBase* scene)
-{
-	// 次のシーンの登録
-	m_NextScene = scene;
-}
-
 
 //-------------------------------------------------------
 //

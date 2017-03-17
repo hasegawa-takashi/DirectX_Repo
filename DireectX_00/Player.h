@@ -58,7 +58,7 @@ public:
 
 	//----------------------------------------
 	// --- ƒRƒŠƒWƒ‡ƒ“‚ğ•Û
-	virtual ColBox GetCol() override { return m_Collision; }
+	virtual ColBox* GetCol() override { return &m_Collision; }
 
 private:
 

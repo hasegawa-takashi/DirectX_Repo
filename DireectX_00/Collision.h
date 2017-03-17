@@ -1,7 +1,5 @@
 #pragma once
 
-#include"ObjManager.h"
-
 #include<d3dx9.h>
 #include<list>
 #include<map>
@@ -69,15 +67,15 @@ public:
 	// --- デストラクタ
 	~CCollision();
 
-	// === ここから先当たり判定関係 === //
-	// === 上手い作り方がわからなかったのでここで一括で当たり判定を構成 === //
+	// コリジョンの種類でオーバーロード
 
-
-	virtual std::list<ObjBase*> ISCollision(const Sphere*) = 0;
-	virtual std::list<ObjBase*> ISCollision(const AABB*) = 0;
-	virtual std::list<ObjBase*> ISCollision(const OBB*) = 0;
+	/*virtual std::list<ObjBase*> ISCollision(const Sphere*)	= 0;
+	virtual std::list<ObjBase*> ISCollision(const AABB*)	= 0;
+	virtual std::list<ObjBase*> ISCollision(const OBB*)		= 0;
 	virtual std::list<ObjBase*> ISCollision(const RaySphere*) = 0;
-	virtual std::list<ObjBase*> ISCollision(const Raycast*) = 0;
+	virtual std::list<ObjBase*> ISCollision(const Raycast*)	= 0;*/
+	
+	virtual std::list<ObjBase*> ISCollision(ColBox &obb1, UINT ID) = 0;
 
 	//--------------------------------------
 	// --- オブジェクトの検索用+判定も

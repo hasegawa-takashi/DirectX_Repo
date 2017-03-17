@@ -73,7 +73,7 @@ public:
 	//	ƒV[ƒ“‚ÌŒğŠ·
 	//
 	//-------------------------------------------------------
-	bool CSceneMgr::ChangeScene();
+	bool CSceneMgr::ChangeScene(bool deleteExcludeObj = true);
 
 	//-------------------------------------------------------
 	//

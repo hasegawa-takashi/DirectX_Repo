@@ -15,7 +15,10 @@
 //-------------------------------------------------------
 CObjManager::CObjManager()
 {
-	
+	for (auto& list : m_ObjListArray)
+	{
+		list = new ObjList();
+	}
 }
 
 //-------------------------------------------------------
@@ -26,6 +29,10 @@ CObjManager::CObjManager()
 CObjManager::~CObjManager()
 {
 	AllRelaseObj();
+	for (auto& list : m_ObjListArray)
+	{
+		delete list;
+	}
 }
 
 //-------------------------------------------------------
@@ -141,7 +148,7 @@ void CObjManager::UIDraw()
 void CObjManager::Release()
 {
 	// ‘½•ª‚±‚ê‚Í•K—v‚È‚¢‚ÆŽv‚¤
-	CObjManager::Instance()->AllRelaseObj();
+	GetObjMgr()->AllRelaseObj();
 }
 
 //-------------------------------------------------------
@@ -298,7 +305,7 @@ int CObjManager::RenameObj(UINT ID , ObjName &SetObj)
 	default:
 		break;
 	}
-
+	Numb++;
 	return name;
 
 }

@@ -10,7 +10,7 @@
 #include"MeshRender.h"
 #include"Collision.h"
 
-// 
+// 名前の定義
 using namespace std;
 
 // IDの種類
@@ -79,9 +79,9 @@ public:
 	virtual bool AllRelaseObj() { return true; }
 
 	// 複数ある可能性があるもの
-	virtual ColBox GetCol() {};
+	virtual ColBox* GetCol() { return &m_Collision; };
 
-	// 一つの固有であるもの
+	// 一つの固有であるもの*
 	virtual CMeshRender* GetRender(){ return m_ModelMesh; }
 	virtual void SetidentNumb(int ID){ ObjNumb = ID; }
 	virtual int GetidentNumb(){ return ObjNumb; }
@@ -275,7 +275,6 @@ public:
 		}
 
 		return GetObj;
-
 	};
 
 private:

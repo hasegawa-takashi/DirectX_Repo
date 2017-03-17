@@ -20,7 +20,7 @@ public:
 	virtual void Release();
 	virtual void Pause();
 	virtual bool AllRelaseObj();
-	virtual ColBox GetCol();
+	virtual ColBox* GetCol();
 	virtual CMeshRender* GetRender();
 	virtual void SetidentNumb(int);
 	virtual int GetidentNumb();

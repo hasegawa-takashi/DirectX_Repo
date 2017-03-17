@@ -8,8 +8,8 @@
 
 CTitle::CTitle() 
 {
-	CObjManager::Instance()->PushObj(new CTitleUI, ID_OTHER);
-	CObjManager::Instance()->PushObj(new CCamera, ID_CAMERA);
+	GetObjMgr()->PushObj(new CTitleUI, ID_OTHER);
+	GetObjMgr()->PushObj(new CCamera, ID_CAMERA);
 }
 
 

@@ -190,6 +190,7 @@
     <ClCompile Include="WaveDataOperater.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
+    <ClCompile Include="BlackFadeOut.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Title.h">
@@ -285,5 +286,6 @@
     <ClInclude Include="WaveDataOperater.h">
       <Filter>Sound</Filter>
     </ClInclude>
+    <ClInclude Include="BlackFadeOut.h" />
   </ItemGroup>
 </Project>

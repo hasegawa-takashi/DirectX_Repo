@@ -32,7 +32,7 @@ Player::Player()
 	m_dAnimTime = 0.0;
 	HitCnt = false;
 	BalletCnt = 0;
-
+	m_colcall = new Raycast;
 	m_ModelMesh = new CMeshRender;
 
 	if (!m_Load)
@@ -83,11 +83,13 @@ void Player::Init()
 	// ‚ ‚Ü‚è‚¢‚¢•û–@‚Å‚Í‚È‚¢‚ÆŽv‚¤‚Ì‚Å‚ ‚Ü‚è‚â‚ç‚È‚¢‚æ‚¤‚É’ˆÓ‚·‚é‚×‚«( ß„Dß)
 	CameraObjlist = GetObjMgr()->SerchObj(ID_CAMERA);
 	
-	for (auto& p : CameraObjlist)
+	if (CameraObjlist.empty())
 	{
-		CameraObj = dynamic_cast<CCamera*>(p);
+		for (auto& p : CameraObjlist)
+		{
+			CameraObj = dynamic_cast<CCamera*>(p);
+		}
 	}
-
 
 	CObjManager::Instance()->LateRenderPush(this);
 }
@@ -351,7 +353,7 @@ void Player::ChangeACTDir()
 
 		m_NowDir = ZVec;
 
-		std::list<ObjBase*> hitobj = m_colcall->ISCollision(m_raycast);
+		std::list<ObjBase*> hitobj = m_raycast->ISCollision(m_Collision, ID_FIELD);
 
 		if (hitobj.empty())
 		{
@@ -409,7 +411,7 @@ void Player::CheckFloor()
 	m_Collision.Ray.y = -1.0f;
 	m_Collision.Ray.z = 0.0f;
 
-	std::list<ObjBase*> hitobj = m_colcall->ISCollision(m_raycast);
+	std::list<ObjBase*> hitobj = m_colcall->ISCollision(m_Collision,ID_FIELD);
 
 	if (hitobj.empty())
 	{

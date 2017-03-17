@@ -16,7 +16,6 @@ public:
 	void Release();
 	void Pause();
 	bool AllRelaseObj();
-	ColBox GetCol();
 	CMeshRender* GetRender();
 	void SetidentNumb(int);
 	int GetidentNumb();

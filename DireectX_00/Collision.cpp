@@ -1,9 +1,6 @@
 #include "Collision.h"
+#include "ObjManager.h"
 
-
-// 前方宣言
-class ObjBase;
-class CMeshRender;
 
 //=============================================================================
 // コンストラクタ
@@ -29,8 +26,8 @@ list<ObjBase*> Sphere::ISCollision(ColBox &obb1, UINT ID)
 
 	for (auto& p : m_TargetObjList)
 	{
-		ColBox colbox = p->GetCol();
-		if ((powf((obb1.m_Pos.x - colbox.m_Pos.x), 2) + powf(obb1.m_Pos.y - colbox.m_Pos.y, 2) + powf((obb1.m_Pos.z - colbox.m_Pos.z), 2) <= powf((obb1.Radius + colbox.Radius), 2)))
+		ColBox* colbox = p->GetCol();
+		if ((powf(obb1.m_Pos.x - colbox->m_Pos.x, 2.0f) + powf(obb1.m_Pos.y - colbox->m_Pos.y, 2.0f) + powf((obb1.m_Pos.z - colbox->m_Pos.z), 2) <= powf((obb1.Radius + colbox->Radius), 2)))
 		{
 			
 			m_ReturnTargetObjList.push_back(p);
@@ -58,7 +55,7 @@ list<ObjBase*> OBB::ISCollision(ColBox &obb1, UINT ID)
 
 	for (auto& p : m_TargetObjList)
 	{
-		ColBox colbox = p->GetCol();
+		ColBox* colbox = p->GetCol();
 		// 各方向ベクトルの確保
 		// （N***:標準化方向ベクトル）
 		D3DXVECTOR3 Norma1_X;
@@ -81,25 +78,25 @@ list<ObjBase*> OBB::ISCollision(ColBox &obb1, UINT ID)
 		Norma1_Z.y = obb1.WorldMtx._32;
 		Norma1_Z.z = obb1.WorldMtx._33;
 
-		Norma2_X.x = colbox.WorldMtx._11;
-		Norma2_X.y = colbox.WorldMtx._12;
-		Norma2_X.z = colbox.WorldMtx._13;
+		Norma2_X.x = colbox->WorldMtx._11;
+		Norma2_X.y = colbox->WorldMtx._12;
+		Norma2_X.z = colbox->WorldMtx._13;
 
-		Norma2_Y.x = colbox.WorldMtx._21;
-		Norma2_Y.y = colbox.WorldMtx._22;
-		Norma2_Y.z = colbox.WorldMtx._23;
+		Norma2_Y.x = colbox->WorldMtx._21;
+		Norma2_Y.y = colbox->WorldMtx._22;
+		Norma2_Y.z = colbox->WorldMtx._23;
 
-		Norma2_Z.x = colbox.WorldMtx._31;
-		Norma2_Z.y = colbox.WorldMtx._32;
-		Norma2_Z.z = colbox.WorldMtx._33;
+		Norma2_Z.x = colbox->WorldMtx._31;
+		Norma2_Z.y = colbox->WorldMtx._32;
+		Norma2_Z.z = colbox->WorldMtx._33;
 
 		D3DXVECTOR3 NAe1 = Norma1_X, Ae1 = NAe1 * obb1.m_fLength[0];
 		D3DXVECTOR3 NAe2 = Norma1_Y, Ae2 = NAe2 * obb1.m_fLength[1];
 		D3DXVECTOR3 NAe3 = Norma1_Z, Ae3 = NAe3 * obb1.m_fLength[2];
-		D3DXVECTOR3 NBe1 = Norma2_X, Be1 = NBe1 * colbox.m_fLength[0];
-		D3DXVECTOR3 NBe2 = Norma2_Y, Be2 = NBe2 * colbox.m_fLength[1];
-		D3DXVECTOR3 NBe3 = Norma2_Z, Be3 = NBe3 * colbox.m_fLength[2];
-		D3DXVECTOR3 Interval = obb1.m_Pos - colbox.m_Pos;
+		D3DXVECTOR3 NBe1 = Norma2_X, Be1 = NBe1 * colbox->m_fLength[0];
+		D3DXVECTOR3 NBe2 = Norma2_Y, Be2 = NBe2 * colbox->m_fLength[1];
+		D3DXVECTOR3 NBe3 = Norma2_Z, Be3 = NBe3 * colbox->m_fLength[2];
+		D3DXVECTOR3 Interval = obb1.m_Pos - colbox->m_Pos;
 
 		// 分離軸 : Ae1
 		FLOAT rA = D3DXVec3Length(&Ae1);
@@ -248,14 +245,14 @@ list<ObjBase*> RaySphere::ISCollision(ColBox &obb1, UINT ID)
 	for (auto& p : m_TargetObjList)
 	{
 
-		ColBox colbox = p->GetCol();
-		float px = colbox.m_Pos.x - obb1.m_Pos.x;
-		float py = colbox.m_Pos.y - obb1.m_Pos.y;
-		float pz = colbox.m_Pos.z - obb1.m_Pos.z;
+		ColBox* colbox = p->GetCol();
+		float px = colbox->m_Pos.x - obb1.m_Pos.x;
+		float py = colbox->m_Pos.y - obb1.m_Pos.y;
+		float pz = colbox->m_Pos.z - obb1.m_Pos.z;
 
 		float A = obb1.Ray.x * obb1.Ray.x + obb1.Ray.y * obb1.Ray.y + obb1.Ray.z* obb1.Ray.z;
 		float B = obb1.Ray.x * px + obb1.Ray.y * py + obb1.Ray.z * pz;
-		float C = px * px + py * py + pz * pz - colbox.Radius * colbox.Radius;
+		float C = px * px + py * py + pz * pz - colbox->Radius * colbox->Radius;
 
 		if (A == 0.0f)
 			continue; // レイの長さが0
