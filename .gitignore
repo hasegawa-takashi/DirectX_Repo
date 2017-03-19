@@ -1,5 +1,4 @@
 *.db
 *.opendb
-/Debug
-!/Debug/
+/Debug/*
 
