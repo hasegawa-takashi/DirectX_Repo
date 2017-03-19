@@ -1,4 +1,5 @@
 *.db
 *.opendb
 /Debug/*
+/DireectX_00/Debug/*
 
