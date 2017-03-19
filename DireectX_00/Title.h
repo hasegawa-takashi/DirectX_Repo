@@ -1,6 +1,13 @@
 #pragma once
 #include "Scene.h"
 #include<stdio.h>
+#include"Input.h"
+#include"GameMain.h"
+#include"Camera.h"
+#include"Title.h"
+#include"TitleUI.h"
+#include"Camera.h"
+#include"BlackoutFade.h"
 
 
 class CTitle : public CSceneBase {

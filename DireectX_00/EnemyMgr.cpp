@@ -51,10 +51,6 @@ bool CEnemyMgr::AllRelaseObj()
 	return true;
 }
 
-ColBox* CEnemyMgr::GetCol()
-{
-	return &Collision;
-}
 
 CMeshRender* CEnemyMgr::GetRender()
 {

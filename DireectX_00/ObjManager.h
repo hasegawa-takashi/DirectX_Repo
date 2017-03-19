@@ -107,8 +107,11 @@ public:
 
 	// デストラクタ
 	virtual ~ObjList() {
-		for (auto& pObj : m_ObjList)
-			delete pObj;
+		if (m_ObjList.empty())
+		{
+			for (auto& pObj : m_ObjList)
+				delete pObj;
+		}
 	}
 
 	//======================================
@@ -254,8 +257,11 @@ public:
 
 		for (auto p : m_ObjList)
 		{
-			p->AllRelaseObj();
-			delete p;
+			if (p->GetNonDestFlag() == false)
+			{
+				p->AllRelaseObj();
+				delete p;
+			}
 		}
 
 		return true;
@@ -270,11 +276,13 @@ public:
 
 		for (auto p : m_ObjList)
 		{
-			if( p->GetNonDestFlag() )
+			if (p->GetNonDestFlag() == true)
+			{
 				GetObj.push_back(p);
+			}
 		}
 
-		return GetObj;
+		return std::move(GetObj);
 	};
 
 private:

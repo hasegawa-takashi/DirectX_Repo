@@ -12,6 +12,8 @@ public:
 	CBlackoutFade();
 	~CBlackoutFade();
 
+	void Init() {};
+
 	// Update
 	void Update() {
 		sprite->SetFade(Fadenum);
