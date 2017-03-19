@@ -45,7 +45,7 @@ bool CSceneMgr::ChangeScene(bool deleteExcludeObj) {
 		// シーンの挿入
 		if (!CreateScene()) return false;
 
-		// シーンの初期化
+		// scene間objの再登録
 		for (auto& pObj : ExcludeObjList)
 		{
 			for (auto& pentityObj : pObj)

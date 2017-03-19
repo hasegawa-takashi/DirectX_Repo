@@ -50,7 +50,7 @@ void CTitleUI::Update()
 	{
 		fade[1] -= 10;
 	}
-	else{
+	else if(PushFade == false) {
 		fade[1] += 10;
 	}
 
@@ -83,18 +83,6 @@ void CTitleUI::UIDraw()
 
 void CTitleUI::Release()
 {
-	for (int i = 0; i < MAX_TEXTURE_TITLE; ++i)
-	{
-		
-
-		if (sprite[i] != NULL)
-		{
-			sprite[i]->Release();
-			auto p = sprite[i];
-			delete sprite[i];
-			sprite[i] = NULL;
-		}
-	}
 }
 
 void CTitleUI::Pause()
@@ -104,5 +92,17 @@ void CTitleUI::Pause()
 
 bool CTitleUI::AllRelaseObj()
 {
-	return false;
+
+	for (int i = 0; i < MAX_TEXTURE_TITLE; ++i)
+	{
+		if (sprite[i] != NULL)
+		{
+			sprite[i]->Release();
+			auto p = sprite[i];
+			delete sprite[i];
+			sprite[i] = NULL;
+		}
+	}
+
+	return true;
 }

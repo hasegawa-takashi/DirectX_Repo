@@ -257,12 +257,13 @@ public:
 
 		for (auto p : m_ObjList)
 		{
-			if (p->GetNonDestFlag() == false)
-			{
-				p->AllRelaseObj();
-				delete p;
-			}
+			p->AllRelaseObj();
+			delete p;
+		
 		}
+
+		// m_ObjƒŠƒXƒg‚ð‚¢‚Á‚½‚ñŠk‚É‚·‚é
+		m_ObjList.clear();
 
 		return true;
 
@@ -274,12 +275,20 @@ public:
 
 		std::list<ObjBase*> GetObj;
 
-		for (auto p : m_ObjList)
+		for (auto itr = m_ObjList.begin(), end = m_ObjList.end() ; itr != end;)
 		{
-			if (p->GetNonDestFlag() == true)
+			auto p = *itr;
+
+			if (p->GetNonDestFlag())
 			{
 				GetObj.push_back(p);
+				itr = m_ObjList.erase(itr);
 			}
+			else {
+				++itr;
+			}
+
+
 		}
 
 		return std::move(GetObj);
