@@ -49,9 +49,12 @@ public:
 	//	シーンmgrの初期化
 	//
 	//-------------------------------------------------------
-	void CSceneMgr::Init() {
+	void Init() {
 		m_Run = true;
+		if (m_pCurrentScene == nullptr) return;
+
 		// シーンの準備
+		m_pCurrentScene->Init();
 	}
 
 	//-------------------------------------------------------
@@ -59,21 +62,21 @@ public:
 	//	シーンの新規挿入 TODO プライベートへ隠ぺい予定
 	//
 	//-------------------------------------------------------
-	bool CSceneMgr::CreateScene();
+	bool CreateScene();
 
 	//-------------------------------------------------------
 	//
 	//	シーンの削除	TODO プライベートへ隠ぺい予定
 	//
 	//-------------------------------------------------------
-	bool CSceneMgr::DeleteScene();
+	bool DeleteScene();
 
 	//-------------------------------------------------------
 	//
 	//	シーンの交換
 	//
 	//-------------------------------------------------------
-	bool CSceneMgr::ChangeScene(bool deleteExcludeObj = true);
+	bool ChangeScene();
 
 	//-------------------------------------------------------
 	//
@@ -107,6 +110,13 @@ public:
 		m_SceneCreatorFunctionList.push_back([]()->CSceneBase* {return new T; });
 	}
 
+	//-------------------------------------------------------
+	//
+	//	Sceneの移行用
+	//
+	//-------------------------------------------------------
+	void Scenemigration();
+
 private:
 
 	
@@ -119,6 +129,9 @@ public:
 private:
 	std::list<CSceneBase*(*)()> m_SceneCreatorFunctionList; // 待機シーン生成関数リスト
 	CSceneBase* m_pCurrentScene = nullptr;				// 次に入れるScene
+
+	bool SceneChangeApply = false;	// sceneの削除申請
+
 protected:
 
 };

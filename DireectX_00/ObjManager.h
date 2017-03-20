@@ -60,6 +60,7 @@ protected:
 	ObjName ObjID;				// モデルのID番号
 	D3DXVECTOR3 m_Pos;			// ポジション
 	bool NonDeleteObj = false;	// 破壊不可Obj
+	bool InitState = false;		// 初期化済みかどうか
 
 public:
 	ObjBase(){}
@@ -392,6 +393,13 @@ public:
 	// --- 半透明Objのリスト
 	bool LateRenderPush(ObjBase* render);
 
+	//-------------------------------------------------------
+	//
+	//	Objの削除タイミングをずらすよう
+	//
+	//-------------------------------------------------------
+	void ObjMigration();
+
 private:
 
 	//----------------------------
@@ -405,9 +413,13 @@ private:
 private:
 	RenderSort TranslucentObj;		// 半透明Objをまとめてるlist
 
-	array<ObjList*,MAX_ID> m_ObjListArray;	//
+	array<ObjList*,MAX_ID> m_ObjListArray;	// 登録用Objlist
+	vector<pair<int, int>> m_HoldDeletelistpair;			// 削除予定Objmap ID/IdentNumb
+
 
 	unsigned int Numb = 10;						// 固有ID用
+
+	bool ObjDeleteApply = false;	// Objの削除申請
 };
 
 //=============================================================================

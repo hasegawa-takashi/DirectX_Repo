@@ -50,7 +50,7 @@ bool CGameWnd::Init(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, i
 
 		// 一番最初のタイトルのプッシュ
 		GetSceneMgr()->PushScene<CTitle>();
-		GetSceneMgr()->ChangeScene(false);
+		GetSceneMgr()->ChangeScene();
 
 		// Objマネージャーの初期化
 		GetObjMgr()->Init();
@@ -98,11 +98,19 @@ void CGameWnd::Run()
 			FpsCnt= CFPS::Instance()->SetFps();
 			if ((FpsCnt) >= (1000 / 60))
 			{
-				CSceneMgr::Instance()->Update();
+				GetSceneMgr()->Init();
+
+				GetSceneMgr()->Update();
 				CInput::Update();
-				CSceneMgr::Instance()->Draw();
+				GetSceneMgr()->Draw();
 				CFPS::Instance()->FpsCntUp();
 			}
+
+
+			// ここにScene/Objの削除処理
+			GetObjMgr()->ObjMigration();
+			GetSceneMgr()->Scenemigration();
+
 		}
 
 	}

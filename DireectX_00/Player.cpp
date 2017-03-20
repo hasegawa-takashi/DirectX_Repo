@@ -75,6 +75,10 @@ Player::~Player()
 ////////////////////////////////////////////////////////////////////////
 void Player::Init()
 {
+	if (InitState)
+		return;
+	InitState = true;
+
 	// プレイヤーのなまえずけ　
 	ObjNumb = CObjManager::Instance()->RenameObj(ID_PLAYER,ObjID);
 
@@ -83,7 +87,7 @@ void Player::Init()
 	// あまりいい方法ではないと思うのであまりやらないように注意するべき( ﾟДﾟ)
 	CameraObjlist = GetObjMgr()->SerchObj(ID_CAMERA);
 	
-	if (CameraObjlist.empty())
+	if (!CameraObjlist.empty())
 	{
 		for (auto& p : CameraObjlist)
 		{
@@ -92,6 +96,8 @@ void Player::Init()
 	}
 
 	CObjManager::Instance()->LateRenderPush(this);
+
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -288,25 +294,7 @@ void Player::Shot()
 ////////////////////////////////////////////////////////////////////////
 void Player::LastRun()
 {
-	/*if (HitCnt < MAX_BOT)
-	{
-		for (size_t i = 0; i < MAX_BALLET; i++)
-		{
-			if (Ballet[i].GetHitCheck())
-				HitCnt++;
-		}
-	}
-	else if (CObjManager::Instance()->CollisonCheck(ID_GOAL, COL_OBB, Collision))
-	{
 
-		CSceneMgr::Instance()->ChangeScene(new CEnd);
-	}
-	
-	if (m_Pos.y < -10)
-	{
-
-		CSceneMgr::Instance()->ChangeScene(new CEnd);
-	}*/
 }
 
 ////////////////////////////////////////////////////////////////////////

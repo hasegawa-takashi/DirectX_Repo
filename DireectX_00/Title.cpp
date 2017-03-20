@@ -25,6 +25,7 @@ void CTitle::Update() {
 	{
 		GetSceneMgr()->PushScene<CGameMain>();
 		GetObjMgr()->PushObj(new CBlackoutFade , ID_FADE);
+		//OutputDebugString("PushEnter\n");
 	}
 
 

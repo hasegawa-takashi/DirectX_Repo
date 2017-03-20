@@ -52,6 +52,10 @@ CCamera::~CCamera()
 //
 void CCamera::Init()
 {
+	if (InitState)
+		return;
+	InitState = true;
+
 	LookTargetObj = GetObjMgr()->SerchObj(ID_PLAYER);
 }
 

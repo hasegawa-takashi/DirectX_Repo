@@ -110,14 +110,16 @@ void CObjManager::LateDraw()
 	// ここでソートをかける
 	//std::sort(TranslucentObj.begin(), TranslucentObj.end(), std::greater<std::pair<float, ObjBase*>>());
 
+
+
+	if (TranslucentObj.empty())
+		return;
+
 	// 半透明オブジェクトの描画
 	for (auto itr = TranslucentObj.begin(); itr != TranslucentObj.end(); itr++)
 	{
 		
 		itr->second->LateDraw();
-
-		if (TranslucentObj.empty())
-			return;
 	}
 
 }
@@ -189,8 +191,11 @@ bool CObjManager::PushObj( ObjBase* obj , UINT ID)
 //-------------------------------------------------------
 bool CObjManager::PopObj(int ID,int Identnumb)
 {
+
+	m_HoldDeletelistpair.push_back(make_pair(ID,Identnumb));
+
 	// Objリストの初期化
-	return m_ObjListArray[ID]->RemoveObject(Identnumb);
+	return true;//m_ObjListArray[ID]->RemoveObject(Identnumb);
 
 }
 
@@ -347,5 +352,27 @@ float CObjManager::CameraDistance(D3DXVECTOR3 SetPos)
 	float result = D3DXVec3Length(&VecDir);
 
 	return result;
+
+}
+
+
+//-------------------------------------------------------
+//
+//	Objの削除タイミングをずらすよう
+//
+//-------------------------------------------------------
+void CObjManager::ObjMigration()
+{
+	if (m_HoldDeletelistpair.empty())
+		return;
+
+	for (auto p = m_HoldDeletelistpair.begin() ; p != m_HoldDeletelistpair.end(); p++)
+	{
+		m_ObjListArray[p->first]->RemoveObject(p->second);
+	}
+
+	// all削除
+	m_HoldDeletelistpair.clear();
+
 
 }

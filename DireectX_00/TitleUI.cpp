@@ -3,16 +3,6 @@
 
 CTitleUI::CTitleUI()
 {
-}
-
-
-CTitleUI::~CTitleUI()
-{
-}
-
-void CTitleUI::Init()
-{
-
 
 	for (int loop = 0; loop < MAX_TEXTURE_TITLE; ++loop)
 	{
@@ -25,7 +15,20 @@ void CTitleUI::Init()
 	fade[1] = 255;
 	sprite[1]->CreateMakeVertex2DPolygon(_T("../data/Texture/PushEnter.png"), 0, 0, 800, 600, fade[1]);
 
-	
+
+}
+
+
+CTitleUI::~CTitleUI()
+{
+}
+
+void CTitleUI::Init()
+{
+	if (InitState)
+		return;
+	InitState = true;
+
 	// カメラオブジェクトのしゅとく
 	CameraList = GetObjMgr()->SerchObj(ID_CAMERA);
 	
