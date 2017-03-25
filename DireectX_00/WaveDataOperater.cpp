@@ -1,9 +1,17 @@
 #include "WaveDataOperater.h"
-
-
+#include"Window.h"
+#include<iostream>
 
 CWaveDataOperater::CWaveDataOperater()
 {
+	fp = NULL;
+}
+
+CWaveDataOperater::CWaveDataOperater(char *filenpath)
+{
+	fp = NULL;
+	monoWaveRead(filenpath);
+
 }
 
 
@@ -15,9 +23,8 @@ CWaveDataOperater::~CWaveDataOperater()
 //
 //	Waveファイルの読み込み
 //
-void CWaveDataOperater::monoWaveRead(MONO_PCM *pcm, char *filename)
+void CWaveDataOperater::monoWaveRead(char *filename)
 {
-	FILE *fp;
 	WAVE_FORMAT waveformat;
 
 	fp = fopen(filename,"rb");
@@ -25,119 +32,52 @@ void CWaveDataOperater::monoWaveRead(MONO_PCM *pcm, char *filename)
 	if (!fp)
 	{
 		// 失敗処理
-		// MesseageBoxでもok
+		GetWinMgr()->MessageBoxA("ファイルの読み込みの失敗");
+		return;
+	}
+	
+	// ヘッダの読み込み
+	fread(&waveformat,sizeof(WAVE_FORMAT),1,fp);
+	data_beg = ftell(fp);
+
+	// 形式のチェック
+	if((memcmp(&waveformat.chunkID, "RIFF", 4) != 0)
+		|| (memcmp(&waveformat.FormType, "WAVE", 4) != 0)
+		|| (waveformat.fmtchunk.WaveFormatType != 1)) {
+
+		GetWinMgr()->MessageBoxA("ファイルの読み込みの失敗");
 		return;
 	}
 
-	//Riffdhunkの読み込み
-	fread(waveformat.riffchunk.chunkID,1,4,fp);
-	fread(&waveformat.riffchunk.chunksize, 4, 1, fp);
-	fread(waveformat.riffchunk.FormType, 1, 4, fp);
-
-	//Formatchunkの読み込み
-	fread(waveformat.fmtchunk.chunkID,1,4,fp);
-	fread(&waveformat.fmtchunk.chunksize, 4, 1, fp);
-	fread(&waveformat.fmtchunk.WaveFormType, 2, 1, fp);
-	fread(&waveformat.fmtchunk.Channel, 2, 1, fp);
-	fread(&waveformat.fmtchunk.samplesPersec, 4, 1, fp);
-	fread(&waveformat.fmtchunk.BytesPerSec, 4, 1, fp);
-	fread(&waveformat.fmtchunk.BlockSize, 2, 1, fp);
-	fread(&waveformat.fmtchunk.BitsPerSample, 2, 1, fp);
-
-	// 音データの読み込み
-	fread(waveformat.datachunk.datachunkID,1,4,fp);
-	fread(&waveformat.datachunk.chunkSize, 4, 1, fp);
-
-	pcm->fs = waveformat.fmtchunk.samplesPersec;
-	pcm->bits = waveformat.fmtchunk.BitsPerSample;
-	pcm->length = waveformat.datachunk.chunkSize;
-	pcm->sounddata = new double(pcm->length);
-
-
-
-	// datachunkの読み込み
-	short data;
-	for (int loop = 0;loop < pcm->length ; loop++ )
+	//dataチャンク
+	if (memcmp(&waveformat.datachunk.datachunkID, "data", 4) != 0)
 	{
-		fread(&data,2,1,fp);
-		pcm->sounddata[loop] = (double)data / GROUND;
+
+		unsigned int chunk_ID_temp[4];
+		unsigned int chunksize_temp;
+
+		fseek(fp,12+8+waveformat.fmtchunk.chunksize,SEEK_SET);
+
+		fread(chunk_ID_temp,1,4,fp);
+
+		while (memcmp(chunk_ID_temp,"data",4)!= 0)
+		{
+			fread(&chunksize_temp,4,1,fp);
+			fseek(fp,chunksize_temp,SEEK_CUR);
+			fread(chunk_ID_temp, 1, 4, fp);
+		}
+
+		fread(&chunksize_temp,4,1,fp);
+		data_beg = ftell(fp);
+
+		//datachunk更新
+		for (int i = 0; i < 4; i++)
+		{
+			waveformat.datachunk.datachunkID[i] = chunk_ID_temp[i];
+		}
+		waveformat.datachunk.chunkSize = chunksize_temp;
+
 	}
-
-	fclose(fp);
-
-}
-
-
-/////////////////////////////////////////////////////////
-//
-//	Waveファイルの書き出し
-//
-void CWaveDataOperater::monoWaveWrite(MONO_PCM *pcm, char *filename)
-{
-	FILE *fp;
-	int loop;
-	WAVE_FORMAT waveformat;
-
-	strcpy(waveformat.riffchunk.chunkID,"RIFF");
-	waveformat.riffchunk.chunksize = 36 + pcm->length * 2;
-	strcpy(waveformat.riffchunk.FormType,"WAVE");
-
-	strcpy(waveformat.fmtchunk.chunkID,"fmt ");
-	waveformat.fmtchunk.chunksize = 16;
-	waveformat.fmtchunk.WaveFormType = 1;	// PCMの場合は1
-	waveformat.fmtchunk.Channel = 2;		// ステレオ2 モノラル1
-	waveformat.fmtchunk.samplesPersec = pcm->fs;
-	waveformat.fmtchunk.BytesPerSec = (pcm->fs*pcm->bits)/8;
-	waveformat.fmtchunk.BlockSize = pcm->bits / 8;
-	waveformat.fmtchunk.BitsPerSample = pcm->bits;
-
-	strcpy(waveformat.datachunk.datachunkID,"data");
-	waveformat.datachunk.chunkSize = pcm->length * 2;
-
-	fp = fopen(filename,"wb");
-
-	if (!fp)
-	{
-		// 生成ミス
-	}
-
-
-	fwrite(waveformat.fmtchunk.chunkID,1,4,fp);
-
-	//Riffdhunkの読み込み
-	fwrite(waveformat.riffchunk.chunkID, 1, 4, fp);
-	fwrite(&waveformat.riffchunk.chunksize, 4, 1, fp);
-	fwrite(waveformat.riffchunk.FormType, 1, 4, fp);
-
-	//Formatchunkの読み込み
-	fwrite(waveformat.fmtchunk.chunkID, 1, 4, fp);
-	fwrite(&waveformat.fmtchunk.chunksize, 4, 1, fp);
-	fwrite(&waveformat.fmtchunk.WaveFormType, 2, 1, fp);
-	fwrite(&waveformat.fmtchunk.Channel, 2, 1, fp);
-	fwrite(&waveformat.fmtchunk.samplesPersec, 4, 1, fp);
-	fwrite(&waveformat.fmtchunk.BytesPerSec, 4, 1, fp);
-	fwrite(&waveformat.fmtchunk.BlockSize, 2, 1, fp);
-	fwrite(&waveformat.fmtchunk.BitsPerSample, 2, 1, fp);
-
-	// 音データの読み込み
-	fwrite(waveformat.datachunk.datachunkID, 1, 4, fp);
-	fwrite(&waveformat.datachunk.chunkSize, 4, 1, fp);
-
-	pcm->fs = waveformat.fmtchunk.samplesPersec;
-	pcm->bits = waveformat.fmtchunk.BitsPerSample;
-	pcm->length = waveformat.datachunk.chunkSize;
-	pcm->sounddata = new double(pcm->length);
-
-
-
-	// datachunkの読み込み
-	short data;
-	for (int loop = 0; loop < pcm->length; loop++)
-	{
-		fwrite(&data, 2, 1, fp);
-		pcm->sounddata[loop] = (double)data / GROUND;
-	}
-
 
 	fclose(fp);
 
