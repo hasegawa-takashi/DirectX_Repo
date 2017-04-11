@@ -95,6 +95,9 @@
     <Filter Include="Sound">
       <UniqueIdentifier>{cee67cee-1197-456b-b2ed-1443b0249117}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound\Wave">
+      <UniqueIdentifier>{0bec5bd1-b8d6-41a5-a0f1-81d70f0d2c7a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Title.cpp">
@@ -187,11 +190,14 @@
     <ClCompile Include="SoundMgr.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
-    <ClCompile Include="WaveDataOperater.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
     <ClCompile Include="BlackoutFade.cpp">
       <Filter>Render\Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadWave.cpp">
+      <Filter>Sound\Wave</Filter>
+    </ClCompile>
+    <ClCompile Include="Wave.cpp">
+      <Filter>Sound\Wave</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -285,11 +291,14 @@
     <ClInclude Include="SoundMgr.h">
       <Filter>Sound</Filter>
     </ClInclude>
-    <ClInclude Include="WaveDataOperater.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
     <ClInclude Include="BlackoutFade.h">
       <Filter>Render\Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadWave.h">
+      <Filter>Sound\Wave</Filter>
+    </ClInclude>
+    <ClInclude Include="Wave.h">
+      <Filter>Sound\Wave</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

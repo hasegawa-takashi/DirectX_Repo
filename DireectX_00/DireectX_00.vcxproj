@@ -99,6 +99,7 @@
     <ClCompile Include="GameWnd.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="LoadWave.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MeshRender.cpp" />
     <ClCompile Include="MyHierarchy.cpp" />
@@ -113,7 +114,7 @@
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="TitleUI.cpp" />
     <ClCompile Include="TrainingBot.cpp" />
-    <ClCompile Include="WaveDataOperater.cpp" />
+    <ClCompile Include="Wave.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +134,7 @@
     <ClInclude Include="GameWnd.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="LoadWave.h" />
     <ClInclude Include="MeshRender.h" />
     <ClInclude Include="mleak.h" />
     <ClInclude Include="MyHierarchy.h" />
@@ -147,7 +149,7 @@
     <ClInclude Include="Title.h" />
     <ClInclude Include="TitleUI.h" />
     <ClInclude Include="TrainingBot.h" />
-    <ClInclude Include="WaveDataOperater.h" />
+    <ClInclude Include="Wave.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
