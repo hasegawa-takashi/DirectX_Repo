@@ -1,6 +1,7 @@
 #pragma once
 
 #include<XAudio2.h>
+#include"LoadWave.h"
 
 class CSoundMgr
 {
@@ -8,9 +9,12 @@ public:
 	CSoundMgr();
 	~CSoundMgr();
 
+	void WaveFileLoad(const char filepath);
+
 private:
+
 	bool CreateXAudio();
-	void FormatWaveTex();
+	
 
 	
 private: // ïœêî
@@ -20,8 +24,7 @@ private: // ïœêî
 	IXAudio2SourceVoice* Voice;
 	UINT32 m_devicecnt;
 
-	WAVEFORMATEX m_wfx;
-
-
+	CLoadWave *wave;
+	WAVEFORMATEX wavefmt;
 };
 

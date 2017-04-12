@@ -24,7 +24,7 @@ public:
 
 	bool gethasfile() { return has_file; }
 
-	void GetWaveFileData(WAVEFORMATEX &file);
+	waveHeader GetWaveDat() { return header; }
 
 private:
 
@@ -40,5 +40,6 @@ private:
 
 	FILE* fp;
 	uint32_t data_beg;
+
 };
 

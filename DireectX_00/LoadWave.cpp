@@ -219,13 +219,3 @@ void CLoadWave::getdatabuffer(int16_t* L_data, int16_t* R_data, uint32_t head, u
 		delete[] data_temp;
 	}
 }
-
-void CLoadWave::GetWaveFileData(WAVEFORMATEX &file)
-{
-	file.wFormatTag = WAVE_FORMAT_PCM;
-	file.nChannels = header.fmt.Channel;
-	file.wBitsPerSample = header.fmt.bytepersec;
-	file.nBlockAlign = header.fmt.Channel * header.fmt.bytepersec / 8;
-	file.nSamplesPerSec = header.fmt.samplingrate;
-	file.nAvgBytesPerSec = file.nSamplesPerSec * file.nBlockAlign;
-}

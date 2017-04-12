@@ -4,7 +4,6 @@
 
 CSoundMgr::CSoundMgr()
 {
-	m_wfx = {0};
 	CreateXAudio();
 }
 
@@ -57,14 +56,29 @@ bool CSoundMgr::CreateXAudio()
 	{
 		return false;
 	}
+
+	m_pXAudio->StartEngine();
+
 }
 
 //==========================================================
 //
-//		Ä¶€”õ
+//		Waaveƒtƒ@ƒCƒ‹‚Ì“Ç‚Ýž‚Ý
 //
-void CSoundMgr::FormatWaveTex()
+void CSoundMgr::WaveFileLoad(const char filepath)
 {
+	wave = new CLoadWave(&filepath);
+	waveHeader header = wave->GetWaveDat();
 
+	wavefmt.wFormatTag = WAVE_FORMAT_PCM;
+	wavefmt.nChannels = header.fmt.Channel;
+	wavefmt.nSamplesPerSec = header.fmt.samplingrate;
+	wavefmt.nAvgBytesPerSec = wavefmt.nSamplesPerSec * wavefmt.nChannels / 8;
+	wavefmt.wBitsPerSample = header.fmt.bit_depth;
+	wavefmt.nBlockAlign = wavefmt.nChannels * wavefmt.wBitsPerSample / 8;
+	wavefmt.cbSize = 0;
+
+	m_pXAudio->CreateSourceVoice(&Voice,&wavefmt,0);
 
 }
+
