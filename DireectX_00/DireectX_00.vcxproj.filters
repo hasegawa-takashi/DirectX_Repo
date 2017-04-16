@@ -98,6 +98,9 @@
     <Filter Include="Sound\Wave">
       <UniqueIdentifier>{0bec5bd1-b8d6-41a5-a0f1-81d70f0d2c7a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound\Sounds">
+      <UniqueIdentifier>{e10dec97-17da-447f-b623-10d181de54a1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Title.cpp">
@@ -199,6 +202,12 @@
     <ClCompile Include="Wave.cpp">
       <Filter>Sound\Wave</Filter>
     </ClCompile>
+    <ClCompile Include="BGM.cpp">
+      <Filter>Sound\Sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="SE.cpp">
+      <Filter>Sound\Sounds</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Title.h">
@@ -299,6 +308,12 @@
     </ClInclude>
     <ClInclude Include="Wave.h">
       <Filter>Sound\Wave</Filter>
+    </ClInclude>
+    <ClInclude Include="BGM.h">
+      <Filter>Sound\Sounds</Filter>
+    </ClInclude>
+    <ClInclude Include="SE.h">
+      <Filter>Sound\Sounds</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

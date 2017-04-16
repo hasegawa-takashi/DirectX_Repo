@@ -9,7 +9,15 @@ public:
 	CSoundMgr();
 	~CSoundMgr();
 
-	void WaveFileLoad(const char filepath);
+
+	void SetSourcevoice(IXAudio2SourceVoice*,WAVEFORMATEX);
+
+	static CSoundMgr* Instance() {
+		static CSoundMgr _Instance;
+		return &_Instance;
+	}
+
+
 
 private:
 
@@ -21,10 +29,16 @@ private: // 変数
 	IXAudio2* m_pXAudio;
 	HRESULT hr;
 	IXAudio2MasteringVoice* m_pMasterVoice;
-	IXAudio2SourceVoice* Voice;
 	UINT32 m_devicecnt;
-
-	CLoadWave *wave;
-	WAVEFORMATEX wavefmt;
 };
+
+
+//=============================================================================
+// デバイス呼び出し用
+//=============================================================================
+inline CSoundMgr* GetSoundMgr()
+{
+	return CSoundMgr::Instance();
+}
+
 

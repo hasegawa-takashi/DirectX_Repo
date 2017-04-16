@@ -83,6 +83,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BGM.cpp" />
     <ClCompile Include="Billbord.cpp" />
     <ClCompile Include="BlackoutFade.cpp" />
     <ClCompile Include="Calculation.cpp" />
@@ -108,6 +109,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderMgr.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SE.cpp" />
     <ClCompile Include="Sky.cpp" />
     <ClCompile Include="SoundMgr.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -118,6 +120,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BGM.h" />
     <ClInclude Include="Billbord.h" />
     <ClInclude Include="BlackoutFade.h" />
     <ClInclude Include="Calculation.h" />
@@ -143,6 +146,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderMgr.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SE.h" />
     <ClInclude Include="Sky.h" />
     <ClInclude Include="SoundMgr.h" />
     <ClInclude Include="Sprite.h" />
