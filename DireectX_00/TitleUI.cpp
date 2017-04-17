@@ -1,5 +1,4 @@
 #include "TitleUI.h"
-#include"WaveDataOperater.h"
 
 CTitleUI::CTitleUI()
 {
@@ -15,13 +14,6 @@ CTitleUI::CTitleUI()
 	fade[1] = 255;
 	sprite[1]->CreateMakeVertex2DPolygon(_T("../data/Texture/PushEnter.png"), 0, 0, 800, 600, fade[1]);
 
-	MONO_PCM monopcmtest;
-
-	CWaveDataOperater* wavedata = new CWaveDataOperater("../data/Sound/Bgm/EmeraldSword.wav");
-
-	Sleep(10);
-
-	delete wavedata;
 }
 
 

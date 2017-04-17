@@ -4,12 +4,17 @@
 
 CSoundMgr::CSoundMgr()
 {
-	CreateXAudio();
 }
 
 
 CSoundMgr::~CSoundMgr()
 {
+}
+
+void CSoundMgr::InitSoundMgr()
+{
+	CreateXAudio();
+	m_BgmVoice = new CBGM();
 }
 
 //==========================================================
@@ -21,7 +26,6 @@ bool CSoundMgr::CreateXAudio()
 
 	UINT32 flags = 0;
 	m_pMasterVoice = NULL;
-
 
 	if (FAILED(hr = CoInitializeEx(NULL, COINIT_MULTITHREADED)))
 	{
@@ -61,13 +65,28 @@ bool CSoundMgr::CreateXAudio()
 
 }
 
-////////////////////////////////////////////////////////////////
-//
-//	SouceVoice‚Ö‚Ì“o˜^
-//
-void CSoundMgr::SetSourcevoice(IXAudio2SourceVoice* m_Voice,WAVEFORMATEX waveformat)
+void CSoundMgr::SetMasterVolume(float Vol )
 {
-	m_pXAudio->CreateSourceVoice(&m_Voice, &waveformat, 0);
+	m_pMasterVoice->SetVolume(Vol);
 }
 
+float CSoundMgr::GetMasterVolume()
+{
+	float vol;
+	m_pMasterVoice->GetVolume(&vol);
+	return vol;
+}
 
+////////////////////////////////////////////////////////////////
+//	SouceVoice‚Ö‚Ì“o˜^
+void CSoundMgr::SetSourcevoice(IXAudio2SourceVoice** m_Voice,WAVEFORMATEX* waveformat)
+{
+	m_pXAudio->CreateSourceVoice(m_Voice, waveformat, 0);
+}
+
+////////////////////////////////////////////////////////////////
+//	Bgm‚ÌÄ¶
+void CSoundMgr::Play(int bgm)
+{
+	m_BgmVoice->PlayBGM(bgm);
+}

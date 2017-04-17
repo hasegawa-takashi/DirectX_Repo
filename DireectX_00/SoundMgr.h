@@ -2,22 +2,30 @@
 
 #include<XAudio2.h>
 #include"LoadWave.h"
+#include"BGM.h"
+#include"SE.h"
+
+class CBGM;
 
 class CSoundMgr
 {
 public:
+	static CSoundMgr* Instance() {
+	static CSoundMgr _Instance;
+	return &_Instance;
+	}
+
+	void SetMasterVolume(float Vol);	// ‘S‘Ì‰¹º‚Ìİ’è
+	float GetMasterVolume();			// ‘S‘Ì‰¹º‚Ìæ“¾
+
 	CSoundMgr();
 	~CSoundMgr();
 
+	void SetSourcevoice(IXAudio2SourceVoice**,WAVEFORMATEX*);
 
-	void SetSourcevoice(IXAudio2SourceVoice*,WAVEFORMATEX);
+	void InitSoundMgr();
 
-	static CSoundMgr* Instance() {
-		static CSoundMgr _Instance;
-		return &_Instance;
-	}
-
-
+	void Play(int bgm);
 
 private:
 
@@ -30,6 +38,9 @@ private: // •Ï”
 	HRESULT hr;
 	IXAudio2MasteringVoice* m_pMasterVoice;
 	UINT32 m_devicecnt;
+
+	CBGM* m_BgmVoice;
+
 };
 
 

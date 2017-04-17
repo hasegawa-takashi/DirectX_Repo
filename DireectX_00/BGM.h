@@ -2,11 +2,13 @@
 
 #include"SoundMgr.h"
 
-enum BGMList
+namespace BGMList
 {
-	Title,
-	MAX_BGM
-};
+	enum {
+		Title,
+		MAX_BGM
+	};
+}
 
 class CBGM
 {
@@ -14,13 +16,21 @@ public:
 	CBGM();
 	~CBGM();
 
+	
+
+	void PlayBGM(int bgmlist);
+	void SetBGMVol(float vol);
 
 private:
 
 	void ReadWaveFile();
-	void PlayBGM(BGMList);
+	void Close();
+	float GetBGMVol();
+	
 
+	IXAudio2SourceVoice* m_Voice[BGMList::MAX_BGM];	// サウンドデータ
+	XAUDIO2_BUFFER buffer;
+	float Volume;								// BGM全体の音量0
 
-	IXAudio2SourceVoice* m_Voice[MAX_BGM];
 
 };

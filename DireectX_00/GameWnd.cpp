@@ -60,6 +60,8 @@ bool CGameWnd::Init(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, i
 
 		CDebug::Instance()->Init();
 
+		GetSoundMgr()->InitSoundMgr();
+
 		return true;
 	}
 	catch (const std::exception&)

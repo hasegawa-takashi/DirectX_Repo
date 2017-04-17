@@ -13,6 +13,7 @@ CLoadWave::CLoadWave(const char* filepath)
 {
 	fp = nullptr;
 	has_file = false;
+	header = { 0 };
 	Openfile(filepath);
 }
 
@@ -24,6 +25,7 @@ CLoadWave::~CLoadWave()
 bool CLoadWave::Openfile(const char* filepath)
 {
 	fp = fopen(filepath, "rb");
+
 	if ( fp == NULL )
 	{
 		std::cerr << "ファイルパスが違う" << std::endl;
@@ -36,9 +38,9 @@ bool CLoadWave::Openfile(const char* filepath)
 	data_beg = _ftelli64(fp);
 
 	//形式チェック
-	if ((memcmp(&header.chunkID, "RIFF", 4) != 0) ||
-		(memcmp(&header.waveID, "WAVE", 4) != 0) ||
-		header.fmt.format_ID != 1)
+	if (	(memcmp(&header.chunkID, "RIFF", 4) != 0) 
+		||  (memcmp(&header.waveID, "WAVE", 4) != 0) 
+		||  ( header.fmt.format_ID != 1) )
 	{
 		std::cerr << "不完全な形式です" << std::endl;
 		has_file = false;

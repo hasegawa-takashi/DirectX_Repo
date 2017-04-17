@@ -8,7 +8,7 @@
 #include"TitleUI.h"
 #include"Camera.h"
 #include"BlackoutFade.h"
-
+#include"SoundMgr.h"
 
 class CTitle : public CSceneBase {
 public:
