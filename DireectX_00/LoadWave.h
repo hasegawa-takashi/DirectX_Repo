@@ -1,47 +1,38 @@
 #pragma once
-#include "Wave.h"
-#include<cstdio>
-#include<cstring>
+
+
+/*
+ここ見ました
+http://qiita.com/tobira-code/items/39936c4e2b1168fb79ce
+*/
 
 #include<XAudio2.h>
+#include <mmsystem.h>
+#include<tchar.h>
+
+namespace BGMList
+{
+	enum {
+		Title,
+		MAX_BGM
+	};
+}
+
+static const LPSTR g_pszFileBGM[BGMList::MAX_BGM] = {
+	_T("../data/Sound/Bgm/test.wav")
+};
 
 
-class CLoadWave :
-	public CWave
+class CLoadWave
 {
 public:
 	CLoadWave();
-	CLoadWave(const char* fliepath);
 	~CLoadWave();
 
-	// モノラルデータ
-	void getdata(uint8_t* data);//モノラル
-	void getdata(int16_t* data);//ステレオ
-
-	// ステレオデータ
-	void getdata(uint8_t* L_data, uint8_t* R_data);//モノラル
-	void getdata(int16_t* L_data, int16_t* R_data);//ステレオ
-
-	bool gethasfile() { return has_file; }
-
-	waveHeader GetWaveDat() { return header; }
-
-	BYTE* GetRawData() { return raw; }
-
 private:
-
-	void getdatabuffer(uint8_t* data , uint32_t head , uint32_t datalength);
-	void getdatabuffer(int16_t* data, uint32_t head, uint32_t datalength);
-
-	void getdatabuffer(uint8_t* L_data, uint8_t* R_data, uint32_t head, uint32_t datalength);
-	void getdatabuffer(int16_t* L_data, int16_t* R_data, uint32_t head, uint32_t datalength);
-
-	bool has_file;
-	bool Openfile(const char* fliepath);
-	void Closefile();
-
-	FILE* fp;
-	uint32_t data_beg;
+	void OpenWave();
+	HMMIO mmio[BGMList::MAX_BGM];
+	MMRESULT mret[BGMList::MAX_BGM];
 
 };
 

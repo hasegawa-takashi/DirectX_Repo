@@ -196,18 +196,13 @@
     <ClCompile Include="BlackoutFade.cpp">
       <Filter>Render\Fade</Filter>
     </ClCompile>
-    <ClCompile Include="LoadWave.cpp">
-      <Filter>Sound\Wave</Filter>
-    </ClCompile>
-    <ClCompile Include="Wave.cpp">
-      <Filter>Sound\Wave</Filter>
-    </ClCompile>
     <ClCompile Include="BGM.cpp">
       <Filter>Sound\Sounds</Filter>
     </ClCompile>
     <ClCompile Include="SE.cpp">
       <Filter>Sound\Sounds</Filter>
     </ClCompile>
+    <ClCompile Include="LoadWave.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Title.h">
@@ -303,17 +298,12 @@
     <ClInclude Include="BlackoutFade.h">
       <Filter>Render\Fade</Filter>
     </ClInclude>
-    <ClInclude Include="LoadWave.h">
-      <Filter>Sound\Wave</Filter>
-    </ClInclude>
-    <ClInclude Include="Wave.h">
-      <Filter>Sound\Wave</Filter>
-    </ClInclude>
     <ClInclude Include="BGM.h">
       <Filter>Sound\Sounds</Filter>
     </ClInclude>
     <ClInclude Include="SE.h">
       <Filter>Sound\Sounds</Filter>
     </ClInclude>
+    <ClInclude Include="LoadWave.h" />
   </ItemGroup>
 </Project>

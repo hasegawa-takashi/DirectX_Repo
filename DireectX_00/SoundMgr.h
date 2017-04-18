@@ -1,9 +1,9 @@
 #pragma once
 
 #include<XAudio2.h>
+#include <mmsystem.h>
+
 #include"LoadWave.h"
-#include"BGM.h"
-#include"SE.h"
 
 class CBGM;
 
@@ -20,6 +20,8 @@ public:
 
 	CSoundMgr();
 	~CSoundMgr();
+
+
 
 	void SetSourcevoice(IXAudio2SourceVoice**,WAVEFORMATEX*);
 
