@@ -45,5 +45,6 @@ public:
 
 protected:
 	waveHeader header;
+	uint8_t* raw;
 };
 

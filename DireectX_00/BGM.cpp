@@ -6,7 +6,7 @@
 //
 //==========================================================
 static const char* g_pszFileBGM[BGMList::MAX_BGM] = {
-	"../data/Sound/Bgm/HeroesofWarcraft.wav"
+	"../data/Sound/Bgm/test.wav"
 };
 
 CBGM::CBGM()
@@ -28,12 +28,14 @@ void CBGM::ReadWaveFile()
 
 	CLoadWave *wave;
 	WAVEFORMATEX wavefmt;
+	XAUDIO2_BUFFER buffer = { 0 };
 
 	for (int loop = 0; loop < BGMList::MAX_BGM; loop++)
 	{
 		wave = new CLoadWave(g_pszFileBGM[loop]);
 		waveHeader header = wave->GetWaveDat();
 
+		// WAVEFORMAT‚ÌÝ’è
 		wavefmt.wFormatTag = WAVE_FORMAT_PCM;
 		wavefmt.nChannels = header.fmt.Channel;
 		wavefmt.nSamplesPerSec = header.fmt.samplingrate;
@@ -41,6 +43,13 @@ void CBGM::ReadWaveFile()
 		wavefmt.wBitsPerSample = header.fmt.bit_depth;
 		wavefmt.nBlockAlign = wavefmt.nChannels * wavefmt.wBitsPerSample / 8;
 		wavefmt.cbSize = 0;
+
+		// XAUDIO2_BUFFER‚ÌÝ’è
+		rawdata = wave->GetRawData();
+		buffer.AudioBytes = header.fmt.chunksize;
+		buffer.pAudioData = rawdata;
+		buffer.Flags = XAUDIO2_END_OF_STREAM;
+		buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
 
 		GetSoundMgr()->SetSourcevoice(&m_Voice[loop], &wavefmt);
 		m_Voice[loop]->SubmitSourceBuffer(&buffer);

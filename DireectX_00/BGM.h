@@ -29,8 +29,7 @@ private:
 	
 
 	IXAudio2SourceVoice* m_Voice[BGMList::MAX_BGM];	// サウンドデータ
-	XAUDIO2_BUFFER buffer;
 	float Volume;								// BGM全体の音量0
-
+	uint8_t* rawdata;
 
 };

@@ -26,6 +26,8 @@ public:
 
 	waveHeader GetWaveDat() { return header; }
 
+	BYTE* GetRawData() { return raw; }
+
 private:
 
 	void getdatabuffer(uint8_t* data , uint32_t head , uint32_t datalength);

@@ -1,4 +1,5 @@
 #include "LoadWave.h"
+#include<vector>
 
 #define _CRT_SECURE_NO_WARNINGS
 #pragma warning(disable:4996)
@@ -72,18 +73,32 @@ bool CLoadWave::Openfile(const char* filepath)
 		{
 			header.data.chunkID[loop] = chunkID_tmp[loop ];
 		}
-		header.data.datasize = chunksize_tmp;
+		header.data.datasize = chunksize_tmp * header.fmt.Channel;
+	}
+
+
+
+	//æ“ª‚©‚çtiff+fmt+data‚Ü‚Å
+	std::vector< BYTE > data(header.data.datasize);
+	_fseeki64(fp, 12 + 8 + header.fmt.chunksize + 8, SEEK_SET);
+
+	for (int loop = 0 ; loop < header.data.datasize ; loop++)
+	{
+		fread(&data[loop], header.data.datasize, 1, fp);
 	}
 
 	has_file = true;
+
+
+	fclose(fp);
+	fp = nullptr;
+
 	return true;
 
 }
 
 void CLoadWave::Closefile()
 {
-	fclose(fp);
-	fp = nullptr;
 	header = { 0 };
 	has_file = false;
 }
