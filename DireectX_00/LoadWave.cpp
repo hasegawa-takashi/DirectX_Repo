@@ -80,16 +80,16 @@ bool CLoadWave::Openfile(const char* filepath)
 
 	//æ“ª‚©‚çtiff+fmt+data‚Ü‚Å
 	//std::vector< BYTE > data(header.data.datasize);
-	BYTE* data = new BYTE(header.data.datasize);
-	_fseeki64(fp, 12 + 8 + header.fmt.chunksize + 8, SEEK_SET);
+	BYTE* data = new BYTE[header.data.datasize];
+	_fseeki64(fp, sizeof(header), SEEK_SET);
 
 	/*for (int loop = 0 ; loop < header.data.datasize ; loop++)
 	{
-		fread(&data[loop], header.data.datasize, 1, fp);
+		fread(&data[loop], 8 , 1, fp);
 	}*/
 
-	fread(data,1,header.data.datasize,fp);
-
+	fread(&data, header.data.datasize, sizeof(header) ,fp);
+	
 	has_file = true;
 
 
