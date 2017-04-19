@@ -202,7 +202,12 @@
     <ClCompile Include="SE.cpp">
       <Filter>Sound\Sounds</Filter>
     </ClCompile>
-    <ClCompile Include="LoadWave.cpp" />
+    <ClCompile Include="LoadWave.cpp">
+      <Filter>Sound\Wave</Filter>
+    </ClCompile>
+    <ClCompile Include="Wave.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Title.h">
@@ -304,6 +309,11 @@
     <ClInclude Include="SE.h">
       <Filter>Sound\Sounds</Filter>
     </ClInclude>
-    <ClInclude Include="LoadWave.h" />
+    <ClInclude Include="LoadWave.h">
+      <Filter>Sound\Wave</Filter>
+    </ClInclude>
+    <ClInclude Include="Wave.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

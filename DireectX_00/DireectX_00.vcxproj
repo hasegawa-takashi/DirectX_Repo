@@ -116,6 +116,7 @@
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="TitleUI.cpp" />
     <ClCompile Include="TrainingBot.cpp" />
+    <ClCompile Include="Wave.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +153,7 @@
     <ClInclude Include="Title.h" />
     <ClInclude Include="TitleUI.h" />
     <ClInclude Include="TrainingBot.h" />
+    <ClInclude Include="Wave.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

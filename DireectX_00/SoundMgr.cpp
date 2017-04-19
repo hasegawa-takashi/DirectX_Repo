@@ -14,6 +14,7 @@ CSoundMgr::~CSoundMgr()
 void CSoundMgr::InitSoundMgr()
 {
 	CreateXAudio();
+	m_BgmVoice = new CBGM();
 }
 
 //==========================================================
