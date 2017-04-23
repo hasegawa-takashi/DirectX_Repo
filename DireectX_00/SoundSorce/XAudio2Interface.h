@@ -17,7 +17,7 @@ public:
 
 	bool CreateXAudio();
 
-	bool SetXAudio2SouceVoice(IXAudio2SourceVoice**,WAVEFORMATEX*);
+	bool SetXAudio2SouceVoice(IXAudio2SourceVoice*,WAVEFORMATEX*);
 
 private:
 

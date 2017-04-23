@@ -15,18 +15,27 @@ public:
 	
 	void Play(bgmdata::BgmNameList);
 
+	void Init();
 	void Update();
 
-	bool SetXAudio2Souce(IXAudio2SourceVoice**, WAVEFORMATEX*);
+	bool SetXAudio2Souce(IXAudio2SourceVoice*, const WAVEFORMATEX);
 
 private:
 	CSoundMgr();
 
-	CXAudio2Interface* m_XAudiointerface;
+	//CXAudio2Interface* m_XAudiointerface;
 	CBgmDatabase* m_Bgmdata;
 
 
+	IXAudio2* m_XAudio2;								// engine
+	IXAudio2MasteringVoice* m_MasterVoice;				// MasterVoice
 
+	IXAudio2SourceVoice* m_BgmVoices[bgmdata::MAX_BGM];	// BGMSourceVoice‚Ì”z—ñ
+
+
+	UINT32 flags = 0;
+
+	UINT32 m_devicecnt;
 };
 
 inline CSoundMgr* GetSoundMgr()

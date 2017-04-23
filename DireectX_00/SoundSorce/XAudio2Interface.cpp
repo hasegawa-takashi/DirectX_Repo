@@ -15,6 +15,7 @@ CXAudio2Interface::~CXAudio2Interface()
 bool CXAudio2Interface::CreateXAudio()
 {
 	HRESULT hr;
+	m_XAudio2 = NULL;
 
 	if ( FAILED(hr = CoInitializeEx(NULL, COINIT_MULTITHREADED)))
 	{
@@ -57,9 +58,11 @@ bool CXAudio2Interface::CreateXAudio()
 	return true;
 }
 
-bool CXAudio2Interface::SetXAudio2SouceVoice(IXAudio2SourceVoice** souce, WAVEFORMATEX* wave)
+bool CXAudio2Interface::SetXAudio2SouceVoice(IXAudio2SourceVoice* souce, WAVEFORMATEX* wave)
 {
-	if (FAILED(m_XAudio2->CreateSourceVoice(souce, wave,0)))
+	HRESULT hr;
+
+	if (FAILED(hr = m_XAudio2->CreateSourceVoice(&souce, wave,0)))
 	{
 		return false;
 	}

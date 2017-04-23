@@ -1,8 +1,17 @@
 
-CSoundMgr 内のInstance()にて発生
+bool CSoundMgr::SetXAudio2Souce(IXAudio2SourceVoice* s,const WAVEFORMATEX w)
+{
+	HRESULT hr;
 
-CBgmDatabase内のSouceVoice発生の
-GetSoundMgr()->SetXAudio2Souce(&m_BgmVoices[loop], waveformat);
-からInstanceへ飛んだ際に内部ループにはまって動作がおかしくなる
+	if (FAILED(hr = m_XAudio2->CreateSourceVoice(&s, &w)))
+	{
+		return false;
+	}
 
+	return true;
+}
+
+の部分で無効な引数が発生していて初期が出来ていない模様。困った
+
+0x80070057	E_INVALIDARG	無効な引数が検出されました。
 
