@@ -5,7 +5,7 @@ CTitle::CTitle()
 	GetObjMgr()->PushObj(new CTitleUI, ID_OTHER);
 	GetObjMgr()->PushObj(new CCamera, ID_CAMERA);
 	
-	GetSoundMgr()->Play(BGMList::Title);
+	GetSoundMgr()->Play(bgmdata::Sound1);
 }
 
 

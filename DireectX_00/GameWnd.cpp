@@ -59,9 +59,6 @@ bool CGameWnd::Init(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, i
 		CFPS::Instance()->Init();
 
 		CDebug::Instance()->Init();
-
-		GetSoundMgr()->InitSoundMgr();
-
 		return true;
 	}
 	catch (const std::exception&)

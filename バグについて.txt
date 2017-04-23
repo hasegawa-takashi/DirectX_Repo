@@ -1,17 +1,8 @@
 
-Player.Cameraは複数ある場合、バグを起こす可能性あり。
-優先度付け等をしないとだめ。
+CSoundMgr 内のInstance()にて発生
 
-SceneとObjの削除処理を1ループの最後にまとめて作る
-
-流れとしては
-更新_1
-更新_2
-描画_1
-描画_2
-描画_3
-Objの削除
-Sceneの削除
-ループ
+CBgmDatabase内のSouceVoice発生の
+GetSoundMgr()->SetXAudio2Souce(&m_BgmVoices[loop], waveformat);
+からInstanceへ飛んだ際に内部ループにはまって動作がおかしくなる
 
 

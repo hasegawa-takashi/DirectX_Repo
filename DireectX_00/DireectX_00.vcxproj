@@ -83,7 +83,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BGM.cpp" />
     <ClCompile Include="Billbord.cpp" />
     <ClCompile Include="BlackoutFade.cpp" />
     <ClCompile Include="Calculation.cpp" />
@@ -100,7 +99,6 @@
     <ClCompile Include="GameWnd.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="Input.cpp" />
-    <ClCompile Include="LoadWave.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MeshRender.cpp" />
     <ClCompile Include="MyHierarchy.cpp" />
@@ -109,18 +107,18 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderMgr.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SE.cpp" />
     <ClCompile Include="Sky.cpp" />
-    <ClCompile Include="SoundMgr.cpp" />
+    <ClCompile Include="SoundSorce\BgmDatabase.cpp" />
+    <ClCompile Include="SoundSorce\LoadWave.cpp" />
+    <ClCompile Include="SoundSorce\SoundMgr.cpp" />
+    <ClCompile Include="SoundSorce\XAudio2Interface.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="TitleUI.cpp" />
     <ClCompile Include="TrainingBot.cpp" />
-    <ClCompile Include="Wave.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BGM.h" />
     <ClInclude Include="Billbord.h" />
     <ClInclude Include="BlackoutFade.h" />
     <ClInclude Include="Calculation.h" />
@@ -137,7 +135,6 @@
     <ClInclude Include="GameWnd.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="LoadWave.h" />
     <ClInclude Include="MeshRender.h" />
     <ClInclude Include="mleak.h" />
     <ClInclude Include="MyHierarchy.h" />
@@ -146,14 +143,15 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderMgr.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="SE.h" />
     <ClInclude Include="Sky.h" />
-    <ClInclude Include="SoundMgr.h" />
+    <ClInclude Include="SoundSorce\BgmDatabase.h" />
+    <ClInclude Include="SoundSorce\LoadWave.h" />
+    <ClInclude Include="SoundSorce\SoundMgr.h" />
+    <ClInclude Include="SoundSorce\XAudio2Interface.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="TitleUI.h" />
     <ClInclude Include="TrainingBot.h" />
-    <ClInclude Include="Wave.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
