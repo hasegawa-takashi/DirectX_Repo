@@ -36,6 +36,7 @@ private:
 	void CreateBgmVoice();
 
 	IXAudio2SourceVoice* m_BgmVoices[bgmdata::MAX_BGM];	// BGMSourceVoice‚Ì”z—ñ
+	XAUDIO2_BUFFER m_AudioBuffer[bgmdata::MAX_BGM] = {0};
 	CLoadWave* m_sourceWaveFormat[bgmdata::MAX_BGM];	// WaveForamt‚Ì”z—ñ 
 	int Volume;											// ‘S‘ÌVol
 

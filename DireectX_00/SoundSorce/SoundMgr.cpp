@@ -72,11 +72,11 @@ void CSoundMgr::Update()
 	m_Bgmdata->Update();
 }
 
-bool CSoundMgr::SetXAudio2Souce(IXAudio2SourceVoice* s,const WAVEFORMATEX w)
+bool CSoundMgr::SetXAudio2Souce(IXAudio2SourceVoice** s,const WAVEFORMATEX w)
 {
 	HRESULT hr;
 
-	if (FAILED(hr = m_XAudio2->CreateSourceVoice(&s, &w)))
+	if (FAILED(hr = m_XAudio2->CreateSourceVoice(s, &w)))
 	{
 		return false;
 	}

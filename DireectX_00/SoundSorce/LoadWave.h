@@ -15,8 +15,8 @@ public:
 	std::size_t ReadRaw(const std::size_t start,const std::size_t sample,void* buffer );
 	std::size_t ReadNormalized(const std::size_t start, const std::size_t samples, float * left, float * right);
 
-	XAUDIO2_BUFFER PreparationBuffer();
-	XAUDIO2_BUFFER UpdateBuiffer(IXAudio2SourceVoice* voice);
+	void PreparationBuffer(XAUDIO2_BUFFER& buffer);
+	void UpdateBuiffer(IXAudio2SourceVoice* voice , XAUDIO2_BUFFER& buffer);
 
 private:
 	void Close();

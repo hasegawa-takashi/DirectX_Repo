@@ -202,7 +202,8 @@ std::size_t CLoadWave::ReadNormalized(const std::size_t start, const std::size_t
 					right[readSample] = 1;
 
 			}
-			else {
+			else
+			{
 
 				float L = (data_s8[0] < 0) ? static_cast<float>(data_s8[0]) / 128.0f : static_cast<float>(data_s8[0]) / 127.0f;
 				float R = (data_s8[1] < 0) ? static_cast<float>(data_s8[1]) / 128.0f : static_cast<float>(data_s8[1]) / 127.0f;
@@ -229,10 +230,11 @@ std::size_t CLoadWave::ReadNormalized(const std::size_t start, const std::size_t
 				left[readSample] = 1;
 				if (right)right[readSample] = 1;
 			}
-			else {
-
+			else 
+			{
 				float L = (data_s16[0] < 0) ? static_cast<float>(data_s16[0]) / 32768.0f : static_cast<float>(data_s16[0]) / 32767.0f;
 				float R = (data_s16[1] < 0) ? static_cast<float>(data_s16[1]) / 32768.0f : static_cast<float>(data_s16[1]) / 32767.0f;
+				
 				if (right)
 				{
 					left[readSample] = L;
@@ -245,7 +247,7 @@ std::size_t CLoadWave::ReadNormalized(const std::size_t start, const std::size_t
 
 			}
 		}
-			break;
+		break;
 			
 
 		default:
@@ -263,10 +265,10 @@ std::size_t CLoadWave::ReadNormalized(const std::size_t start, const std::size_t
 //
 //	ストリーミング用のバッファの作成
 //
-XAUDIO2_BUFFER CLoadWave::PreparationBuffer()
+void CLoadWave::PreparationBuffer(XAUDIO2_BUFFER& bufferDesc)
 {
 
-	XAUDIO2_BUFFER bufferDesc = { 0 };
+	//XAUDIO2_BUFFER bufferDesc = { 0 };
 
 	if (nextFirstSample < GetSamples() )
 	{
@@ -280,7 +282,7 @@ XAUDIO2_BUFFER CLoadWave::PreparationBuffer()
 		if (nextFirstSample < GetSamples())
 		{
 
-			std::size_t readSample = ReadNormalized(nextFirstSample, bufferSample, &(primaryLeft[0]), &primaryRight[0]);
+			std::size_t readSample = ReadNormalized(nextFirstSample, bufferSample, &(primaryLeft[0]), &(primaryRight[0]) );
 
 			if (readSample > 0)
 			{
@@ -296,8 +298,6 @@ XAUDIO2_BUFFER CLoadWave::PreparationBuffer()
 				bufferDesc.Flags = nextFirstSample + readSample >= GetSamples() ? XAUDIO2_END_OF_STREAM : 0;
 				bufferDesc.AudioBytes = readSample * m_waveformat.nBlockAlign;
 				bufferDesc.pAudioData = reinterpret_cast<BYTE*> (&(primaryMixed[0]));
-				// 再生用バッファの設定
-				//voice->SubmitSourceBuffer(&bufferDesc);
 
 				nextFirstSample += readSample;
 				++submitTimes;
@@ -307,16 +307,18 @@ XAUDIO2_BUFFER CLoadWave::PreparationBuffer()
 		}
 	}
 
-	return bufferDesc;
+	//return bufferDesc;
 
 
 }
 
 //////////////////////////////////////////////////////////////
 //
-//	バッファの更新読み込み
+// バッファの更新読み込み
+// バッファ更新読み込み時にエラー
+// 更新タイミングの制限をかけると直ると思う
 //
-XAUDIO2_BUFFER CLoadWave::UpdateBuiffer(IXAudio2SourceVoice* voice)
+void CLoadWave::UpdateBuiffer(IXAudio2SourceVoice* voice, XAUDIO2_BUFFER& buffer)
 {
 	XAUDIO2_VOICE_STATE state;
 	XAUDIO2_BUFFER bufferDesc = { 0 };
@@ -327,15 +329,13 @@ XAUDIO2_BUFFER CLoadWave::UpdateBuiffer(IXAudio2SourceVoice* voice)
 	secondaryRight = std::vector<float>(bufferSample);
 	secondaryMixed = std::vector<float>(bufferSample * 2);
 
-
-
 	if (state.BuffersQueued < 2)
 	{
 		std::vector< float > & bufferLeft  = submitTimes & 1 ? secondaryLeft  : primaryLeft;
 		std::vector< float > & bufferRight = submitTimes & 1 ? secondaryRight : primaryRight;
 		std::vector< float > & bufferMixed = submitTimes & 1 ? secondaryMixed : primaryMixed;
 
-		std::size_t readSamples = ReadNormalized(nextFirstSample, bufferSample, &(bufferLeft[0]), &(bufferRight[0]));
+		std::size_t readSamples = ReadNormalized(nextFirstSample, bufferSample, &(bufferLeft[0]), &(bufferRight[0]) );
 
 		if (readSamples > 0)
 		{
@@ -351,7 +351,6 @@ XAUDIO2_BUFFER CLoadWave::UpdateBuiffer(IXAudio2SourceVoice* voice)
 			bufferDesc.Flags = nextFirstSample + readSamples >= GetSamples() ? XAUDIO2_END_OF_STREAM : 0;
 			bufferDesc.AudioBytes = readSamples * m_waveformat.nBlockAlign;
 			bufferDesc.pAudioData = reinterpret_cast<BYTE*>(&(bufferMixed[0]));
-			//voice->SubmitSourceBuffer(&bufferDesc);
 
 			nextFirstSample += readSamples;
 
@@ -362,7 +361,7 @@ XAUDIO2_BUFFER CLoadWave::UpdateBuiffer(IXAudio2SourceVoice* voice)
 			nextFirstSample = 0;
 
 	}
-	return bufferDesc;
+	//return bufferDesc;
 	
 }
 
