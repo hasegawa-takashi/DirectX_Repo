@@ -5,7 +5,7 @@ CTitle::CTitle()
 	GetObjMgr()->PushObj(new CTitleUI, ID_OTHER);
 	GetObjMgr()->PushObj(new CCamera, ID_CAMERA);
 	
-	GetSoundMgr()->Play(BGMList::Title);
+	GetSoundMgr()->Play(bgmdata::Sound1);
 }
 
 
@@ -27,7 +27,6 @@ void CTitle::Update() {
 	{
 		GetSceneMgr()->PushScene<CGameMain>();
 		GetObjMgr()->PushObj(new CBlackoutFade , ID_FADE);
-		//OutputDebugString("PushEnter\n");
 	}
 
 

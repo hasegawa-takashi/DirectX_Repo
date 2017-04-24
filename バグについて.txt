@@ -1,17 +1,17 @@
 
-Player.Cameraは複数ある場合、バグを起こす可能性あり。
-優先度付け等をしないとだめ。
+bool CSoundMgr::SetXAudio2Souce(IXAudio2SourceVoice* s,const WAVEFORMATEX w)
+{
+	HRESULT hr;
 
-SceneとObjの削除処理を1ループの最後にまとめて作る
+	if (FAILED(hr = m_XAudio2->CreateSourceVoice(&s, &w)))
+	{
+		return false;
+	}
 
-流れとしては
-更新_1
-更新_2
-描画_1
-描画_2
-描画_3
-Objの削除
-Sceneの削除
-ループ
+	return true;
+}
 
+の部分で無効な引数が発生していて初期が出来ていない模様。困った
+
+0x80070057	E_INVALIDARG	無効な引数が検出されました。
 

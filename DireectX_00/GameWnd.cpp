@@ -60,7 +60,7 @@ bool CGameWnd::Init(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, i
 
 		CDebug::Instance()->Init();
 
-		GetSoundMgr()->InitSoundMgr();
+		GetSoundMgr()->Init();
 
 		return true;
 	}
@@ -103,6 +103,7 @@ void CGameWnd::Run()
 				GetSceneMgr()->Init();
 
 				GetSceneMgr()->Update();
+				GetSoundMgr()->Update();
 				CInput::Update();
 				GetSceneMgr()->Draw();
 				CFPS::Instance()->FpsCntUp();

@@ -5,9 +5,12 @@
 
 #include<XAudio2.h>
 
+/*
+‚±‚±‚Ý‚½
+https://gist.github.com/xrated/2700516
+*/
 
-class CLoadWave :
-	public CWave
+class CLoadWave : public CWave
 {
 public:
 	CLoadWave();

@@ -1,7 +1,3 @@
-
-XAudio2を生音源から取得しようとしたのですがXAUDIO2_BUFFER->pAudiodataの中身の詳細がわからなかったので中止
-data_deleteにその途中ファイルを対比させてmmioに変更
-
 これからの目標
 
 1 XAudio2の設定
