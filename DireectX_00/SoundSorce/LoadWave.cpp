@@ -5,6 +5,9 @@ CLoadWave::CLoadWave(char* filepass)
 
 	fp = fopen(filepass, "rb");
 
+	nextFirstSample = 0;
+	submitTimes = 0;
+
 }
 
 CLoadWave::~CLoadWave()
@@ -81,7 +84,7 @@ WAVEFORMATEX* CLoadWave::GetWaveFormat()
 		m_dataChunkSample = m_dataChunkSize / m_waveformat.nBlockAlign;
 
 	}
-
+	
 	return &m_waveformat;
 
 }
@@ -108,7 +111,7 @@ std::size_t CLoadWave::GetSamples()
 //
 //	Data部分の取得
 //
-std::size_t CLoadWave::ReadRaw(const std::size_t start, const std::size_t sample, void* buffer)
+std::size_t CLoadWave::ReadDataRaw(const std::size_t start, const std::size_t sample, void* buffer)
 {
 
 	if (!buffer)
@@ -169,7 +172,7 @@ std::size_t CLoadWave::ReadNormalized(const std::size_t start, const std::size_t
 	if (start >= m_dataChunkSample)
 		return 0;
 
-	std::size_t actualSample = start + samples > m_dataChunkSample ? m_dataChunkSample - start : samples;
+	std::size_t actualSample = start + (samples > m_dataChunkSample) ? m_dataChunkSample - start : samples;
 
 	if (fseek(fp, m_firstSampleOffSet + start * m_waveformat.nBlockAlign, SEEK_SET) != 0)
 		return 0;
@@ -224,6 +227,7 @@ std::size_t CLoadWave::ReadNormalized(const std::size_t start, const std::size_t
 		case 16:
 		{
 			int16_t* data_s16 = reinterpret_cast<int16_t*>(data);
+			
 			if (m_waveformat.nChannels == 1)
 			{
 				float L = (data_s16[0] < 0) ? static_cast<float>(data_s16[0]) / 32768.0f : static_cast<float>(data_s16[0]) / 32767.0f;
@@ -238,7 +242,7 @@ std::size_t CLoadWave::ReadNormalized(const std::size_t start, const std::size_t
 				if (right)
 				{
 					left[readSample] = L;
-					right[readSample] = R;
+ 					right[readSample] = R;
 				}
 				else
 				{
@@ -265,49 +269,56 @@ std::size_t CLoadWave::ReadNormalized(const std::size_t start, const std::size_t
 //
 //	ストリーミング用のバッファの作成
 //
-void CLoadWave::PreparationBuffer(XAUDIO2_BUFFER& bufferDesc)
+XAUDIO2_BUFFER CLoadWave::PreparationBuffer()
 {
+	XAUDIO2_BUFFER buffer = { 0 };
+	
 
-	//XAUDIO2_BUFFER bufferDesc = { 0 };
+	bufferSample = m_waveformat.nSamplesPerSec * 3;
 
-	if (nextFirstSample < GetSamples() )
+	// BGM保存用バッファの初期化
+	primaryLeft = std::vector<float>(bufferSample);
+	primaryRight = std::vector<float>(bufferSample);
+	primaryMixed = std::vector<float>(bufferSample * 2);
+
+
+	secondaryLeft = std::vector<float>(bufferSample);
+	secondaryRight = std::vector<float>(bufferSample);
+	secondaryMixed = std::vector<float>(bufferSample * 2);
+
+
+	if (nextFirstSample < GetSamples())
 	{
-		bufferSample = m_waveformat.nSamplesPerSec * 3;
-		// プライマリバッファ
 
-		primaryLeft  = std::vector<float>(bufferSample);
-		primaryRight = std::vector<float>(bufferSample);
-		primaryMixed = std::vector<float>(bufferSample * 2);
+		//std::size_t readSample = ReadNormalized(nextFirstSample, bufferSample,&(primaryLeft[0]), &(primaryRight[0]) );
+		std::size_t readSample = ReadDataRaw(nextFirstSample,bufferSample,&(primaryMixed[0]) );
 
-		if (nextFirstSample < GetSamples())
+
+		if (readSample > 0)
 		{
 
-			std::size_t readSample = ReadNormalized(nextFirstSample, bufferSample, &(primaryLeft[0]), &(primaryRight[0]) );
+			/*primaryMixed.clear();
 
-			if (readSample > 0)
+			for (std::size_t loop = 0; loop < readSample; ++loop)
 			{
+				primaryMixed.push_back(primaryLeft.at(loop));
+				primaryMixed.push_back(primaryRight.at(loop));
+			}*/
 
-				primaryMixed.clear();
+			buffer.Flags	  = nextFirstSample + readSample >= GetSamples() ? XAUDIO2_END_OF_STREAM : 0;
+			buffer.AudioBytes = readSample * m_waveformat.nBlockAlign;
+			buffer.pAudioData = reinterpret_cast<BYTE*>( &(primaryMixed[0]) );
 
-				for (std::size_t loop = 0; loop < readSample; ++loop)
-				{
-					primaryMixed.push_back(primaryLeft.at(loop));
-					primaryMixed.push_back(primaryRight.at(loop));
-				}
 
-				bufferDesc.Flags = nextFirstSample + readSample >= GetSamples() ? XAUDIO2_END_OF_STREAM : 0;
-				bufferDesc.AudioBytes = readSample * m_waveformat.nBlockAlign;
-				bufferDesc.pAudioData = reinterpret_cast<BYTE*> (&(primaryMixed[0]));
+			nextFirstSample += readSample;
+			++submitTimes;
 
-				nextFirstSample += readSample;
-				++submitTimes;
-
-			}
-	
 		}
+	
 	}
+	
 
-	//return bufferDesc;
+	return buffer;
 
 
 }
@@ -318,39 +329,44 @@ void CLoadWave::PreparationBuffer(XAUDIO2_BUFFER& bufferDesc)
 // バッファ更新読み込み時にエラー
 // 更新タイミングの制限をかけると直ると思う
 //
-void CLoadWave::UpdateBuiffer(IXAudio2SourceVoice* voice, XAUDIO2_BUFFER& buffer)
+XAUDIO2_BUFFER CLoadWave::UpdateBuiffer(IXAudio2SourceVoice* voice)
 {
-	XAUDIO2_VOICE_STATE state;
-	XAUDIO2_BUFFER bufferDesc = { 0 };
+	// 読み込みをかけるべきか?
+	if ()
+	{
 
+	}
+
+
+	XAUDIO2_VOICE_STATE state;
+	XAUDIO2_BUFFER buffer = { 0 };
 	voice->GetState(&state);
 
-	secondaryLeft  = std::vector<float>(bufferSample);
-	secondaryRight = std::vector<float>(bufferSample);
-	secondaryMixed = std::vector<float>(bufferSample * 2);
+	bufferSample = m_waveformat.nSamplesPerSec * 3;
 
-	if (state.BuffersQueued < 2)
+	if (state.BuffersQueued < 2 &&nextFirstSample < GetSamples() )
 	{
-		std::vector< float > & bufferLeft  = submitTimes & 1 ? secondaryLeft  : primaryLeft;
-		std::vector< float > & bufferRight = submitTimes & 1 ? secondaryRight : primaryRight;
-		std::vector< float > & bufferMixed = submitTimes & 1 ? secondaryMixed : primaryMixed;
+		/*std::vector< float >& bufferLeft  = submitTimes & 1 ? secondaryLeft  : primaryLeft;
+		std::vector< float >& bufferRight = submitTimes & 1 ? secondaryRight : primaryRight;*/
+		std::vector< float >& bufferMixed = submitTimes & 1 ? secondaryMixed : primaryMixed;
 
-		std::size_t readSamples = ReadNormalized(nextFirstSample, bufferSample, &(bufferLeft[0]), &(bufferRight[0]) );
+		//std::size_t readSamples = ReadNormalized(nextFirstSample, bufferSample,&(bufferLeft[0]), &(bufferRight[0]) );
+		std::size_t readSamples = ReadDataRaw(nextFirstSample, bufferSample, &(bufferMixed[0]));
 
 		if (readSamples > 0)
 		{
-			bufferMixed.clear();
+			/*bufferMixed.clear();
 
 			for (std::size_t i = 0; i < readSamples; ++i)
 			{
 				bufferMixed.push_back(bufferLeft.at(i));
 				bufferMixed.push_back(bufferRight.at(i));
-			}
+			}*/
 
-
-			bufferDesc.Flags = nextFirstSample + readSamples >= GetSamples() ? XAUDIO2_END_OF_STREAM : 0;
-			bufferDesc.AudioBytes = readSamples * m_waveformat.nBlockAlign;
-			bufferDesc.pAudioData = reinterpret_cast<BYTE*>(&(bufferMixed[0]));
+			buffer = { 0 };
+			buffer.Flags = nextFirstSample + readSamples >= GetSamples() ? XAUDIO2_END_OF_STREAM : 0;
+			buffer.AudioBytes = readSamples * m_waveformat.nBlockAlign;
+			buffer.pAudioData = reinterpret_cast<BYTE*>(&(bufferMixed[0]));
 
 			nextFirstSample += readSamples;
 
@@ -361,7 +377,7 @@ void CLoadWave::UpdateBuiffer(IXAudio2SourceVoice* voice, XAUDIO2_BUFFER& buffer
 			nextFirstSample = 0;
 
 	}
-	//return bufferDesc;
+	return buffer;
 	
 }
 

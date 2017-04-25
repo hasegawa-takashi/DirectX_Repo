@@ -12,11 +12,13 @@ public:
 
 	WAVEFORMATEX* GetWaveFormat();
 	std::size_t GetSamples();
-	std::size_t ReadRaw(const std::size_t start,const std::size_t sample,void* buffer );
+	std::size_t ReadDataRaw(const std::size_t start,const std::size_t sample,void* buffer );
 	std::size_t ReadNormalized(const std::size_t start, const std::size_t samples, float * left, float * right);
 
-	void PreparationBuffer(XAUDIO2_BUFFER& buffer);
-	void UpdateBuiffer(IXAudio2SourceVoice* voice , XAUDIO2_BUFFER& buffer);
+	XAUDIO2_BUFFER PreparationBuffer();
+	XAUDIO2_BUFFER UpdateBuiffer(IXAudio2SourceVoice* voice);
+
+
 
 private:
 	void Close();
@@ -50,3 +52,22 @@ private:
 
 };
 
+class VoiceCallBack : public IXAudio2VoiceCallback
+{
+public:
+	HANDLE hBufferEndEvent;
+	VoiceCallBack(): hBufferEndEvent(CreateEvent(NULL, FALSE, FALSE, NULL)) {}
+	~VoiceCallBack() { CloseHandle(hBufferEndEvent); }
+
+	void OnStreamEnd() { SetEvent( hBufferEndEvent ); }
+
+	void OnVoiceProcessingPassEnd() { }
+	void OnVoiceProcessingPassStart(UINT32 SamplesRequired) {    }
+	void OnBufferEnd(void * pBufferContext) { }
+	void OnBufferStart(void * pBufferContext) {    }
+	void OnLoopEnd(void * pBufferContext) {    }
+	void OnVoiceError(void * pBufferContext, HRESULT Error) { }
+
+private:
+
+};

@@ -24,24 +24,24 @@ CSoundMgr::CSoundMgr()
 	}
 
 	// 使用可能オーディオデバイス数
-	m_XAudio2->GetDeviceCount(&m_devicecnt);
+	//m_XAudio2->GetDeviceCount(&m_devicecnt);
 
-	// デバイスの選択
-	XAUDIO2_DEVICE_DETAILS devicedetails;
-	int preferredDevice = 0;
+	//// デバイスの選択
+	//XAUDIO2_DEVICE_DETAILS devicedetails;
+	//int preferredDevice = 0;
 
-	for (UINT loop = 0; loop < m_devicecnt; loop++)
-	{
-		m_XAudio2->GetDeviceDetails(loop, &devicedetails);
-		if (devicedetails.OutputFormat.Format.nChannels > 2)
-		{
-			preferredDevice = loop;
-		}
-	}
+	//for (UINT loop = 0; loop < m_devicecnt; loop++)
+	//{
+	//	m_XAudio2->GetDeviceDetails(loop, &devicedetails);
+	//	if (devicedetails.OutputFormat.Format.nChannels > 2)
+	//	{
+	//		preferredDevice = loop;
+	//	}
+	//}
 
 
 	// マスターボイスの作成
-	if (FAILED(hr = m_XAudio2->CreateMasteringVoice(&m_MasterVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, preferredDevice, NULL)))
+	if (FAILED(hr = m_XAudio2->CreateMasteringVoice(&m_MasterVoice, 2)))
 	{
 		std::cout << "マスターボイス作成失敗" << std::endl;
 		CoUninitialize();

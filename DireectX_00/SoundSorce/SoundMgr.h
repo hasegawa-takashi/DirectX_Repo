@@ -30,9 +30,6 @@ private:
 	IXAudio2* m_XAudio2;								// engine
 	IXAudio2MasteringVoice* m_MasterVoice;				// MasterVoice
 
-	//IXAudio2SourceVoice* m_BgmVoices[bgmdata::MAX_BGM];	// BGMSourceVoice‚Ì”z—ñ
-
-
 	UINT32 flags = 0;
 
 	UINT32 m_devicecnt;

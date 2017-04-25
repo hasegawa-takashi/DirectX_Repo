@@ -34,8 +34,7 @@ void CBgmDatabase::CreateBgmVoice()
 	// バッファの設定
 	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
 	{
-		m_sourceWaveFormat[loop]->PreparationBuffer(m_AudioBuffer[loop]) ;
-		m_BgmVoices[loop]->SubmitSourceBuffer(&m_AudioBuffer[loop]);
+		m_BgmVoices[loop]->SubmitSourceBuffer(&m_sourceWaveFormat[loop]->PreparationBuffer());
 	}
 
 }
@@ -45,8 +44,7 @@ void CBgmDatabase::Update()
 	// バッファの設定
 	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
 	{
-		m_sourceWaveFormat[loop]->UpdateBuiffer(m_BgmVoices[loop], m_AudioBuffer[loop]);
-		m_BgmVoices[loop]->SubmitSourceBuffer(&m_AudioBuffer[loop]);
+		m_BgmVoices[loop]->SubmitSourceBuffer(&m_sourceWaveFormat[loop]->UpdateBuiffer(m_BgmVoices[loop]));
 	}
 }
 
@@ -54,7 +52,7 @@ void CBgmDatabase::Play(int BgmListNumb)
 {
 	HRESULT hr;
 
-	if (FAILED(hr = m_BgmVoices[BgmListNumb]->Start()))
+	if (FAILED(hr = m_BgmVoices[BgmListNumb]->Start() ))
 	{
 		
 	}
