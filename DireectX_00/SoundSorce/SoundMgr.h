@@ -13,20 +13,14 @@ public:
 		return &_instance;
 	}
 	
-	void Play(bgmdata::BgmNameList);
-
 	void Init();
 	void Update();
-
-	bool SetXAudio2Souce(IXAudio2SourceVoice**, const WAVEFORMATEX);
+	void Play(bgmdata::BgmNameList);
 
 private:
 	CSoundMgr();
 
-	//CXAudio2Interface* m_XAudiointerface;
-	CBgmDatabase* m_Bgmdata;
-
-
+	CBgmDatabase* m_Bgmdata;							// BgmList
 	IXAudio2* m_XAudio2;								// engine
 	IXAudio2MasteringVoice* m_MasterVoice;				// MasterVoice
 

@@ -4,7 +4,11 @@
 
 CXAudio2Interface::CXAudio2Interface()
 {
-	CreateXAudio();
+	if ( !CreateXAudio() )
+	{
+		
+	}
+
 }
 
 
@@ -12,6 +16,10 @@ CXAudio2Interface::~CXAudio2Interface()
 {
 }
 
+/////////////////////////////////////////////////////////////////
+//
+//	XAudio‚Ìì¬
+//
 bool CXAudio2Interface::CreateXAudio()
 {
 	HRESULT hr;
@@ -58,15 +66,37 @@ bool CXAudio2Interface::CreateXAudio()
 	return true;
 }
 
-bool CXAudio2Interface::SetXAudio2SouceVoice(IXAudio2SourceVoice* souce, WAVEFORMATEX* wave)
+/////////////////////////////////////////////////////////////////
+//
+//	SouceVoice‚ÌÝ’è
+//
+bool CXAudio2Interface::SetXAudio2SouceVoice(IXAudio2SourceVoice** souce, WAVEFORMATEX wave)
 {
 	HRESULT hr;
-
-	if (FAILED(hr = m_XAudio2->CreateSourceVoice(&souce, wave,0)))
+	if (FAILED(hr = m_XAudio2->CreateSourceVoice(souce, &wave,0)))
 	{
 		return false;
 	}
-
 	return true;
+}
 
+/////////////////////////////////////////////////////////////////
+//
+//	‘S‘Ì‰¹—Ê‚ÌÝ’è
+//
+void CXAudio2Interface::SetMasterVolume(float Volume)
+{
+	m_MasterVoice->SetVolume(Volume);
+}
+
+/////////////////////////////////////////////////////////////////
+//
+//	‘S‘Ì‰¹—Ê‚ÌŽæ“¾
+//
+float CXAudio2Interface::GetMasterVolume()
+{
+
+	float vol = 0.0f;
+	m_MasterVoice->GetVolume(&vol);
+	return vol;
 }

@@ -15,9 +15,10 @@ public:
 	std::size_t ReadDataRaw(const std::size_t start,const std::size_t sample,void* buffer );
 	std::size_t ReadNormalized(const std::size_t start, const std::size_t samples, float * left, float * right);
 
-	XAUDIO2_BUFFER PreparationBuffer();
-	XAUDIO2_BUFFER UpdateBuiffer(IXAudio2SourceVoice* voice);
+	XAUDIO2_BUFFER PreparationBuffer();								// バッファのストリーミング設定
+	XAUDIO2_BUFFER UpdateBuiffer(IXAudio2SourceVoice* voice);		// バッファのストリーミング更新
 
+	XAUDIO2_BUFFER PreLoadSound();									// プリロード用読み込み
 
 
 private:
@@ -49,25 +50,5 @@ private:
 	std::vector< float > secondaryRight = { 0 };
 	std::vector< float > secondaryMixed = { 0 };
 
-
-};
-
-class VoiceCallBack : public IXAudio2VoiceCallback
-{
-public:
-	HANDLE hBufferEndEvent;
-	VoiceCallBack(): hBufferEndEvent(CreateEvent(NULL, FALSE, FALSE, NULL)) {}
-	~VoiceCallBack() { CloseHandle(hBufferEndEvent); }
-
-	void OnStreamEnd() { SetEvent( hBufferEndEvent ); }
-
-	void OnVoiceProcessingPassEnd() { }
-	void OnVoiceProcessingPassStart(UINT32 SamplesRequired) {    }
-	void OnBufferEnd(void * pBufferContext) { }
-	void OnBufferStart(void * pBufferContext) {    }
-	void OnLoopEnd(void * pBufferContext) {    }
-	void OnVoiceError(void * pBufferContext, HRESULT Error) { }
-
-private:
 
 };

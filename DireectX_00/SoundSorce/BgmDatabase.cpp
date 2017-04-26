@@ -1,8 +1,6 @@
 #include "BgmDatabase.h"
 
 #include "LoadWave.h"
-#include"XAudio2Interface.h"
-#include"SoundMgr.h"
 
 CBgmDatabase::CBgmDatabase()
 {
@@ -14,6 +12,10 @@ CBgmDatabase::~CBgmDatabase()
 {
 }
 
+/////////////////////////////////////////////////////////////////
+//
+//	SouceVoiceの作成
+//
 void CBgmDatabase::CreateBgmVoice()
 {
 	// 全BGMのLoad
@@ -23,12 +25,11 @@ void CBgmDatabase::CreateBgmVoice()
 		m_BgmVoices[loop] = NULL;
 	}
 
-	
 	// SouceVoiceの作成
 	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
 	{
 		WAVEFORMATEX* waveformat = m_sourceWaveFormat[loop]->GetWaveFormat();
-		GetSoundMgr()->SetXAudio2Souce(&m_BgmVoices[loop], *waveformat);
+		GetXAudio2Mgr()->SetXAudio2SouceVoice(&m_BgmVoices[loop], *waveformat);
 	}
 
 	// バッファの設定
@@ -39,15 +40,25 @@ void CBgmDatabase::CreateBgmVoice()
 
 }
 
+/////////////////////////////////////////////////////////////////
+//
+//	SouceVoiceの設定
+//
 void CBgmDatabase::Update()
 {
-	// バッファの設定
+	// バッファの更新
 	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
 	{
-		m_BgmVoices[loop]->SubmitSourceBuffer(&m_sourceWaveFormat[loop]->UpdateBuiffer(m_BgmVoices[loop]));
+		XAUDIO2_BUFFER buffer = m_sourceWaveFormat[loop]->UpdateBuiffer(m_BgmVoices[loop]);
+		if(buffer.pAudioData > 0)
+			m_BgmVoices[loop]->SubmitSourceBuffer(&buffer);
 	}
 }
 
+/////////////////////////////////////////////////////////////////
+//
+//	BGMの再生
+//
 void CBgmDatabase::Play(int BgmListNumb)
 {
 	HRESULT hr;
@@ -55,5 +66,28 @@ void CBgmDatabase::Play(int BgmListNumb)
 	if (FAILED(hr = m_BgmVoices[BgmListNumb]->Start() ))
 	{
 		
+	}
+}
+
+/////////////////////////////////////////////////////////////////
+//
+//	BGM音量の取得
+//
+float CBgmDatabase::GetBgmVolume()
+{
+	return Volume;
+}
+
+/////////////////////////////////////////////////////////////////
+//
+//	BGM音量の設定
+//
+void CBgmDatabase::SetBgmVolume(float vol)
+{
+	Volume = vol;
+
+	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
+	{
+		m_BgmVoices[loop]->SetVolume(Volume);
 	}
 }

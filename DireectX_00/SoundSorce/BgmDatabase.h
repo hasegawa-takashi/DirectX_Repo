@@ -2,7 +2,9 @@
 
 #include<XAudio2.h>
 #include<vector>
+
 #include"LoadWave.h"
+#include"XAudio2Interface.h"
 
 namespace bgmdata {
 	enum BgmNameList
@@ -30,15 +32,18 @@ public:
 
 	void Update();
 
+	float GetBgmVolume();
+	void SetBgmVolume(float Vol);
+
 	void Close();
 
 private:
 	void CreateBgmVoice();
 
 	IXAudio2SourceVoice* m_BgmVoices[bgmdata::MAX_BGM];	// BGMSourceVoiceの配列
-	VoiceCallBack m_voicecallback;
+	VoiceCallback m_voicecallback;						// BGMのCallBack *BGMを多重再生しない前提 
 	CLoadWave* m_sourceWaveFormat[bgmdata::MAX_BGM];	// WaveForamtの配列 
-	int Volume;											// 全体Vol
+	float Volume;											// 全体Vol
 
 };
 

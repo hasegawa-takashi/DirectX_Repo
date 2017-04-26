@@ -2,9 +2,8 @@
 #include "Fade.h"
 
 const int MAX_FADE = 255;
-const int FADE_SPEED = 3.0f;
+const int FADE_SPEED = 3;
 #define PATH_FADETEXTURE _T("../data/Texture/Fade.png")
-
 
 class CBlackoutFade : public CFade
 {
