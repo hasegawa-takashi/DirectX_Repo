@@ -28,7 +28,9 @@ public:
 	CBgmDatabase();
 	~CBgmDatabase();
 
+	void Play(int BgmListNumb);
 	void Play(int BgmListNumb,bool fadein);
+	void Stop();
 	void Stop(bool fadeout);
 
 	void Update();
