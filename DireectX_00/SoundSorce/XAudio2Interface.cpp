@@ -31,7 +31,7 @@ bool CXAudio2Interface::CreateXAudio()
 		return false;
 	}
 
-	if (FAILED(hr = XAudio2Create(&m_XAudio2, flags)))
+	if (FAILED(hr = XAudio2Create(&m_XAudio2, m_flags)))
 	{
 		std::cout << "XAudio2‚Ìì¬Ž¸”s" << std::endl;
 		CoUninitialize();
@@ -86,7 +86,8 @@ bool CXAudio2Interface::SetXAudio2SouceVoice(IXAudio2SourceVoice** souce, WAVEFO
 //
 void CXAudio2Interface::SetMasterVolume(float Volume)
 {
-	m_MasterVoice->SetVolume(Volume);
+	m_MasterVolume = Volume;
+	m_MasterVoice->SetVolume(m_MasterVolume);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -95,8 +96,43 @@ void CXAudio2Interface::SetMasterVolume(float Volume)
 //
 float CXAudio2Interface::GetMasterVolume()
 {
+	m_MasterVolume = 0.0f;
+	m_MasterVoice->GetVolume(&m_MasterVolume);
+	return m_MasterVolume;
+}
 
-	float vol = 0.0f;
-	m_MasterVoice->GetVolume(&vol);
-	return vol;
+/////////////////////////////////////////////////////////////////
+//
+//	FadeOut
+//
+void CXAudio2Interface::MasterVoiceFadeOut()
+{
+	float NowVolume = 0.0f;
+	m_MasterVoice->GetVolume(&NowVolume);
+	
+	if (NowVolume <= 0)
+	{
+		m_Fade = false;
+		m_MasterVoice->SetVolume(0.0f);
+	}
+	NowVolume -= MasterVoiceData::FadeSpd;
+	m_MasterVoice->SetVolume(NowVolume);
+}
+
+/////////////////////////////////////////////////////////////////
+//
+//	FadeIn
+//
+void CXAudio2Interface::MasterVoiceFadeIn()
+{
+	float NowVolume = 0.0f;
+	m_MasterVoice->GetVolume(&NowVolume);
+
+	if (NowVolume >= m_MasterVolume)
+	{
+		m_Fade = false;
+		m_MasterVoice->SetVolume(m_MasterVolume);
+	}
+	NowVolume += MasterVoiceData::FadeSpd;
+	m_MasterVoice->SetVolume(NowVolume);
 }

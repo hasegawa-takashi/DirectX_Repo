@@ -3,6 +3,10 @@
 #include<XAudio2.h>
 #include <iostream>
 
+namespace MasterVoiceData {
+	const float FadeSpd = 0.1f;
+}
+
 /////////////////////////////////////////////////////////////////
 //
 //	XAudio2ÇÃèÄîıìôÅX
@@ -24,6 +28,9 @@ public:
 
 	void SetMasterVolume(float Volume);
 	float GetMasterVolume();
+	
+	void MasterVoiceFadeOut();
+	void MasterVoiceFadeIn();
 
 private:
 	CXAudio2Interface();
@@ -31,9 +38,12 @@ private:
 	IXAudio2* m_XAudio2;
 	IXAudio2MasteringVoice* m_MasterVoice;
 
-	UINT32 flags = 0;
-
+	UINT32 m_flags = 0;
 	UINT32 m_devicecnt;
+
+	float m_MasterVolume = 1;
+	bool m_Fade = false;
+
 };
 
 inline CXAudio2Interface* GetXAudio2Mgr()

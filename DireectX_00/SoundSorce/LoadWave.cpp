@@ -12,7 +12,7 @@ CLoadWave::CLoadWave(char* filepass)
 
 CLoadWave::~CLoadWave()
 {
-
+	Close();
 }
 //////////////////////////////////////////////////////////////
 //

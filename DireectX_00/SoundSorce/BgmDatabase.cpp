@@ -10,6 +10,7 @@ CBgmDatabase::CBgmDatabase()
 
 CBgmDatabase::~CBgmDatabase()
 {
+	Close();
 }
 
 /////////////////////////////////////////////////////////////////
@@ -59,13 +60,27 @@ void CBgmDatabase::Update()
 //
 //	BGMÇÃçƒê∂
 //
-void CBgmDatabase::Play(int BgmListNumb)
+void CBgmDatabase::Play(int BgmListNumb , bool fadein = false)
 {
 	HRESULT hr;
 
-	if (FAILED(hr = m_BgmVoices[BgmListNumb]->Start() ))
+	m_BgmVoices[BgmListNumb]->Start();
+
+	if (fadein)
 	{
-		
+		FadeIn();
+	}
+}
+
+/////////////////////////////////////////////////////////////////
+//
+//	BGMÇÃí‚é~
+//
+void CBgmDatabase::Stop(bool fadein = false)
+{
+	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
+	{
+		m_BgmVoices[loop]->Stop();
 	}
 }
 
@@ -89,5 +104,58 @@ void CBgmDatabase::SetBgmVolume(float vol)
 	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
 	{
 		m_BgmVoices[loop]->SetVolume(Volume);
+	}
+}
+
+/////////////////////////////////////////////////////////////////
+//
+//	èIóπèàóù
+//
+void CBgmDatabase::Close()
+{
+	// Ç†Ç∆énññ
+	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
+	{
+		m_BgmVoices[loop]->DestroyVoice();
+	}
+
+	// 
+	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
+	{
+		delete[] m_sourceWaveFormat;
+	}
+}
+
+void CBgmDatabase::FadeOut()
+{
+	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
+	{
+		float NowVolume = 0.0f;
+		m_BgmVoices[loop]->GetVolume(&NowVolume);
+
+		if (NowVolume <= 0)
+		{
+			m_Fade = false;
+			m_BgmVoices[loop]->SetVolume(0.0f);
+		}
+		NowVolume -= MasterVoiceData::FadeSpd;
+		m_BgmVoices[loop]->SetVolume(NowVolume);
+	}
+}
+
+void CBgmDatabase::FadeIn()
+{
+	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
+	{
+		float NowVolume = 0.0f;
+		m_BgmVoices[loop]->GetVolume(&NowVolume);
+
+		if (NowVolume >= Volume)
+		{
+			m_Fade = false;
+			m_BgmVoices[loop]->SetVolume(Volume);
+		}
+		NowVolume += MasterVoiceData::FadeSpd;
+		m_BgmVoices[loop]->SetVolume(NowVolume);
 	}
 }
