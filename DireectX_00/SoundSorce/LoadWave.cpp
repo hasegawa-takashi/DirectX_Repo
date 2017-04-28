@@ -365,5 +365,22 @@ void CLoadWave::Close()
 //
 XAUDIO2_BUFFER CLoadWave::PreLoadSound()
 {
+	XAUDIO2_BUFFER buffer = { 0 };
+
+	bufferSample = m_dataChunkSize;
+
+	primaryMixed = std::vector<float>(bufferSample * 2);
+
+	if ( nextFirstSample < GetSamples() )
+	{
+		std::size_t readSample = ReadDataRaw(nextFirstSample, bufferSample, &(primaryMixed[0]));
+
+		buffer = { 0 };
+		buffer.Flags = nextFirstSample + readSample >= GetSamples() ? XAUDIO2_END_OF_STREAM : 0;
+		buffer.AudioBytes = readSample * m_waveformat.nBlockAlign;
+		buffer.pAudioData = reinterpret_cast<BYTE*>(&(primaryMixed[0]));
+	}
+
+	return buffer;
 
 }

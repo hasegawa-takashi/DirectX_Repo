@@ -15,7 +15,8 @@ public:
 	
 	void Init();
 	void Update();
-	void Play(bgmdata::BgmNameList);
+	void Play(bgmdata::BgmNameList, bool fadein);
+	void Stop(bgmdata::BgmNameList, bool fadeout);
 
 private:
 	CSoundMgr();

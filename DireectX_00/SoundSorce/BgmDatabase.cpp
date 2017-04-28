@@ -1,6 +1,5 @@
 #include "BgmDatabase.h"
 
-#include "LoadWave.h"
 
 CBgmDatabase::CBgmDatabase()
 {
@@ -51,6 +50,7 @@ void CBgmDatabase::Update()
 	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
 	{
 		XAUDIO2_BUFFER buffer = m_sourceWaveFormat[loop]->UpdateBuiffer(m_BgmVoices[loop]);
+		
 		if(buffer.pAudioData > 0)
 			m_BgmVoices[loop]->SubmitSourceBuffer(&buffer);
 	}
@@ -76,12 +76,9 @@ void CBgmDatabase::Play(int BgmListNumb , bool fadein = false)
 //
 //	BGMの停止
 //
-void CBgmDatabase::Stop(bool fadein = false)
+void CBgmDatabase::Stop(int BgmListNumb,bool fadein = false)
 {
-	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
-	{
-		m_BgmVoices[loop]->Stop();
-	}
+	m_BgmVoices[BgmListNumb]->Stop();
 }
 
 /////////////////////////////////////////////////////////////////
@@ -126,6 +123,10 @@ void CBgmDatabase::Close()
 	}
 }
 
+/////////////////////////////////////////////////////////////////
+//
+//	フェードアウト
+//
 void CBgmDatabase::FadeOut()
 {
 	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
@@ -143,6 +144,10 @@ void CBgmDatabase::FadeOut()
 	}
 }
 
+/////////////////////////////////////////////////////////////////
+//
+//	フェードイン
+//
 void CBgmDatabase::FadeIn()
 {
 	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)

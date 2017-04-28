@@ -29,7 +29,7 @@ public:
 	~CBgmDatabase();
 
 	void Play(int BgmListNumb,bool fadein);
-	void Stop(bool fadeout);
+	void Stop(int BgmListNumb,bool fadeout);
 
 	void Update();
 
