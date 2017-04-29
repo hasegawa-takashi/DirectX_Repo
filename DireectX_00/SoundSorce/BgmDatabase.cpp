@@ -1,11 +1,9 @@
 #include "BgmDatabase.h"
 
-
 CBgmDatabase::CBgmDatabase()
 {
 	CreateBgmVoice();
 }
-
 
 CBgmDatabase::~CBgmDatabase()
 {
@@ -35,9 +33,10 @@ void CBgmDatabase::CreateBgmVoice()
 	// バッファの設定
 	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
 	{
-		m_BgmVoices[loop]->SubmitSourceBuffer(&m_sourceWaveFormat[loop]->PreparationBuffer());
+		m_BgmVoices[loop]->SubmitSourceBuffer( &m_sourceWaveFormat[loop]->PreparationBuffer() );
 	}
 
+	Soundfunc = []() {};
 }
 
 /////////////////////////////////////////////////////////////////
@@ -54,31 +53,67 @@ void CBgmDatabase::Update()
 		if(buffer.pAudioData > 0)
 			m_BgmVoices[loop]->SubmitSourceBuffer(&buffer);
 	}
+
+	if (Soundfunc != NULL)
+	{
+		Soundfunc();
+	}
+
 }
 
 /////////////////////////////////////////////////////////////////
 //
 //	BGMの再生
 //
-void CBgmDatabase::Play(int BgmListNumb , bool fadein = false)
+void CBgmDatabase::Play(int BgmListNumb , bool fadein)
 {
-	HRESULT hr;
-
-	m_BgmVoices[BgmListNumb]->Start();
-
 	if (fadein)
 	{
-		FadeIn();
+		Soundfunc = std::bind(&CBgmDatabase::FadeIn, this, fadein);
+		//Soundfunc = std::bind( &FadeIn, this, BgmListNumb);
+	}
+	else
+	{
+		m_BgmVoices[BgmListNumb]->Start();
 	}
 }
+/////////////////////////////////////////////////////////////////
+//
+//	BGMの再生
+//
+void CBgmDatabase::Play(int BgmListNumb)
+{
+	m_BgmVoices[BgmListNumb]->Start();
+}
+
 
 /////////////////////////////////////////////////////////////////
 //
-//	BGMの停止
+//	BGMの停止[BGMを全停止]
 //
-void CBgmDatabase::Stop(int BgmListNumb,bool fadein = false)
+void CBgmDatabase::Stop()
 {
-	m_BgmVoices[BgmListNumb]->Stop();
+	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
+	{
+		m_BgmVoices[loop]->Stop();
+	}
+}
+/////////////////////////////////////////////////////////////////
+//
+//	BGMの停止[BGMを選択停止]
+//
+void CBgmDatabase::Stop(int BgmListNumb , bool fadeOut)
+{
+	
+	if (fadeOut)
+	{
+		Soundfunc = std::bind(&CBgmDatabase::FadeIn, this, fadeOut);
+	}
+	else
+	{
+		m_BgmVoices[BgmListNumb]->Stop();
+	}
+
 }
 
 /////////////////////////////////////////////////////////////////
@@ -127,40 +162,45 @@ void CBgmDatabase::Close()
 //
 //	フェードアウト
 //
-void CBgmDatabase::FadeOut()
+void CBgmDatabase::FadeOut(int BgmListNumb)
 {
-	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
-	{
-		float NowVolume = 0.0f;
-		m_BgmVoices[loop]->GetVolume(&NowVolume);
+	float NowVolume = 0.0f;
+	m_BgmVoices[BgmListNumb]->GetVolume(&NowVolume);
 
-		if (NowVolume <= 0)
-		{
-			m_Fade = false;
-			m_BgmVoices[loop]->SetVolume(0.0f);
-		}
-		NowVolume -= MasterVoiceData::FadeSpd;
-		m_BgmVoices[loop]->SetVolume(NowVolume);
+	if (NowVolume <= 0)
+	{
+		m_Fade = false;
+		m_BgmVoices[BgmListNumb]->SetVolume(0.0f);
+		Soundfunc = []() {};
 	}
+	NowVolume -= MasterVoiceData::FadeSpd;
+	m_BgmVoices[BgmListNumb]->SetVolume(NowVolume);
 }
 
 /////////////////////////////////////////////////////////////////
 //
 //	フェードイン
 //
-void CBgmDatabase::FadeIn()
+void CBgmDatabase::FadeIn(int BgmListNumb)
 {
-	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
-	{
-		float NowVolume = 0.0f;
-		m_BgmVoices[loop]->GetVolume(&NowVolume);
+	float NowVolume = 0.0f;
+	m_BgmVoices[BgmListNumb]->GetVolume(&NowVolume);
 
-		if (NowVolume >= Volume)
-		{
-			m_Fade = false;
-			m_BgmVoices[loop]->SetVolume(Volume);
-		}
-		NowVolume += MasterVoiceData::FadeSpd;
-		m_BgmVoices[loop]->SetVolume(NowVolume);
+	if (NowVolume >= Volume)
+	{
+		m_Fade = false;
+		m_BgmVoices[BgmListNumb]->SetVolume(Volume);
+		Soundfunc = []() {};
 	}
+	NowVolume += MasterVoiceData::FadeSpd;
+	m_BgmVoices[BgmListNumb]->SetVolume(NowVolume);
+}
+
+/////////////////////////////////////////////////////////////////
+//
+//	ピッチレートの変更関数
+//
+void CBgmDatabase::PitchRate(int BgmListNumb,float PitchRate)
+{
+	m_BgmVoices[0]->SetFrequencyRatio(PitchRate);
 }

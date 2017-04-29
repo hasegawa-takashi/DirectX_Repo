@@ -111,6 +111,7 @@
     <ClCompile Include="SoundSorce\BgmDatabase.cpp" />
     <ClCompile Include="SoundSorce\LoadWave.cpp" />
     <ClCompile Include="SoundSorce\SoundMgr.cpp" />
+    <ClCompile Include="SoundSorce\X3DAudio.cpp" />
     <ClCompile Include="SoundSorce\XAudio2Interface.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Title.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="SoundSorce\BgmDatabase.h" />
     <ClInclude Include="SoundSorce\LoadWave.h" />
     <ClInclude Include="SoundSorce\SoundMgr.h" />
+    <ClInclude Include="SoundSorce\X3DAudio.h" />
     <ClInclude Include="SoundSorce\XAudio2Interface.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="Title.h" />

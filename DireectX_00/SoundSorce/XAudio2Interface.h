@@ -1,6 +1,7 @@
 #pragma once
 
 #include<XAudio2.h>
+#include<X3DAudio.h>
 #include <iostream>
 
 namespace MasterVoiceData {
@@ -37,6 +38,7 @@ private:
 
 	IXAudio2* m_XAudio2;
 	IXAudio2MasteringVoice* m_MasterVoice;
+	X3DAUDIO_HANDLE X3DInstance;
 
 	UINT32 m_flags = 0;
 	UINT32 m_devicecnt;

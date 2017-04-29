@@ -5,10 +5,7 @@
 CXAudio2Interface::CXAudio2Interface()
 {
 	if ( !CreateXAudio() )
-	{
-		
-	}
-
+	{}
 }
 
 
@@ -54,7 +51,6 @@ bool CXAudio2Interface::CreateXAudio()
 		}
 	}
 
-
 	// マスターボイスの作成
 	if (FAILED(hr = m_XAudio2->CreateMasteringVoice(&m_MasterVoice, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, preferredDevice, NULL)))
 	{
@@ -62,6 +58,9 @@ bool CXAudio2Interface::CreateXAudio()
 		CoUninitialize();
 		return false;
 	}
+
+	DWORD channelMask = devicedetails.OutputFormat.dwChannelMask;
+	X3DAudioInitialize(channelMask,X3DAUDIO_SPEED_OF_SOUND,X3DInstance);
 
 	return true;
 }
