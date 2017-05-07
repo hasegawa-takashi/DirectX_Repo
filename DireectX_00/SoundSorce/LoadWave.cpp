@@ -10,6 +10,10 @@ CLoadWave::CLoadWave(char* filepass)
 
 }
 
+//////////////////////////////////////////////////////////////
+//
+//	WAveFmt‚Ì’âŽ~
+//
 CLoadWave::~CLoadWave()
 {
 	Close();

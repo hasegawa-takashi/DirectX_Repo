@@ -47,7 +47,7 @@ public:
 	void PitchRate(int BgmListNumb, float PitchRate );
 
 private:
-	void CreateBgmVoice();
+	void CreateSourceVoice();
 
 	IXAudio2SourceVoice* m_BgmVoices[bgmdata::MAX_BGM];	// BGMSourceVoice‚Ì”z—ñ
 	VoiceCallback m_voicecallback;						// BGM‚ÌCallBack *BGM‚ğ‘½dÄ¶‚µ‚È‚¢‘O’ñ 

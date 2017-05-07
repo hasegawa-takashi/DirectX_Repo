@@ -1,6 +1,7 @@
 #pragma once
 
 #include"BgmDatabase.h"
+#include"SEDatabase.h"
 #include"XAudio2Interface.h"
 
 class CSoundMgr
@@ -15,15 +16,19 @@ public:
 	
 	void Init();
 	void Update();
+
 	void Play(bgmdata::BgmNameList, bool fadein);
 	void Stop(bgmdata::BgmNameList, bool fadeout);
+
+	void Play(sedata::SeNameList);
+	void Stop(sedata::SeNameList);
 
 private:
 	CSoundMgr();
 
 	CBgmDatabase* m_Bgmdata;							// BgmList
-	IXAudio2* m_XAudio2;								// engine
-	IXAudio2MasteringVoice* m_MasterVoice;				// MasterVoice
+	CSEDatabase* m_Sedata;
+
 
 	UINT32 flags = 0;
 

@@ -149,7 +149,6 @@ void CObjManager::UIDraw()
 //-------------------------------------------------------
 void CObjManager::Release()
 {
-	// ‘½•ª‚±‚ê‚Í•K—v‚È‚¢‚ÆŽv‚¤
 	GetObjMgr()->AllRelaseObj();
 }
 

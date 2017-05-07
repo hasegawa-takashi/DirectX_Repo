@@ -59,8 +59,17 @@ bool CXAudio2Interface::CreateXAudio()
 		return false;
 	}
 
+	// 3DSound‚Ì‰Šú‰»
 	DWORD channelMask = devicedetails.OutputFormat.dwChannelMask;
-	X3DAudioInitialize(channelMask,X3DAUDIO_SPEED_OF_SOUND,X3DInstance);
+	X3DAudioInitialize(channelMask,X3DAUDIO_SPEED_OF_SOUND, m_X3DInstance);
+
+	// DSPSetteing‚Ìİ’è
+	m_X3DDsp = { 0 };
+	FLOAT32* matrix = new FLOAT32[devicedetails.OutputFormat.Format.nChannels];
+	m_X3DDsp.SrcChannelCount = 1;
+	m_X3DDsp.DstChannelCount = devicedetails.OutputFormat.Format.nChannels;
+	m_X3DDsp.pMatrixCoefficients = matrix;
+
 
 	return true;
 }

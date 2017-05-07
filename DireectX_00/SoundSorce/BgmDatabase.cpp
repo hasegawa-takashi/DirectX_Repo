@@ -2,7 +2,9 @@
 
 CBgmDatabase::CBgmDatabase()
 {
-	CreateBgmVoice();
+	CreateSourceVoice();
+
+	Volume = 1.0f;
 }
 
 CBgmDatabase::~CBgmDatabase()
@@ -14,7 +16,7 @@ CBgmDatabase::~CBgmDatabase()
 //
 //	SouceVoiceÇÃçÏê¨
 //
-void CBgmDatabase::CreateBgmVoice()
+void CBgmDatabase::CreateSourceVoice()
 {
 	// ëSBGMÇÃLoad
 	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
@@ -154,7 +156,7 @@ void CBgmDatabase::Close()
 	// 
 	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
 	{
-		delete[] m_sourceWaveFormat;
+		delete[] m_sourceWaveFormat[loop];
 	}
 }
 
@@ -202,5 +204,5 @@ void CBgmDatabase::FadeIn(int BgmListNumb)
 //
 void CBgmDatabase::PitchRate(int BgmListNumb,float PitchRate)
 {
-	m_BgmVoices[0]->SetFrequencyRatio(PitchRate);
+	m_BgmVoices[BgmListNumb]->SetFrequencyRatio(PitchRate);
 }
