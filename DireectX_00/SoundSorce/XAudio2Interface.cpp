@@ -5,7 +5,8 @@
 CXAudio2Interface::CXAudio2Interface()
 {
 	if ( !CreateXAudio() )
-	{}
+	{
+	}
 }
 
 

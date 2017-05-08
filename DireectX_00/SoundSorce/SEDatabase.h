@@ -4,12 +4,13 @@
 #include<XAudio2.h>
 #include<vector>
 #include<functional>
-#include <iostream>
+#include<iostream>
 #include<XAPOFX.h>
-#include <Winuser.h>
 
 #include"LoadWave.h"
 #include"XAudio2Interface.h"
+
+#pragma comment(lib,"XAPOFX.lib")
 
 namespace sedata {
 	enum SeNameList

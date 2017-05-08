@@ -1,5 +1,5 @@
+#pragma once
 
-#include<X3DAudio.h>
 #include<list>
 
 //------------------------------------------------------------
@@ -19,7 +19,7 @@ public:
 	
 
 private:
-	X3DAUDIO_LISTENER m_listener;
+	//X3DAUDIO_LISTENER m_listener;
 };
 
 
@@ -38,6 +38,6 @@ public:
 	void SetEmitter();
 
 private:
-	std::list<X3DAUDIO_EMITTER> m_emitter;
+	//std::list<X3DAUDIO_EMITTER> m_emitter;
 
 };

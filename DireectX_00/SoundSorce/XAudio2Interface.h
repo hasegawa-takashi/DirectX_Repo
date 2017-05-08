@@ -2,7 +2,9 @@
 
 #include<XAudio2.h>
 #include<X3DAudio.h>
-#include <iostream>
+#include<iostream>
+
+#pragma comment(lib,"X3daudio.lib")
 
 namespace MasterVoiceData {
 	const float FadeSpd = 0.1f;

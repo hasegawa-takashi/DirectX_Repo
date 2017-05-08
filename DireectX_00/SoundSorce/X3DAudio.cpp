@@ -3,7 +3,7 @@
 
 CListener::CListener()
 {
-	m_listener = { 0 };
+	//m_listener = { 0 };
 }
 
 CListener::~CListener()
@@ -14,10 +14,10 @@ CListener::~CListener()
 
 CEmitter::CEmitter()
 {
-	m_emitter = { 0 };
+	/*m_emitter = { 0 };
 
 	m_emitter.ChannelCount = 1;
-	m_emitter.CurveDistanceScaler = FLT_MIN;
+	m_emitter.CurveDistanceScaler = FLT_MIN;*/
 
 }
 
