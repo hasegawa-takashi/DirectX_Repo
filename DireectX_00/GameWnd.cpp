@@ -21,7 +21,7 @@
 bool CGameWnd::Init(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int iCmdShow)
 {
 	_CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF | _CRTDBG_ALLOC_MEM_DF);
-	//_CrtSetBreakAlloc(1014);
+	//_CrtSetBreakAlloc(231);
 	
 	// ïœêîêÈåæ
 	HRESULT Createflag = E_FAIL;

@@ -32,7 +32,6 @@ public:
 	CSEDatabase();
 	~CSEDatabase();
 
-
 	void Play(int SeListNumb);
 
 	void Stop(int SeListNumb);
@@ -42,12 +41,12 @@ public:
 	void Close();
 
 	float GetSeVolume();
+
 	void SetSeVolume(float Vol);
-
-
+	
 	void PitchRate(int BgmListNumb, float PitchRate);
-
-
+	
+	void SetReverbSize(float walltype , float roomsize);
 
 private:
 
@@ -56,7 +55,7 @@ private:
 
 	IXAudio2SourceVoice* m_SeVoices[sedata::MAX_SE];	// BGMSourceVoiceの配列
 	VoiceCallback m_voicecallback;						// BGMのCallBack *BGMを多重再生しない前提 
-	CLoadWave* m_sourceWaveFormat[sedata::MAX_SE];	// WaveForamtの配列
+	CLoadWave* m_sourceWaveFormat[sedata::MAX_SE];		// WaveForamtの配列
 
 	// XAPOFX
 	IUnknown* m_reverb;
@@ -66,7 +65,6 @@ private:
 
 	std::function< void() > Soundfunc;					// Bgmのfunc
 	float Volume = 1.0f;								// 全体Vol
-	bool m_Fade = false;
 
 };
 

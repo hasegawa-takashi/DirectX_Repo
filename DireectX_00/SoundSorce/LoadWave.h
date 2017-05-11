@@ -26,7 +26,7 @@ private:
 
 private:
 
-	FILE* fp = NULL;
+	FILE* fp;
 	WAVEFORMATEX m_waveformat;
 	long m_firstSampleOffSet;
 	std::size_t m_dataChunkSize;

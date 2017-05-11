@@ -5,7 +5,7 @@ CTitle::CTitle()
 	GetObjMgr()->PushObj(new CTitleUI, ID_OTHER);
 	GetObjMgr()->PushObj(new CCamera, ID_CAMERA);
 	
-	GetSoundMgr()->Play(bgmdata::Sound1,false);
+	PushEnter = false;
 }
 
 
@@ -23,11 +23,50 @@ void CTitle::Update() {
 
 	CObjManager::Instance()->Update();
 
-	if (CInput::GetKeyPress(DIK_SPACE))
+	if (CInput::GetKeyPress(DIK_SPACE) && PushEnter == false )
 	{
 		GetSceneMgr()->PushScene<CGameMain>();
 		GetObjMgr()->PushObj(new CBlackoutFade , ID_FADE);
+		PushEnter = true;
 	}
+
+	// デバッグ
+	if (CInput::GetKeyPress(DIK_S))
+	{
+		GetSoundMgr()->Stop(sedata::SE1);
+	}
+	if (CInput::GetKeyPress(DIK_D))
+	{
+		GetSoundMgr()->Play(sedata::SE1);
+	}
+	
+	if (CInput::GetKeyPress(DIK_H))
+	{
+		GetSoundMgr()->SetReverbEffect(1.0f,1.0f);
+	}
+	if (CInput::GetKeyPress(DIK_J))
+	{
+		GetSoundMgr()->SetReverbEffect(3.0f, 3.0f);
+	}
+
+	/*if (CInput::GetKeyPress(DIK_UPARROW))
+	{
+		GetSoundMgr()->SeVolume(1.0f);
+	}
+	if (CInput::GetKeyPress(DIK_DOWNARROW))
+	{
+		GetSoundMgr()->SeVolume(0.5f);
+	}
+	
+	if (CInput::GetKeyPress(DIK_LEFTARROW))
+	{
+		GetSoundMgr()->SetPitctlate(sedata::SE1,1.0f);
+	}
+	if (CInput::GetKeyPress(DIK_RIGHTARROW))
+	{
+		GetSoundMgr()->SetPitctlate(sedata::SE1, 0.5f);
+	}*/
+
 
 
 }

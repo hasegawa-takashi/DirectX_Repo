@@ -1,7 +1,9 @@
 #include "SEDatabase.h"
 
-
-
+///////////////////////////////////////////////////////////
+//
+//	準備
+//
 CSEDatabase::CSEDatabase()
 {
 	CreateSourceVoice();
@@ -11,7 +13,10 @@ CSEDatabase::CSEDatabase()
 
 }
 
-
+///////////////////////////////////////////////////////////
+//
+//	かたずけ
+//
 CSEDatabase::~CSEDatabase()
 {
 	Close();
@@ -68,27 +73,36 @@ void CSEDatabase::CreateVoiceEffect()
 	m_Reverbpram.Diffusion = FXREVERB_DEFAULT_DIFFUSION;
 	m_Reverbpram.RoomSize = FXREVERB_DEFAULT_ROOMSIZE;
 
-
 	// 色々やっているけどリバーブの設定だけしてます。
-	//他にも色々あるらしい
+	// 他にも色々あるらしい
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
 		m_SeVoices[loop]->SetEffectParameters(0,&m_Reverbpram,sizeof(FXREVERB_PARAMETERS));
 	}
-
-
 }
 
+///////////////////////////////////////////////////////////
+//
+//	再生
+//
 void CSEDatabase::Play(int SeListNumb)
 {
 	m_SeVoices[SeListNumb]->Start();
 }
 
+///////////////////////////////////////////////////////////
+//
+//	停止
+//
 void CSEDatabase::Stop(int SeListNumb)
 {
 	m_SeVoices[SeListNumb]->Stop();
 }
 
+///////////////////////////////////////////////////////////
+//
+//	更新処理
+//
 void CSEDatabase::Update()
 {
 	if (Soundfunc != NULL)
@@ -97,6 +111,10 @@ void CSEDatabase::Update()
 	}
 }
 
+///////////////////////////////////////////////////////////
+//
+//	かたずけ
+//
 void CSEDatabase::Close()
 {
 	// あと始末
@@ -108,15 +126,25 @@ void CSEDatabase::Close()
 	// 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		delete[] m_sourceWaveFormat[loop];
+		delete m_sourceWaveFormat[loop];
 	}
+
+	m_reverb->Release();
 }
 
+///////////////////////////////////////////////////////////
+//
+//	現在ボリュームの取得
+//
 float CSEDatabase::GetSeVolume()
 {
 	return Volume;
 }
 
+///////////////////////////////////////////////////////////
+//
+//	Seの全体音量の設定
+//
 void CSEDatabase::SetSeVolume(float Vol)
 {
 	Volume = Vol;
@@ -127,7 +155,28 @@ void CSEDatabase::SetSeVolume(float Vol)
 	}
 }
 
+///////////////////////////////////////////////////////////
+//
+//	ピッチレートの変更
+//
 void CSEDatabase::PitchRate(int BgmListNumb, float PitchRate)
 {
 	m_SeVoices[BgmListNumb]->SetFrequencyRatio(PitchRate);
+}
+
+///////////////////////////////////////////////////////////
+//
+//	Reverbエフェクトの設定
+//
+void CSEDatabase::SetReverbSize(float walltype, float roomsize)
+{
+	FXREVERB_PARAMETERS param;
+
+	param.Diffusion = walltype;
+	param.RoomSize = roomsize;
+
+	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
+	{
+		m_SeVoices[loop]->SetEffectParameters(0, &param, sizeof(FXREVERB_PARAMETERS));
+	}
 }

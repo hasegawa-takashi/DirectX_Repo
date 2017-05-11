@@ -70,7 +70,7 @@ bool CXAudio2Interface::CreateXAudio()
 	m_X3DDsp.SrcChannelCount = 1;
 	m_X3DDsp.DstChannelCount = devicedetails.OutputFormat.Format.nChannels;
 	m_X3DDsp.pMatrixCoefficients = matrix;
-
+	delete matrix;
 
 	return true;
 }

@@ -17,11 +17,18 @@ public:
 	void Init();
 	void Update();
 
+	// BGM—p
 	void Play(bgmdata::BgmNameList, bool fadein);
 	void Stop(bgmdata::BgmNameList, bool fadeout);
+	void BgmVolume(float vol);
+	void SetPitctlate(bgmdata::BgmNameList, float late );
 
+	// Se—p
 	void Play(sedata::SeNameList);
 	void Stop(sedata::SeNameList);
+	void SeVolume(float vol);
+	void SetPitctlate(sedata::SeNameList, float late);
+	void SetReverbEffect(float walltype,float roomsize);
 
 private:
 	CSoundMgr();

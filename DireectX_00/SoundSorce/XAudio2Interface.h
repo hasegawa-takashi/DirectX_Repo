@@ -7,7 +7,7 @@
 #pragma comment(lib,"X3daudio.lib")
 
 namespace MasterVoiceData {
-	const float FadeSpd = 0.1f;
+	const float FadeSpd = 0.01f;
 }
 
 /////////////////////////////////////////////////////////////////

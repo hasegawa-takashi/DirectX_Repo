@@ -38,7 +38,7 @@ void CBgmDatabase::CreateSourceVoice()
 		m_BgmVoices[loop]->SubmitSourceBuffer( &m_sourceWaveFormat[loop]->PreparationBuffer() );
 	}
 
-	Soundfunc = []() {};
+	Soundfunc = nullptr;
 }
 
 /////////////////////////////////////////////////////////////////
@@ -56,11 +56,10 @@ void CBgmDatabase::Update()
 			m_BgmVoices[loop]->SubmitSourceBuffer(&buffer);
 	}
 
-	if (Soundfunc != NULL)
+	if (Soundfunc != nullptr)
 	{
 		Soundfunc();
 	}
-
 }
 
 /////////////////////////////////////////////////////////////////
@@ -71,8 +70,8 @@ void CBgmDatabase::Play(int BgmListNumb , bool fadein)
 {
 	if (fadein)
 	{
-		Soundfunc = std::bind(&CBgmDatabase::FadeIn, this, fadein);
-		//Soundfunc = std::bind( &FadeIn, this, BgmListNumb);
+		Soundfunc = std::bind(&CBgmDatabase::FadeIn, this, BgmListNumb);
+		m_BgmVoices[BgmListNumb]->Start();
 	}
 	else
 	{
@@ -109,7 +108,7 @@ void CBgmDatabase::Stop(int BgmListNumb , bool fadeOut)
 	
 	if (fadeOut)
 	{
-		Soundfunc = std::bind(&CBgmDatabase::FadeIn, this, fadeOut);
+		Soundfunc = std::bind(&CBgmDatabase::FadeOut, this, BgmListNumb);
 	}
 	else
 	{
@@ -133,6 +132,10 @@ float CBgmDatabase::GetBgmVolume()
 //
 void CBgmDatabase::SetBgmVolume(float vol)
 {
+
+	if (vol > 1.0f || vol < 0.0f)
+		return;
+
 	Volume = vol;
 
 	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
@@ -156,8 +159,11 @@ void CBgmDatabase::Close()
 	// 
 	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
 	{
-		delete[] m_sourceWaveFormat[loop];
+		delete m_sourceWaveFormat[loop];
 	}
+
+	Soundfunc = nullptr;
+
 }
 
 /////////////////////////////////////////////////////////////////
@@ -173,8 +179,10 @@ void CBgmDatabase::FadeOut(int BgmListNumb)
 	{
 		m_Fade = false;
 		m_BgmVoices[BgmListNumb]->SetVolume(0.0f);
-		Soundfunc = []() {};
+		m_BgmVoices[BgmListNumb]->Stop();
+		Soundfunc = nullptr;
 	}
+
 	NowVolume -= MasterVoiceData::FadeSpd;
 	m_BgmVoices[BgmListNumb]->SetVolume(NowVolume);
 }
@@ -192,7 +200,7 @@ void CBgmDatabase::FadeIn(int BgmListNumb)
 	{
 		m_Fade = false;
 		m_BgmVoices[BgmListNumb]->SetVolume(Volume);
-		Soundfunc = []() {};
+		Soundfunc = nullptr;
 	}
 	NowVolume += MasterVoiceData::FadeSpd;
 	m_BgmVoices[BgmListNumb]->SetVolume(NowVolume);

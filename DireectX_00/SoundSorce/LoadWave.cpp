@@ -303,7 +303,6 @@ XAUDIO2_BUFFER CLoadWave::PreparationBuffer()
 			++submitTimes;
 		}
 	}
-
 	return buffer;
 }
 
@@ -361,6 +360,11 @@ void CLoadWave::Close()
 		m_dataChunkSize = 0;
 		m_dataChunkSample = 0;
 	}
+
+	nextFirstSample;
+	//submitTimes = { 0 };
+	//bufferSample = { 0 };
+
 }
 
 //////////////////////////////////////////////////////////////
@@ -384,7 +388,7 @@ XAUDIO2_BUFFER CLoadWave::PreLoadSound()
 		buffer.AudioBytes = readSample * m_waveformat.nBlockAlign;
 		buffer.pAudioData = reinterpret_cast<BYTE*>(&(primaryMixed[0]));
 	}
-
+	
 	return buffer;
 
 }
