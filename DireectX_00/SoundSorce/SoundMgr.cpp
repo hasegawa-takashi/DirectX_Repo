@@ -108,3 +108,11 @@ void CSoundMgr::SetReverbEffect(float walltype, float roomsize)
 {
 	m_Sedata->SetReverbSize(walltype, roomsize);
 }
+///////////////////////////////////////////////////////////
+//
+//	SE‚ÌReverbEffect‚Ì‰Šú‰»
+//
+void CSoundMgr::OffEffect()
+{
+	m_Sedata->offsetReverbSize();
+}

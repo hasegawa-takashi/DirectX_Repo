@@ -180,3 +180,20 @@ void CSEDatabase::SetReverbSize(float walltype, float roomsize)
 		m_SeVoices[loop]->SetEffectParameters(0, &param, sizeof(FXREVERB_PARAMETERS));
 	}
 }
+
+///////////////////////////////////////////////////////////
+//
+//	Reverbèâä˙âª
+//
+void CSEDatabase::offsetReverbSize()
+{
+	FXREVERB_PARAMETERS param;
+
+	param.Diffusion = FXREVERB_DEFAULT_DIFFUSION;
+	param.RoomSize = FXREVERB_DEFAULT_ROOMSIZE;
+
+	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
+	{
+		m_SeVoices[loop]->SetEffectParameters(0, &param, sizeof(FXREVERB_PARAMETERS));
+	}
+}

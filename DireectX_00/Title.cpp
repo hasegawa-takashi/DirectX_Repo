@@ -42,11 +42,11 @@ void CTitle::Update() {
 	
 	if (CInput::GetKeyPress(DIK_H))
 	{
-		GetSoundMgr()->SetReverbEffect(1.0f,1.0f);
+		GetSoundMgr()->SetReverbEffect(1.0f,0.0f);
 	}
 	if (CInput::GetKeyPress(DIK_J))
 	{
-		GetSoundMgr()->SetReverbEffect(3.0f, 3.0f);
+		GetSoundMgr()->OffEffect();
 	}
 
 	/*if (CInput::GetKeyPress(DIK_UPARROW))

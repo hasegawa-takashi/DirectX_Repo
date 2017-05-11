@@ -29,6 +29,7 @@ public:
 	void SeVolume(float vol);
 	void SetPitctlate(sedata::SeNameList, float late);
 	void SetReverbEffect(float walltype,float roomsize);
+	void OffEffect();
 
 private:
 	CSoundMgr();

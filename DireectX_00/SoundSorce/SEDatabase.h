@@ -47,6 +47,7 @@ public:
 	void PitchRate(int BgmListNumb, float PitchRate);
 	
 	void SetReverbSize(float walltype , float roomsize);
+	void offsetReverbSize();
 
 private:
 
