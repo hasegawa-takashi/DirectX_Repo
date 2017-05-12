@@ -45,7 +45,6 @@ public:
 	void SetSeVolume(float Vol);
 	
 	void PitchRate(int BgmListNumb, float PitchRate);
-	
 	void SetReverbSize(float walltype , float roomsize);
 	void offsetReverbSize();
 
@@ -59,10 +58,13 @@ private:
 	CLoadWave* m_sourceWaveFormat[sedata::MAX_SE];		// WaveForamtの配列
 
 	// XAPOFX
-	IUnknown* m_reverb;
+	IUnknown* m_Effects;
 	XAUDIO2_EFFECT_CHAIN m_chain;
 	XAUDIO2_EFFECT_DESCRIPTOR m_desc;
-	FXREVERB_PARAMETERS m_Reverbpram;
+
+	FXREVERB_PARAMETERS m_Reverbpram;	// リバーブエフェクト
+	FXECHO_PARAMETERS m_EchoPram;		// エコーエフェクト
+	FXEQ_PARAMETERS m_EqPram;			// イコライザ
 
 	std::function< void() > Soundfunc;					// Bgmのfunc
 	float Volume = 1.0f;								// 全体Vol

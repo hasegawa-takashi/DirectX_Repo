@@ -20,7 +20,6 @@ CSEDatabase::CSEDatabase()
 CSEDatabase::~CSEDatabase()
 {
 	Close();
-	m_reverb->Release();
 }
 
 ///////////////////////////////////////////////////////////
@@ -56,11 +55,11 @@ void CSEDatabase::CreateSourceVoice()
 //
 void CSEDatabase::CreateVoiceEffect()
 {
-	CreateFX(__uuidof(::FXReverb), &m_reverb);
+	CreateFX(__uuidof(::FXReverb), &m_Effects);
 
 	m_desc.InitialState = TRUE;
 	m_desc.OutputChannels = 2;
-	m_desc.pEffect = m_reverb;
+	m_desc.pEffect = m_Effects;
 
 	m_chain.pEffectDescriptors = &m_desc;
 	m_chain.EffectCount = 1;
@@ -70,14 +69,28 @@ void CSEDatabase::CreateVoiceEffect()
 		m_SeVoices[loop]->SetEffectChain(&m_chain);
 	}
 
+	// リバーブの初期化
 	m_Reverbpram.Diffusion = FXREVERB_DEFAULT_DIFFUSION;
 	m_Reverbpram.RoomSize = FXREVERB_DEFAULT_ROOMSIZE;
+
+	// エコーの初期化
+	m_EchoPram.Delay = FXECHO_DEFAULT_DELAY;
+	m_EchoPram.Feedback = FXECHO_DEFAULT_FEEDBACK;
+	m_EchoPram.WetDryMix = FXECHO_DEFAULT_WETDRYMIX;
+
+	// イコライザの初期化
+	m_EqPram.FrequencyCenter0 = FXEQ_DEFAULT_FREQUENCY_CENTER_0;
+	m_EqPram.FrequencyCenter1 = FXEQ_DEFAULT_FREQUENCY_CENTER_1;
+	m_EqPram.FrequencyCenter2 = FXEQ_DEFAULT_FREQUENCY_CENTER_2;
+	m_EqPram.FrequencyCenter3 = FXEQ_DEFAULT_FREQUENCY_CENTER_3;
 
 	// 色々やっているけどリバーブの設定だけしてます。
 	// 他にも色々あるらしい
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		m_SeVoices[loop]->SetEffectParameters(0,&m_Reverbpram,sizeof(FXREVERB_PARAMETERS));
+		//m_SeVoices[loop]->SetEffectParameters(0, &m_Reverbpram, sizeof(FXREVERB_PARAMETERS));
+		//m_SeVoices[loop]->SetEffectParameters(1, &m_EchoPram, sizeof(FXREVERB_PARAMETERS));
+		//m_SeVoices[loop]->SetEffectParameters(2, &m_EqPram, sizeof(FXREVERB_PARAMETERS));
 	}
 }
 
@@ -129,7 +142,7 @@ void CSEDatabase::Close()
 		delete m_sourceWaveFormat[loop];
 	}
 
-	m_reverb->Release();
+	m_Effects->Release();
 }
 
 ///////////////////////////////////////////////////////////

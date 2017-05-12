@@ -49,7 +49,7 @@ void CTitle::Update() {
 		GetSoundMgr()->OffEffect();
 	}
 
-	/*if (CInput::GetKeyPress(DIK_UPARROW))
+	if (CInput::GetKeyPress(DIK_UPARROW))
 	{
 		GetSoundMgr()->SeVolume(1.0f);
 	}
@@ -65,7 +65,7 @@ void CTitle::Update() {
 	if (CInput::GetKeyPress(DIK_RIGHTARROW))
 	{
 		GetSoundMgr()->SetPitctlate(sedata::SE1, 0.5f);
-	}*/
+	}
 
 
 
