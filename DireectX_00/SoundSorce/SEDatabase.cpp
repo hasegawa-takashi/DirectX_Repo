@@ -55,14 +55,26 @@ void CSEDatabase::CreateSourceVoice()
 //
 void CSEDatabase::CreateVoiceEffect()
 {
-	CreateFX(__uuidof(::FXReverb), &m_Effects);
 
-	m_desc.InitialState = TRUE;
-	m_desc.OutputChannels = 2;
-	m_desc.pEffect = m_Effects;
+	// 各種の設定
+	CreateFX(__uuidof(::FXReverb), &m_Effect[0]);
+	CreateFX(__uuidof(::FXEcho),&m_Effect[1]);
+	CreateFX(__uuidof(::FXEQ), &m_Effect[2]);
 
-	m_chain.pEffectDescriptors = &m_desc;
-	m_chain.EffectCount = 1;
+	m_desc[0].InitialState = TRUE;
+	m_desc[0].OutputChannels = 2;
+	m_desc[0].pEffect = m_Effect[0];
+
+	m_desc[1].InitialState = TRUE;
+	m_desc[1].OutputChannels = 2;
+	m_desc[1].pEffect = m_Effect[1];
+
+	m_desc[2].InitialState = TRUE;
+	m_desc[2].OutputChannels = 2;
+	m_desc[2].pEffect = m_Effect[2];
+
+	m_chain.pEffectDescriptors = m_desc;
+	m_chain.EffectCount = 3;
 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
@@ -74,9 +86,13 @@ void CSEDatabase::CreateVoiceEffect()
 	m_Reverbpram.RoomSize = FXREVERB_DEFAULT_ROOMSIZE;
 
 	// エコーの初期化
-	m_EchoPram.Delay = FXECHO_DEFAULT_DELAY;
-	m_EchoPram.Feedback = FXECHO_DEFAULT_FEEDBACK;
-	m_EchoPram.WetDryMix = FXECHO_DEFAULT_WETDRYMIX;
+	m_EchoPram.Delay		= FXECHO_DEFAULT_DELAY;
+	m_EchoPram.Feedback		= FXECHO_DEFAULT_FEEDBACK;
+	m_EchoPram.WetDryMix	= FXECHO_DEFAULT_WETDRYMIX;
+
+	FXECHO_MAX_DELAY;
+	FXECHO_MAX_FEEDBACK;
+	FXECHO_MAX_WETDRYMIX;
 
 	// イコライザの初期化
 	m_EqPram.FrequencyCenter0 = FXEQ_DEFAULT_FREQUENCY_CENTER_0;
@@ -88,9 +104,9 @@ void CSEDatabase::CreateVoiceEffect()
 	// 他にも色々あるらしい
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		//m_SeVoices[loop]->SetEffectParameters(0, &m_Reverbpram, sizeof(FXREVERB_PARAMETERS));
-		//m_SeVoices[loop]->SetEffectParameters(1, &m_EchoPram, sizeof(FXREVERB_PARAMETERS));
-		//m_SeVoices[loop]->SetEffectParameters(2, &m_EqPram, sizeof(FXREVERB_PARAMETERS));
+		m_SeVoices[loop]->SetEffectParameters(0, &m_Reverbpram, sizeof(FXREVERB_PARAMETERS));
+		m_SeVoices[loop]->SetEffectParameters(1, &m_EchoPram, sizeof(FXECHO_PARAMETERS));
+		m_SeVoices[loop]->SetEffectParameters(2, &m_EqPram, sizeof(FXEQ_PARAMETERS));
 	}
 }
 
@@ -142,7 +158,7 @@ void CSEDatabase::Close()
 		delete m_sourceWaveFormat[loop];
 	}
 
-	m_Effects->Release();
+	//m_Effects->Release();
 }
 
 ///////////////////////////////////////////////////////////
@@ -203,10 +219,27 @@ void CSEDatabase::offsetReverbSize()
 	FXREVERB_PARAMETERS param;
 
 	param.Diffusion = FXREVERB_DEFAULT_DIFFUSION;
-	param.RoomSize = FXREVERB_DEFAULT_ROOMSIZE;
+	param.RoomSize  = FXREVERB_DEFAULT_ROOMSIZE;
 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
 		m_SeVoices[loop]->SetEffectParameters(0, &param, sizeof(FXREVERB_PARAMETERS));
+	}
+}
+///////////////////////////////////////////////////////////
+//
+//	Reverb初期化
+//
+void CSEDatabase::SetEchoSize(float Delay,float feedback,float wetdry)
+{
+	FXECHO_PARAMETERS param;
+
+	param.Delay = Delay;
+	param.Feedback = feedback;
+	param.WetDryMix = wetdry;
+
+	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
+	{
+		m_SeVoices[loop]->SetEffectParameters(1, &param, sizeof(FXECHO_PARAMETERS));
 	}
 }

@@ -29,6 +29,7 @@ public:
 	void SeVolume(float vol);
 	void SetPitctlate(sedata::SeNameList, float late);
 	void SetReverbEffect(float walltype,float roomsize);
+	void SetEchoEffect(float Delay, float feedback, float wetdry);
 	void OffEffect();
 
 private:

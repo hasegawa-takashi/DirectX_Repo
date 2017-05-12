@@ -47,6 +47,7 @@ public:
 	void PitchRate(int BgmListNumb, float PitchRate);
 	void SetReverbSize(float walltype , float roomsize);
 	void offsetReverbSize();
+	void SetEchoSize(float Delay, float feedback, float wetdry);
 
 private:
 
@@ -58,9 +59,10 @@ private:
 	CLoadWave* m_sourceWaveFormat[sedata::MAX_SE];		// WaveForamtの配列
 
 	// XAPOFX
-	IUnknown* m_Effects;
+	IUnknown* m_Effect[3];
+
 	XAUDIO2_EFFECT_CHAIN m_chain;
-	XAUDIO2_EFFECT_DESCRIPTOR m_desc;
+	XAUDIO2_EFFECT_DESCRIPTOR m_desc[3];
 
 	FXREVERB_PARAMETERS m_Reverbpram;	// リバーブエフェクト
 	FXECHO_PARAMETERS m_EchoPram;		// エコーエフェクト

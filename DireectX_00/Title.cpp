@@ -39,7 +39,6 @@ void CTitle::Update() {
 	{
 		GetSoundMgr()->Play(sedata::SE1);
 	}
-	
 	if (CInput::GetKeyPress(DIK_H))
 	{
 		GetSoundMgr()->SetReverbEffect(1.0f,0.0f);
@@ -48,7 +47,14 @@ void CTitle::Update() {
 	{
 		GetSoundMgr()->OffEffect();
 	}
-
+	if (CInput::GetKeyPress(DIK_Y))
+	{
+		GetSoundMgr()->SetEchoEffect(1000.0f,0.8f,0.8f);
+	}
+	if (CInput::GetKeyPress(DIK_U))
+	{
+		GetSoundMgr()->SetEchoEffect(1.0f,0.0f, 0.0f);
+	}
 	if (CInput::GetKeyPress(DIK_UPARROW))
 	{
 		GetSoundMgr()->SeVolume(1.0f);
@@ -57,17 +63,14 @@ void CTitle::Update() {
 	{
 		GetSoundMgr()->SeVolume(0.5f);
 	}
-	
 	if (CInput::GetKeyPress(DIK_LEFTARROW))
 	{
 		GetSoundMgr()->SetPitctlate(sedata::SE1,1.0f);
 	}
 	if (CInput::GetKeyPress(DIK_RIGHTARROW))
 	{
-		GetSoundMgr()->SetPitctlate(sedata::SE1, 0.5f);
+		GetSoundMgr()->SetPitctlate(sedata::SE1, 3.0f);
 	}
-
-
 
 }
 

@@ -116,3 +116,11 @@ void CSoundMgr::OffEffect()
 {
 	m_Sedata->offsetReverbSize();
 }
+///////////////////////////////////////////////////////////
+//
+//	SE‚ÌEcho‚ÌÝ’è
+//
+void CSoundMgr::SetEchoEffect(float Delay, float feedback, float wetdry)
+{
+	m_Sedata->SetEchoSize(Delay,feedback,wetdry);
+}
