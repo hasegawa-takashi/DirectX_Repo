@@ -112,6 +112,7 @@
     <ClCompile Include="SoundSorce\LoadWave.cpp" />
     <ClCompile Include="SoundSorce\SEDatabase.cpp" />
     <ClCompile Include="SoundSorce\SoundMgr.cpp" />
+    <ClCompile Include="SoundSorce\VoiceEffect.cpp" />
     <ClCompile Include="SoundSorce\X3DAudio.cpp" />
     <ClCompile Include="SoundSorce\XAudio2Interface.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="SoundSorce\LoadWave.h" />
     <ClInclude Include="SoundSorce\SEDatabase.h" />
     <ClInclude Include="SoundSorce\SoundMgr.h" />
+    <ClInclude Include="SoundSorce\VoiceEffect.h" />
     <ClInclude Include="SoundSorce\X3DAudio.h" />
     <ClInclude Include="SoundSorce\XAudio2Interface.h" />
     <ClInclude Include="Sprite.h" />

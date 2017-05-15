@@ -8,6 +8,7 @@
 #include"LoadWave.h"
 #include"XAudio2Interface.h"
 
+
 namespace bgmdata {
 	enum BgmNameList
 	{
@@ -37,27 +38,21 @@ public:
 
 	void Update();
 
-	void Close();
-
-
 	float GetBgmVolume();
 	void SetBgmVolume(float Vol);
 
 	void FadeOut(int BgmListNumb);
 	void FadeIn(int BgmListNumb);
 	
-	void PitchRate(int BgmListNumb, float PitchRate );
-
 private:
-	
 
+	void Close();
 	void CreateSourceVoice();
 
-	IXAudio2SourceVoice* m_BgmVoices[bgmdata::MAX_BGM];	// BGMSourceVoiceの配列
-	VoiceCallback m_voicecallback;						// BGMのCallBack *BGMを多重再生しない前提 
-	CLoadWave* m_sourceWaveFormat[bgmdata::MAX_BGM];	// WaveForamtの配列 
+	SoundData* m_BgmData[bgmdata::MAX_BGM];				// SoundSorce
 	std::function< void() > Soundfunc;					// Bgmのfunc
 	float Volume = 1.0f;								// 全体Vol
+	
 	bool m_Fade = false;
 };
 

@@ -4,11 +4,27 @@
 #include<X3DAudio.h>
 #include<iostream>
 
+#include"VoiceEffect.h"
+
 #pragma comment(lib,"X3daudio.lib")
 
 namespace MasterVoiceData {
 	const float FadeSpd = 0.01f;
 }
+
+// 必要なもの
+struct SoundData
+{
+	IXAudio2SourceVoice*	Voice;				// サウンド
+	VoiceCallback			VoiceCallBack;		// コールバック
+	CLoadWave*				SourceWaveFormat;	// waveファイルの色々
+	CVoiceEffect			VoiceEffect;		// 各種エフェクト
+
+	float Volume;								// 単体の音量
+	bool  Loop;									// ループ再生するのか？
+	bool  Fade;									// Fadeflag
+};
+
 
 /////////////////////////////////////////////////////////////////
 //

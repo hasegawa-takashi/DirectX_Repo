@@ -205,6 +205,9 @@
     <ClCompile Include="SoundSorce\SEDatabase.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
+    <ClCompile Include="SoundSorce\VoiceEffect.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Title.h">
@@ -313,6 +316,9 @@
       <Filter>Sound</Filter>
     </ClInclude>
     <ClInclude Include="SoundSorce\SEDatabase.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundSorce\VoiceEffect.h">
       <Filter>Sound</Filter>
     </ClInclude>
   </ItemGroup>

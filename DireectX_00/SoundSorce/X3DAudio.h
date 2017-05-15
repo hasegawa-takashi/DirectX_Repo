@@ -1,6 +1,6 @@
 #pragma once
 
-#include<list>
+#include<vector>
 #include<X3DAudio.h>
 
 
@@ -37,8 +37,11 @@ public:
 	~CEmitter();
 
 	void SetEmitter(D3DMATRIX* matrix);
+	void Update();
 
 private:
-	std::list<X3DAUDIO_EMITTER> m_emitter;
+	std::vector<D3DMATRIX*> m_Emitterlist;
+	//std::list<X3DAUDIO_EMITTER> m_emitter;
+	X3DAUDIO_EMITTER m_Emitter;
 
 };

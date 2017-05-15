@@ -28,18 +28,16 @@ CEmitter::~CEmitter()
 void CEmitter::SetEmitter(D3DMATRIX* matrix)
 {
 
-	/*m_emitter = { 0 };
+	m_Emitter = { 0 };
 
-	m_emitter.ChannelCount = 1;
-	m_emitter.CurveDistanceScaler = FLT_MIN;*/
+	m_Emitter.ChannelCount = 1;
+	m_Emitter.CurveDistanceScaler = FLT_MIN;
+	
+	// マトリクスの登録
+	m_Emitterlist.push_back(matrix);
+}
 
-	X3DAUDIO_EMITTER emitter;
-	emitter = { 0 };
-
-	emitter.ChannelCount = 1;
-	emitter.CurveDistanceScaler = FLT_MIN;
-
-
-	m_emitter.push_back(emitter);
+void CEmitter::Update()
+{
 
 }
