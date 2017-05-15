@@ -24,3 +24,22 @@ CEmitter::CEmitter()
 CEmitter::~CEmitter()
 {
 }
+
+void CEmitter::SetEmitter(D3DMATRIX* matrix)
+{
+
+	/*m_emitter = { 0 };
+
+	m_emitter.ChannelCount = 1;
+	m_emitter.CurveDistanceScaler = FLT_MIN;*/
+
+	X3DAUDIO_EMITTER emitter;
+	emitter = { 0 };
+
+	emitter.ChannelCount = 1;
+	emitter.CurveDistanceScaler = FLT_MIN;
+
+
+	m_emitter.push_back(emitter);
+
+}

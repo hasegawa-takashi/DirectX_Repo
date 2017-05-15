@@ -82,17 +82,13 @@ void CSEDatabase::CreateVoiceEffect()
 	}
 
 	// リバーブの初期化
-	m_Reverbpram.Diffusion = FXREVERB_DEFAULT_DIFFUSION;
-	m_Reverbpram.RoomSize = FXREVERB_DEFAULT_ROOMSIZE;
+	m_Reverbpram.Diffusion = FXREVERB_MIN_DIFFUSION;
+	m_Reverbpram.RoomSize = FXREVERB_MIN_ROOMSIZE;
 
 	// エコーの初期化
-	m_EchoPram.Delay		= FXECHO_DEFAULT_DELAY;
-	m_EchoPram.Feedback		= FXECHO_DEFAULT_FEEDBACK;
-	m_EchoPram.WetDryMix	= FXECHO_DEFAULT_WETDRYMIX;
-
-	FXECHO_MAX_DELAY;
-	FXECHO_MAX_FEEDBACK;
-	FXECHO_MAX_WETDRYMIX;
+	m_EchoPram.Delay		= FXECHO_MIN_DELAY;
+	m_EchoPram.Feedback		= FXECHO_MIN_FEEDBACK;
+	m_EchoPram.WetDryMix	= FXECHO_MIN_WETDRYMIX;
 
 	// イコライザの初期化
 	m_EqPram.FrequencyCenter0 = FXEQ_DEFAULT_FREQUENCY_CENTER_0;
@@ -100,8 +96,8 @@ void CSEDatabase::CreateVoiceEffect()
 	m_EqPram.FrequencyCenter2 = FXEQ_DEFAULT_FREQUENCY_CENTER_2;
 	m_EqPram.FrequencyCenter3 = FXEQ_DEFAULT_FREQUENCY_CENTER_3;
 
-	// 色々やっているけどリバーブの設定だけしてます。
-	// 他にも色々あるらしい
+
+
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
 		m_SeVoices[loop]->SetEffectParameters(0, &m_Reverbpram, sizeof(FXREVERB_PARAMETERS));
@@ -228,7 +224,7 @@ void CSEDatabase::offsetReverbSize()
 }
 ///////////////////////////////////////////////////////////
 //
-//	Reverb初期化
+//	エコーの設定
 //
 void CSEDatabase::SetEchoSize(float Delay,float feedback,float wetdry)
 {

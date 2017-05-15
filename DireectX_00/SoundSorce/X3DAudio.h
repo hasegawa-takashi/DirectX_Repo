@@ -1,6 +1,9 @@
 #pragma once
 
 #include<list>
+#include<X3DAudio.h>
+
+
 
 //------------------------------------------------------------
 //
@@ -14,12 +17,10 @@ public:
 	CListener();
 	~CListener();
 
-	void SetListener();
-
-	
+	void SetListener(D3DMATRIX* matrix);
 
 private:
-	//X3DAUDIO_LISTENER m_listener;
+	X3DAUDIO_LISTENER m_listener;
 };
 
 
@@ -35,9 +36,9 @@ public:
 	CEmitter();
 	~CEmitter();
 
-	void SetEmitter();
+	void SetEmitter(D3DMATRIX* matrix);
 
 private:
-	//std::list<X3DAUDIO_EMITTER> m_emitter;
+	std::list<X3DAUDIO_EMITTER> m_emitter;
 
 };
