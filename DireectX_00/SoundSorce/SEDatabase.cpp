@@ -29,19 +29,19 @@ void CSEDatabase::CreateSourceVoice()
 {
 	for (int loop = 0 ; loop < sedata::MAX_SE ; ++loop)
 	{
-		m_sourceWaveFormat[loop] = new CLoadWave(sedata::SEName[loop]);
-		m_SeVoices[loop] = NULL;
+		m_SeData[loop]->SourceWaveFormat = new CLoadWave(sedata::SEName[loop]);
+		m_SeData[loop]->Voice = NULL;
 	}
 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		WAVEFORMATEX* waveformat = m_sourceWaveFormat[loop]->GetWaveFormat();
-		GetXAudio2Mgr()->SetXAudio2SouceVoice(&m_SeVoices[loop],*waveformat);
+		WAVEFORMATEX* waveformat = m_SeData[loop]->SourceWaveFormat->GetWaveFormat();
+		GetXAudio2Mgr()->SetXAudio2SouceVoice(&m_SeData[loop]->Voice,*waveformat);
 	}
 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		m_SeVoices[loop]->SubmitSourceBuffer(&m_sourceWaveFormat[loop]->PreLoadSound());
+		m_SeData[loop]->Voice->SubmitSourceBuffer(&m_SeData[loop]->SourceWaveFormat->PreLoadSound());
 	}
 
 	Soundfunc = []() {};
@@ -54,7 +54,7 @@ void CSEDatabase::CreateSourceVoice()
 //
 void CSEDatabase::Play(int SeListNumb)
 {
-	m_SeVoices[SeListNumb]->Start();
+	m_SeData[SeListNumb]->Voice->Start();
 }
 
 ///////////////////////////////////////////////////////////
@@ -63,7 +63,7 @@ void CSEDatabase::Play(int SeListNumb)
 //
 void CSEDatabase::Stop(int SeListNumb)
 {
-	m_SeVoices[SeListNumb]->Stop();
+	m_SeData[SeListNumb]->Voice->Stop();
 }
 
 ///////////////////////////////////////////////////////////
@@ -87,13 +87,13 @@ void CSEDatabase::Close()
 	// ‚ ‚ÆŽn––
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		m_SeVoices[loop]->DestroyVoice();
+		m_SeData[loop]->Voice->DestroyVoice();
 	}
 
 	// 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		delete m_sourceWaveFormat[loop];
+		delete m_SeData[loop]->Voice;
 	}
 
 	//m_Effects->Release();
@@ -118,7 +118,7 @@ void CSEDatabase::SetMasterVolume(float Vol)
 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		m_SeVoices[loop]->SetVolume(Volume);
+		m_SeData[loop]->Voice->SetVolume(Volume);
 	}
 }
 
@@ -128,5 +128,5 @@ void CSEDatabase::SetMasterVolume(float Vol)
 //
 void CSEDatabase::SetSeVolume(int SetListNumb,float Vol)
 {
-	m_SeVoices[SetListNumb]->SetVolume(Vol);
+	m_SeData[SetListNumb]->Voice->SetVolume(Vol);
 }

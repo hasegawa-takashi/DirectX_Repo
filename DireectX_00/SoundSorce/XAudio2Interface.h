@@ -5,6 +5,7 @@
 #include<iostream>
 
 #include"VoiceEffect.h"
+#include"LoadWave.h"
 
 #pragma comment(lib,"X3daudio.lib")
 

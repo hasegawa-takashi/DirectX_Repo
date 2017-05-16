@@ -33,15 +33,22 @@ public:
 	~CSEDatabase();
 
 	void Play(int SeListNumb);
+	void Play(int SeListNumb,bool fadein);
+	void Stop();
 	void Stop(int SeListNumb);
+
 	void Update();
-	void Close();
+	
 	float GetSeVolume();
 	void SetMasterVolume(float Vol);
+	
 	void SetSeVolume(int SetListNumb,float Vol);
 
-private:
+	void FadeOut(int BgmListNumb);
+	void FadeIn(int BgmListNumb);
 
+private:
+	void Close();
 	void CreateSourceVoice();
 
 	SoundData* m_SeData[sedata::MAX_SE];				// SoundSorce
