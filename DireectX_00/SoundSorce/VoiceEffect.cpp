@@ -115,7 +115,7 @@ void CVoiceEffect::offsetEchoVolume()
 
 }
 
-void CVoiceEffect::PitchRate(int BgmListNumb, float PitchRate)
+void CVoiceEffect::PitchRate( float PitchRate)
 {
 	m_voice->SetFrequencyRatio(PitchRate);
 }

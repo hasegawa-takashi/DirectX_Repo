@@ -1,8 +1,8 @@
 #pragma once
 
+#include"XAudio2Interface.h"
 #include"BgmDatabase.h"
 #include"SEDatabase.h"
-#include"XAudio2Interface.h"
 
 class CSoundMgr
 {
@@ -22,15 +22,20 @@ public:
 	void Stop(bgmdata::BgmNameList, bool fadeout);
 	void BgmVolume(float vol);
 	void SetPitctlate(bgmdata::BgmNameList, float late );
+	void SetReverbEffect(bgmdata::BgmNameList, float walltype, float roomsize);
+	void SetEchoEffect(bgmdata::BgmNameList, float Delay, float feedback, float wetdry);
+	void OffBGMReverb();
+	void OffBGMEcho();
 
 	// Se—p
-	void Play(sedata::SeNameList);
-	void Stop(sedata::SeNameList);
+	void Play(sedata::SeNameList, bool fadein);
+	void Stop(sedata::SeNameList, bool fadeout);
 	void SeVolume(float vol);
 	void SetPitctlate(sedata::SeNameList, float late);
-	void SetReverbEffect(float walltype,float roomsize);
-	void SetEchoEffect(float Delay, float feedback, float wetdry);
-	void OffEffect();
+	void SetReverbEffect(sedata::SeNameList, float walltype,float roomsize);
+	void SetEchoEffect(sedata::SeNameList, float Delay, float feedback, float wetdry);
+	void OffSEReverb();
+	void OffSEEcho();
 
 private:
 	CSoundMgr();

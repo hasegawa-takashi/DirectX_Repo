@@ -4,16 +4,19 @@
 #include<XAudio2.h>
 #include<functional>
 
+#pragma comment(lib,"X3daudio.lib")
 #pragma comment(lib,"XAPOFX.lib")
 
-// エフェクトのタイプ
-enum EFFECT_TYPE{
-	PITCHRATE = 0,
-	REVERB,
-	ECHO,
-	EQUALIZER,
-	MAX_EFFECT
-};
+namespace effect_type {
+	// エフェクトのタイプ
+	enum EFFECT_TYPE {
+		PITCHRATE = 0,
+		REVERB,
+		ECHO,
+		EQUALIZER,
+		MAX_EFFECT
+	};
+}
 
 //------------------------------------------------------------
 //
@@ -35,7 +38,7 @@ public:
 	void offsetEchoVolume();
 	
 	// ピッチレート用
-	void PitchRate(int BgmListNumb, float PitchRate);
+	void PitchRate( float PitchRate);
 
 private:
 	IXAudio2SourceVoice* m_voice;

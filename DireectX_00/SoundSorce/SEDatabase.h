@@ -5,12 +5,10 @@
 #include<vector>
 #include<functional>
 #include<iostream>
-#include<XAPOFX.h>
 
 #include"LoadWave.h"
 #include"XAudio2Interface.h"
 
-#pragma comment(lib,"XAPOFX.lib")
 
 namespace sedata {
 	enum SeNameList
@@ -34,12 +32,11 @@ public:
 
 	void Play(int SeListNumb);
 	void Play(int SeListNumb,bool fadein);
-	void Stop();
-	void Stop(int SeListNumb);
+	void Stop(int SeListNumb, bool fadeout);
 
 	void Update();
 	
-	float GetSeVolume();
+	float GetVolume();
 	void SetMasterVolume(float Vol);
 	
 	void SetSeVolume(int SetListNumb,float Vol);
@@ -47,11 +44,18 @@ public:
 	void FadeOut(int BgmListNumb);
 	void FadeIn(int BgmListNumb);
 
+	// エフェクト用
+	void ChangeReverv(int ListNumb, float walltype, float roomsize);
+	void OffReverv();
+	void ChangeEcho(int ListNumb, float Delay, float feedback, float wetdry);
+	void OffEcho();
+	void ChangePitch(int ListNumb, float PitchRate);
+
 private:
 	void Close();
 	void CreateSourceVoice();
 
-	SoundData* m_SeData[sedata::MAX_SE];				// SoundSorce
+	SoundData* m_VoiceData[sedata::MAX_SE];				// SoundSorce
 	std::function< void() > Soundfunc;					// Bgmのfunc
 	float Volume = 1.0f;								// 全体Vol
 

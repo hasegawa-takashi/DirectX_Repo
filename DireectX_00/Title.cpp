@@ -35,27 +35,27 @@ void CTitle::Update() {
 	// デバッグ
 	if (CInput::GetKeyPress(DIK_S))
 	{
-		GetSoundMgr()->Stop(sedata::SE1);
+		GetSoundMgr()->Stop(sedata::SE1,false);
 	}
 	if (CInput::GetKeyPress(DIK_D))
 	{
-		GetSoundMgr()->Play(sedata::SE1);
+		GetSoundMgr()->Play(sedata::SE1, false);
 	}
 	if (CInput::GetKeyPress(DIK_H))
 	{
-		GetSoundMgr()->SetReverbEffect(1.0f,0.0f);
+		GetSoundMgr()->SetReverbEffect(sedata::SE1, 1.0f,0.0f);
 	}
 	if (CInput::GetKeyPress(DIK_J))
 	{
-		GetSoundMgr()->OffEffect();
+		GetSoundMgr()->OffBGMReverb();
 	}
 	if (CInput::GetKeyPress(DIK_Y))
 	{
-		GetSoundMgr()->SetEchoEffect(1000.0f,0.8f,0.8f);
+		GetSoundMgr()->SetEchoEffect(sedata::SE1, 1000.0f,0.8f,0.8f);
 	}
 	if (CInput::GetKeyPress(DIK_U))
 	{
-		GetSoundMgr()->SetEchoEffect(1.0f,0.0f, 0.0f);
+		GetSoundMgr()->OffSEEcho();
 	}
 	if (CInput::GetKeyPress(DIK_UPARROW))
 	{

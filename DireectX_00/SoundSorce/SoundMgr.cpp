@@ -48,7 +48,7 @@ void CSoundMgr::Stop(bgmdata::BgmNameList name, bool fadeout)
 //
 void CSoundMgr::BgmVolume(float vol)
 {
-	m_Bgmdata->SetBgmVolume(vol);
+	m_Bgmdata->SetMasterVolume(vol);
 }
 
 ///////////////////////////////////////////////////////////
@@ -57,30 +57,51 @@ void CSoundMgr::BgmVolume(float vol)
 //
 void CSoundMgr::SetPitctlate(bgmdata::BgmNameList numb, float late)
 {
-	m_Bgmdata->PitchRate(numb, late);
+	m_Bgmdata->ChangePitch(numb, late);
+}
+
+
+void CSoundMgr::SetReverbEffect(bgmdata::BgmNameList numb, float walltype, float roomsize)
+{
+	m_Bgmdata->ChangeReverv(numb,walltype,roomsize);
+}
+
+void CSoundMgr::SetEchoEffect(bgmdata::BgmNameList numb, float Delay, float feedback, float wetdry)
+{
+	m_Bgmdata->ChangeEcho(numb,Delay,feedback, wetdry);
+}
+
+void CSoundMgr::OffBGMReverb()
+{
+	m_Bgmdata->OffReverv();
+}
+
+void CSoundMgr::OffBGMEcho()
+{
+	m_Bgmdata->OffEcho();
 }
 
 ///////////////////////////////////////////////////////////
 //
 //	Ä¶
 //
-void CSoundMgr::Play(sedata::SeNameList name)
+void CSoundMgr::Play(sedata::SeNameList name, bool fadein)
 {
-	m_Sedata->Play(name);
+	m_Sedata->Play(name,fadein);
 }
 
 ///////////////////////////////////////////////////////////
 //
 //	’âŽ~
 //
-void CSoundMgr::Stop(sedata::SeNameList name)
+void CSoundMgr::Stop(sedata::SeNameList name, bool fadeout)
 {
-	m_Sedata->Stop(name);
+	m_Sedata->Stop(name,fadeout);
 }
 
 void CSoundMgr::SeVolume(float vol)
 {
-	m_Sedata->SetSeVolume(vol);
+	m_Sedata->SetMasterVolume(vol);
 }
 
 ///////////////////////////////////////////////////////////
@@ -98,29 +119,37 @@ void CSoundMgr::Update()
 //
 void CSoundMgr::SetPitctlate(sedata::SeNameList numb, float late)
 {
-	m_Sedata->PitchRate(numb, late);
+	m_Sedata->ChangePitch(numb, late);
 }
 ///////////////////////////////////////////////////////////
 //
 //	SE‚ÌReverbEffect
 //
-void CSoundMgr::SetReverbEffect(float walltype, float roomsize)
+void CSoundMgr::SetReverbEffect(sedata::SeNameList numb,float walltype, float roomsize)
 {
-	m_Sedata->SetReverbSize(walltype, roomsize);
+	m_Sedata->ChangeReverv(numb,walltype, roomsize);
 }
 ///////////////////////////////////////////////////////////
 //
 //	SE‚ÌReverbEffect‚Ì‰Šú‰»
 //
-void CSoundMgr::OffEffect()
+void CSoundMgr::OffSEReverb()
 {
-	m_Sedata->offsetReverbSize();
+	m_Sedata->OffReverv();
 }
 ///////////////////////////////////////////////////////////
 //
 //	SE‚ÌEcho‚ÌÝ’è
 //
-void CSoundMgr::SetEchoEffect(float Delay, float feedback, float wetdry)
+void CSoundMgr::SetEchoEffect(sedata::SeNameList numb, float Delay, float feedback, float wetdry)
 {
-	m_Sedata->SetEchoSize(Delay,feedback,wetdry);
+	m_Sedata->ChangeEcho(numb,Delay,feedback,wetdry);
+}
+///////////////////////////////////////////////////////////
+//
+//	SE‚ÌEchoEffect‚Ì‰Šú‰»
+//
+void CSoundMgr::OffSEEcho()
+{
+	m_Sedata->OffEcho();
 }

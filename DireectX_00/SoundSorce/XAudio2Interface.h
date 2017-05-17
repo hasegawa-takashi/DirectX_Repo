@@ -2,12 +2,16 @@
 
 #include<XAudio2.h>
 #include<X3DAudio.h>
+#include<XAPOFX.h>
 #include<iostream>
+
+#pragma comment(lib,"X3daudio.lib")
+#pragma comment(lib,"XAPOFX.lib")
 
 #include"VoiceEffect.h"
 #include"LoadWave.h"
 
-#pragma comment(lib,"X3daudio.lib")
+
 
 namespace MasterVoiceData {
 	const float FadeSpd = 0.01f;
@@ -17,9 +21,8 @@ namespace MasterVoiceData {
 struct SoundData
 {
 	IXAudio2SourceVoice*	Voice;				// サウンド
-	VoiceCallback			VoiceCallBack;		// コールバック
 	CLoadWave*				SourceWaveFormat;	// waveファイルの色々
-	CVoiceEffect			VoiceEffect;		// 各種エフェクト
+	CVoiceEffect*			VoiceEffect;		// 各種エフェクト
 
 	float Volume;								// 単体の音量
 	bool  Loop;									// ループ再生するのか？

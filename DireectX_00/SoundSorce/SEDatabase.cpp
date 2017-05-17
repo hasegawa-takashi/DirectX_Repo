@@ -29,19 +29,20 @@ void CSEDatabase::CreateSourceVoice()
 {
 	for (int loop = 0 ; loop < sedata::MAX_SE ; ++loop)
 	{
-		m_SeData[loop]->SourceWaveFormat = new CLoadWave(sedata::SEName[loop]);
-		m_SeData[loop]->Voice = NULL;
+		m_VoiceData[loop]->SourceWaveFormat = new CLoadWave(sedata::SEName[loop]);
+		m_VoiceData[loop]->Voice = NULL;
 	}
 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		WAVEFORMATEX* waveformat = m_SeData[loop]->SourceWaveFormat->GetWaveFormat();
-		GetXAudio2Mgr()->SetXAudio2SouceVoice(&m_SeData[loop]->Voice,*waveformat);
+		WAVEFORMATEX* waveformat = m_VoiceData[loop]->SourceWaveFormat->GetWaveFormat();
+		GetXAudio2Mgr()->SetXAudio2SouceVoice(&m_VoiceData[loop]->Voice,*waveformat);
 	}
 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		m_SeData[loop]->Voice->SubmitSourceBuffer(&m_SeData[loop]->SourceWaveFormat->PreLoadSound());
+		m_VoiceData[loop]->Voice->SubmitSourceBuffer(&m_VoiceData[loop]->SourceWaveFormat->PreLoadSound());
+		m_VoiceData[loop]->VoiceEffect = new CVoiceEffect(m_VoiceData[loop]->Voice);
 	}
 
 	Soundfunc = []() {};
@@ -54,16 +55,25 @@ void CSEDatabase::CreateSourceVoice()
 //
 void CSEDatabase::Play(int SeListNumb)
 {
-	m_SeData[SeListNumb]->Voice->Start();
+	m_VoiceData[SeListNumb]->Voice->Start();
+}
+
+///////////////////////////////////////////////////////////
+//
+//	çƒê∂
+//
+void CSEDatabase::Play(int SeListNumb, bool fadein)
+{
+	m_VoiceData[SeListNumb]->Voice->Start(fadein);
 }
 
 ///////////////////////////////////////////////////////////
 //
 //	í‚é~
 //
-void CSEDatabase::Stop(int SeListNumb)
+void CSEDatabase::Stop(int SeListNumb,bool fadeout)
 {
-	m_SeData[SeListNumb]->Voice->Stop();
+	m_VoiceData[SeListNumb]->Voice->Stop();
 }
 
 ///////////////////////////////////////////////////////////
@@ -87,13 +97,13 @@ void CSEDatabase::Close()
 	// Ç†Ç∆énññ
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		m_SeData[loop]->Voice->DestroyVoice();
+		m_VoiceData[loop]->Voice->DestroyVoice();
 	}
 
 	// 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		delete m_SeData[loop]->Voice;
+		delete m_VoiceData[loop]->Voice;
 	}
 
 	//m_Effects->Release();
@@ -103,7 +113,7 @@ void CSEDatabase::Close()
 //
 //	åªç›É{ÉäÉÖÅ[ÉÄÇÃéÊìæ
 //
-float CSEDatabase::GetSeVolume()
+float CSEDatabase::GetVolume()
 {
 	return Volume;
 }
@@ -118,7 +128,7 @@ void CSEDatabase::SetMasterVolume(float Vol)
 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		m_SeData[loop]->Voice->SetVolume(Volume);
+		m_VoiceData[loop]->Voice->SetVolume(Volume);
 	}
 }
 
@@ -128,5 +138,68 @@ void CSEDatabase::SetMasterVolume(float Vol)
 //
 void CSEDatabase::SetSeVolume(int SetListNumb,float Vol)
 {
-	m_SeData[SetListNumb]->Voice->SetVolume(Vol);
+	m_VoiceData[SetListNumb]->Voice->SetVolume(Vol);
+}
+
+void CSEDatabase::ChangeReverv(int ListNumb, float walltype, float roomsize)
+{
+	m_VoiceData[ListNumb]->VoiceEffect->SetReverbVolume(walltype,roomsize);
+}
+
+void CSEDatabase::OffReverv()
+{
+	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
+	{
+		m_VoiceData[loop]->VoiceEffect->offsetReverbVolume();
+	}
+}
+
+void CSEDatabase::ChangeEcho(int ListNumb, float Delay, float feedback, float wetdry)
+{
+	m_VoiceData[ListNumb]->VoiceEffect->SetEchoVolume(Delay,feedback, wetdry);
+}
+
+void CSEDatabase::OffEcho()
+{
+	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
+	{
+		m_VoiceData[loop]->VoiceEffect->offsetEchoVolume();
+	}
+}
+
+void CSEDatabase::ChangePitch(int ListNumb, float PitchRate)
+{
+	m_VoiceData[ListNumb]->VoiceEffect->PitchRate(PitchRate);
+}
+
+void CSEDatabase::FadeOut(int BgmListNumb)
+{
+	float NowVolume = 0.0f;
+	m_VoiceData[BgmListNumb]->Voice->GetVolume(&NowVolume);
+
+	if (NowVolume <= 0)
+	{
+		m_VoiceData[BgmListNumb]->Fade = false;
+		m_VoiceData[BgmListNumb]->Voice->SetVolume(0.0f);
+		m_VoiceData[BgmListNumb]->Voice->Stop();
+		Soundfunc = nullptr;
+	}
+
+	NowVolume -= MasterVoiceData::FadeSpd;
+	m_VoiceData[BgmListNumb]->Voice->SetVolume(NowVolume);
+}
+
+void CSEDatabase::FadeIn(int BgmListNumb)
+{
+	float NowVolume = 0.0f;
+	m_VoiceData[BgmListNumb]->Voice->GetVolume(&NowVolume);
+
+	if (NowVolume >= Volume)
+	{
+		m_VoiceData[BgmListNumb]->Fade = false;
+		m_VoiceData[BgmListNumb]->Voice->SetVolume(Volume);
+		Soundfunc = nullptr;
+	}
+	NowVolume += MasterVoiceData::FadeSpd;
+	m_VoiceData[BgmListNumb]->Voice->SetVolume(NowVolume);
 }
