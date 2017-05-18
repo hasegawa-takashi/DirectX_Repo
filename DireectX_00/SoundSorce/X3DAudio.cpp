@@ -28,13 +28,13 @@ CEmitter::~CEmitter()
 void CEmitter::SetEmitter(D3DMATRIX* matrix)
 {
 
-	m_Emitter = { 0 };
+	//m_Emitter = { 0 };
 
-	m_Emitter.ChannelCount = 1;
-	m_Emitter.CurveDistanceScaler = FLT_MIN;
-	
-	// マトリクスの登録
-	m_Emitterlist.push_back(matrix);
+	//m_Emitter.ChannelCount = 1;
+	//m_Emitter.CurveDistanceScaler = FLT_MIN;
+	//
+	//// マトリクスの登録
+	//m_Emitterlist.push_back(matrix);
 }
 
 void CEmitter::Update()

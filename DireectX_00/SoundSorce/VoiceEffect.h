@@ -4,7 +4,7 @@
 #include<XAudio2.h>
 #include<functional>
 
-#pragma comment(lib,"X3daudio.lib")
+//#pragma comment(lib,"X3daudio.lib")
 #pragma comment(lib,"XAPOFX.lib")
 
 namespace effect_type {

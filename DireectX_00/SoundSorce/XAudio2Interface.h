@@ -2,11 +2,9 @@
 
 #include<XAudio2.h>
 #include<X3DAudio.h>
-#include<XAPOFX.h>
 #include<iostream>
 
 #pragma comment(lib,"X3daudio.lib")
-#pragma comment(lib,"XAPOFX.lib")
 
 #include"VoiceEffect.h"
 #include"LoadWave.h"
@@ -62,10 +60,12 @@ private:
 	IXAudio2* m_XAudio2;
 	IXAudio2MasteringVoice* m_MasterVoice;
 	
+	/*
 	// 3DSoundópÅiñ¢é¿ëïÅj
 	X3DAUDIO_HANDLE m_X3DInstance;
 	X3DAUDIO_DSP_SETTINGS m_X3DDsp;
-	
+	*/
+
 	UINT32 m_flags = 0;
 	UINT32 m_devicecnt;
 

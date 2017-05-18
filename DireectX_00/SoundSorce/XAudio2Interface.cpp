@@ -60,6 +60,8 @@ bool CXAudio2Interface::CreateXAudio()
 		return false;
 	}
 
+	/*
+
 	// 3DSound‚Ì‰Šú‰»
 	DWORD channelMask = devicedetails.OutputFormat.dwChannelMask;
 	X3DAudioInitialize(channelMask,X3DAUDIO_SPEED_OF_SOUND, m_X3DInstance);
@@ -71,6 +73,8 @@ bool CXAudio2Interface::CreateXAudio()
 	m_X3DDsp.DstChannelCount = devicedetails.OutputFormat.Format.nChannels;
 	m_X3DDsp.pMatrixCoefficients = matrix;
 	delete matrix;
+	
+	*/
 
 	return true;
 }

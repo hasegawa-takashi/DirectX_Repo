@@ -29,20 +29,20 @@ void CSEDatabase::CreateSourceVoice()
 {
 	for (int loop = 0 ; loop < sedata::MAX_SE ; ++loop)
 	{
-		m_VoiceData[loop]->SourceWaveFormat = new CLoadWave(sedata::SEName[loop]);
-		m_VoiceData[loop]->Voice = NULL;
+		m_VoiceData[loop].SourceWaveFormat = new CLoadWave(sedata::SEName[loop]);
+		m_VoiceData[loop].Voice = NULL;
 	}
 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		WAVEFORMATEX* waveformat = m_VoiceData[loop]->SourceWaveFormat->GetWaveFormat();
-		GetXAudio2Mgr()->SetXAudio2SouceVoice(&m_VoiceData[loop]->Voice,*waveformat);
+		WAVEFORMATEX* waveformat = m_VoiceData[loop].SourceWaveFormat->GetWaveFormat();
+		GetXAudio2Mgr()->SetXAudio2SouceVoice(&m_VoiceData[loop].Voice,*waveformat);
 	}
 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		m_VoiceData[loop]->Voice->SubmitSourceBuffer(&m_VoiceData[loop]->SourceWaveFormat->PreLoadSound());
-		m_VoiceData[loop]->VoiceEffect = new CVoiceEffect(m_VoiceData[loop]->Voice);
+		m_VoiceData[loop].Voice->SubmitSourceBuffer(&m_VoiceData[loop].SourceWaveFormat->PreLoadSound());
+		m_VoiceData[loop].VoiceEffect = new CVoiceEffect(m_VoiceData[loop].Voice);
 	}
 
 	Soundfunc = []() {};
@@ -55,7 +55,7 @@ void CSEDatabase::CreateSourceVoice()
 //
 void CSEDatabase::Play(int SeListNumb)
 {
-	m_VoiceData[SeListNumb]->Voice->Start();
+	m_VoiceData[SeListNumb].Voice->Start();
 }
 
 ///////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ void CSEDatabase::Play(int SeListNumb)
 //
 void CSEDatabase::Play(int SeListNumb, bool fadein)
 {
-	m_VoiceData[SeListNumb]->Voice->Start(fadein);
+	m_VoiceData[SeListNumb].Voice->Start(fadein);
 }
 
 ///////////////////////////////////////////////////////////
@@ -73,7 +73,7 @@ void CSEDatabase::Play(int SeListNumb, bool fadein)
 //
 void CSEDatabase::Stop(int SeListNumb,bool fadeout)
 {
-	m_VoiceData[SeListNumb]->Voice->Stop();
+	m_VoiceData[SeListNumb].Voice->Stop();
 }
 
 ///////////////////////////////////////////////////////////
@@ -97,13 +97,13 @@ void CSEDatabase::Close()
 	// ‚ ‚ÆŽn––
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		m_VoiceData[loop]->Voice->DestroyVoice();
+		m_VoiceData[loop].Voice->DestroyVoice();
 	}
 
 	// 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		delete m_VoiceData[loop]->Voice;
+		delete m_VoiceData[loop].Voice;
 	}
 
 	//m_Effects->Release();
@@ -128,7 +128,7 @@ void CSEDatabase::SetMasterVolume(float Vol)
 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		m_VoiceData[loop]->Voice->SetVolume(Volume);
+		m_VoiceData[loop].Voice->SetVolume(Volume);
 	}
 }
 
@@ -138,68 +138,68 @@ void CSEDatabase::SetMasterVolume(float Vol)
 //
 void CSEDatabase::SetSeVolume(int SetListNumb,float Vol)
 {
-	m_VoiceData[SetListNumb]->Voice->SetVolume(Vol);
+	m_VoiceData[SetListNumb].Voice->SetVolume(Vol);
 }
 
 void CSEDatabase::ChangeReverv(int ListNumb, float walltype, float roomsize)
 {
-	m_VoiceData[ListNumb]->VoiceEffect->SetReverbVolume(walltype,roomsize);
+	m_VoiceData[ListNumb].VoiceEffect->SetReverbVolume(walltype,roomsize);
 }
 
 void CSEDatabase::OffReverv()
 {
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		m_VoiceData[loop]->VoiceEffect->offsetReverbVolume();
+		m_VoiceData[loop].VoiceEffect->offsetReverbVolume();
 	}
 }
 
 void CSEDatabase::ChangeEcho(int ListNumb, float Delay, float feedback, float wetdry)
 {
-	m_VoiceData[ListNumb]->VoiceEffect->SetEchoVolume(Delay,feedback, wetdry);
+	m_VoiceData[ListNumb].VoiceEffect->SetEchoVolume(Delay,feedback, wetdry);
 }
 
 void CSEDatabase::OffEcho()
 {
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		m_VoiceData[loop]->VoiceEffect->offsetEchoVolume();
+		m_VoiceData[loop].VoiceEffect->offsetEchoVolume();
 	}
 }
 
 void CSEDatabase::ChangePitch(int ListNumb, float PitchRate)
 {
-	m_VoiceData[ListNumb]->VoiceEffect->PitchRate(PitchRate);
+	m_VoiceData[ListNumb].VoiceEffect->PitchRate(PitchRate);
 }
 
 void CSEDatabase::FadeOut(int BgmListNumb)
 {
 	float NowVolume = 0.0f;
-	m_VoiceData[BgmListNumb]->Voice->GetVolume(&NowVolume);
+	m_VoiceData[BgmListNumb].Voice->GetVolume(&NowVolume);
 
 	if (NowVolume <= 0)
 	{
-		m_VoiceData[BgmListNumb]->Fade = false;
-		m_VoiceData[BgmListNumb]->Voice->SetVolume(0.0f);
-		m_VoiceData[BgmListNumb]->Voice->Stop();
+		m_VoiceData[BgmListNumb].Fade = false;
+		m_VoiceData[BgmListNumb].Voice->SetVolume(0.0f);
+		m_VoiceData[BgmListNumb].Voice->Stop();
 		Soundfunc = nullptr;
 	}
 
 	NowVolume -= MasterVoiceData::FadeSpd;
-	m_VoiceData[BgmListNumb]->Voice->SetVolume(NowVolume);
+	m_VoiceData[BgmListNumb].Voice->SetVolume(NowVolume);
 }
 
 void CSEDatabase::FadeIn(int BgmListNumb)
 {
 	float NowVolume = 0.0f;
-	m_VoiceData[BgmListNumb]->Voice->GetVolume(&NowVolume);
+	m_VoiceData[BgmListNumb].Voice->GetVolume(&NowVolume);
 
 	if (NowVolume >= Volume)
 	{
-		m_VoiceData[BgmListNumb]->Fade = false;
-		m_VoiceData[BgmListNumb]->Voice->SetVolume(Volume);
+		m_VoiceData[BgmListNumb].Fade = false;
+		m_VoiceData[BgmListNumb].Voice->SetVolume(Volume);
 		Soundfunc = nullptr;
 	}
 	NowVolume += MasterVoiceData::FadeSpd;
-	m_VoiceData[BgmListNumb]->Voice->SetVolume(NowVolume);
+	m_VoiceData[BgmListNumb].Voice->SetVolume(NowVolume);
 }

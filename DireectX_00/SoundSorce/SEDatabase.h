@@ -6,6 +6,7 @@
 #include<functional>
 #include<iostream>
 
+#include"VoiceEffect.h"
 #include"LoadWave.h"
 #include"XAudio2Interface.h"
 
@@ -55,7 +56,7 @@ private:
 	void Close();
 	void CreateSourceVoice();
 
-	SoundData* m_VoiceData[sedata::MAX_SE];				// SoundSorce
+	SoundData m_VoiceData[sedata::MAX_SE];				// SoundSorce
 	std::function< void() > Soundfunc;					// Bgm‚Ìfunc
 	float Volume = 1.0f;								// ‘S‘ÌVol
 

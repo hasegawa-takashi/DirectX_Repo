@@ -1,9 +1,10 @@
 #pragma once
 
-#include<vector>
+
+#include<d3d9.h>
 #include<X3DAudio.h>
 
-
+#pragma comment(lib,"X3daudio.lib")
 
 //------------------------------------------------------------
 //
@@ -20,7 +21,7 @@ public:
 	void SetListener(D3DMATRIX* matrix);
 
 private:
-	X3DAUDIO_LISTENER m_listener;
+	//X3DAUDIO_LISTENER m_listener;
 };
 
 
@@ -40,8 +41,8 @@ public:
 	void Update();
 
 private:
-	std::vector<D3DMATRIX*> m_Emitterlist;
+	//std::vector<D3DMATRIX*> m_Emitterlist;
 	//std::list<X3DAUDIO_EMITTER> m_emitter;
-	X3DAUDIO_EMITTER m_Emitter;
+	//X3DAUDIO_EMITTER m_Emitter;
 
 };
