@@ -33,7 +33,7 @@ CVoiceEffect::CVoiceEffect(IXAudio2SourceVoice* voice)
 	
 	// リバーブの初期化
 	m_Reverbpram.Diffusion = FXREVERB_MIN_DIFFUSION;
-	m_Reverbpram.RoomSize = FXREVERB_MIN_ROOMSIZE;
+	m_Reverbpram.RoomSize =  FXREVERB_MIN_ROOMSIZE;
 
 	// エコーの初期化
 	m_EchoPram.Delay = FXECHO_MIN_DELAY;
@@ -84,8 +84,8 @@ void CVoiceEffect::offsetReverbVolume()
 {
 	FXREVERB_PARAMETERS param;
 
-	param.Diffusion = FXREVERB_DEFAULT_DIFFUSION;
-	param.RoomSize = FXREVERB_DEFAULT_ROOMSIZE;
+	param.Diffusion = FXREVERB_MIN_DIFFUSION;
+	param.RoomSize = FXREVERB_MIN_ROOMSIZE;
 
 	m_voice->SetEffectParameters(0, &param, sizeof(FXREVERB_PARAMETERS));
 
@@ -107,9 +107,9 @@ void CVoiceEffect::offsetEchoVolume()
 {
 	FXECHO_PARAMETERS param;
 
-	param.Delay = FXECHO_DEFAULT_DELAY;
-	param.Feedback = FXECHO_DEFAULT_FEEDBACK;
-	param.WetDryMix = FXECHO_DEFAULT_WETDRYMIX;
+	param.Delay = FXECHO_MIN_DELAY;
+	param.Feedback = FXECHO_MIN_FEEDBACK;
+	param.WetDryMix = FXECHO_MIN_WETDRYMIX;
 
 	m_voice->SetEffectParameters(1, &param, sizeof(FXECHO_PARAMETERS));
 

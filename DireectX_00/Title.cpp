@@ -5,7 +5,7 @@ CTitle::CTitle()
 	GetObjMgr()->PushObj(new CTitleUI, ID_OTHER);
 	GetObjMgr()->PushObj(new CCamera, ID_CAMERA);
 	
-	GetSoundMgr()->Play(bgmdata::Sound2,false);
+	//GetSoundMgr()->Play(bgmdata::Sound2,false);
 
 	PushEnter = false;
 }
@@ -47,7 +47,7 @@ void CTitle::Update() {
 	}
 	if (CInput::GetKeyPress(DIK_J))
 	{
-		GetSoundMgr()->OffBGMReverb();
+		GetSoundMgr()->OffSEReverb();
 	}
 	if (CInput::GetKeyPress(DIK_Y))
 	{
