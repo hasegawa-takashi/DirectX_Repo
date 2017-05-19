@@ -1,0 +1,8 @@
+﻿  framing.c
+d:\directx_repo\data\ogglib\libogg-1.3.2\src\framing.c(733): warning C4456: declaration of 'page' hides previous local declaration
+  d:\directx_repo\data\ogglib\libogg-1.3.2\src\framing.c(678): note: see declaration of 'page'
+d:\directx_repo\data\ogglib\libogg-1.3.2\src\framing.c(734): warning C4456: declaration of 'bytes' hides previous local declaration
+  d:\directx_repo\data\ogglib\libogg-1.3.2\src\framing.c(680): note: see declaration of 'bytes'
+  bitwise.c
+  Generating Code...
+  libogg_static.vcxproj -> D:\DirectX_Repo\data\OggLib\libogg-1.3.2\win32\VS2010\Win32\Debug\libogg_static.lib

@@ -60,7 +60,7 @@ bool CXAudio2Interface::CreateXAudio()
 		return false;
 	}
 
-	/*
+	
 
 	// 3DSound‚Ì‰Šú‰»
 	DWORD channelMask = devicedetails.OutputFormat.dwChannelMask;
@@ -74,7 +74,7 @@ bool CXAudio2Interface::CreateXAudio()
 	m_X3DDsp.pMatrixCoefficients = matrix;
 	delete matrix;
 	
-	*/
+	
 
 	return true;
 }

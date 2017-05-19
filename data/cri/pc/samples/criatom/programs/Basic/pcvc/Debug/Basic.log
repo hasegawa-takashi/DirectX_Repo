@@ -1,8 +1,0 @@
-﻿2016/07/06 16:26:07 にビルドを開始しました。
-     1>ノード 2 上のプロジェクト "C:\Users\HasegawaTakashi\Desktop\製作中\DireectX_00\cri\pc\samples\criatom\programs\Basic\pcvc\Basic.vcxproj" (build ターゲット)。
-     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Platforms\Win32\Microsoft.Cpp.Win32.Targets(518,5): error MSB8008: 指定したプラットフォーム ツールセット (v140) はインストールされていないか無効です。サポートされている PlatformToolset 値が選択されていることを確認してください。
-     1>プロジェクト "C:\Users\HasegawaTakashi\Desktop\製作中\DireectX_00\cri\pc\samples\criatom\programs\Basic\pcvc\Basic.vcxproj" (build ターゲット) のビルドが終了しました -- 失敗。
-
-ビルドに失敗しました。
-
-経過時間 00:00:00.00

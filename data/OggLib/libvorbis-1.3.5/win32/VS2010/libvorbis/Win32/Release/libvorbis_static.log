@@ -1,0 +1,48 @@
+﻿  analysis.c
+  bitrate.c
+  block.c
+..\..\..\lib\block.c(256): warning C4456: declaration of 'i' hides previous local declaration
+  ..\..\..\lib\block.c(172): note: see declaration of 'i'
+..\..\..\lib\block.c(1029): warning C4456: declaration of 'i' hides previous local declaration
+  ..\..\..\lib\block.c(972): note: see declaration of 'i'
+  codebook.c
+  envelope.c
+  floor0.c
+  floor1.c
+..\..\..\lib\floor1.c(497): warning C4457: declaration of 'a' hides function parameter
+  ..\..\..\lib\floor1.c(457): note: see declaration of 'a'
+..\..\..\lib\floor1.c(714): warning C4456: declaration of 'y0' hides previous local declaration
+  ..\..\..\lib\floor1.c(613): note: see declaration of 'y0'
+..\..\..\lib\floor1.c(715): warning C4456: declaration of 'y1' hides previous local declaration
+  ..\..\..\lib\floor1.c(614): note: see declaration of 'y1'
+  info.c
+..\..\..\lib\info.c : warning C4819: The file contains a character that cannot be represented in the current code page (932). Save the file in Unicode format to prevent data loss
+..\..\..\lib\info.c(62): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+..\..\..\lib\info.c(69): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+..\..\..\lib\info.c(70): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+..\..\..\lib\info.c(71): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+..\..\..\lib\info.c(93): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+..\..\..\lib\info.c(94): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+..\..\..\lib\info.c(112): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+..\..\..\lib\info.c(113): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  lookup.c
+  lpc.c
+  lsp.c
+  mapping0.c
+  mdct.c
+..\..\..\lib\mdct.c(79): warning C4456: declaration of 'i' hides previous local declaration
+  ..\..\..\lib\mdct.c(56): note: see declaration of 'i'
+..\..\..\lib\mdct.c(440): warning C4456: declaration of 'iX' hides previous local declaration
+  ..\..\..\lib\mdct.c(404): note: see declaration of 'iX'
+  psy.c
+..\..\..\lib\psy.c(239): warning C4456: declaration of 'bin' hides previous local declaration
+  ..\..\..\lib\psy.c(160): note: see declaration of 'bin'
+  registry.c
+  res0.c
+  sharedbook.c
+  smallft.c
+  synthesis.c
+  vorbisenc.c
+  Compiling...
+  window.c
+  libvorbis_static.vcxproj -> D:\DirectX_Repo\data\OggLib\libvorbis-1.3.5\win32\VS2010\Win32\Release\libvorbis_static.lib

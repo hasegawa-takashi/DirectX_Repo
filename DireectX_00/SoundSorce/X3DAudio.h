@@ -19,6 +19,8 @@ public:
 	CListener();
 	~CListener();
 
+	void Update();
+
 	void SetListener(D3DMATRIX* matrix);
 
 private:

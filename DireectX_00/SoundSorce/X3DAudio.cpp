@@ -10,7 +10,21 @@ CListener::~CListener()
 {
 }
 
+void CListener::Update()
+{
+	m_listener.OrientFront;		//	前方向
+	m_listener.OrientTop;		//	上方向
+	m_listener.pCone;			//	聴覚範囲 NULLだと全方向
+	m_listener.Position;		//	座標
+	m_listener.Velocity;		//	移動量?移動ベクトルの大きさ？
+}
 
+void CListener::SetListener(D3DMATRIX* matrix)
+{
+
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 CEmitter::CEmitter()
 {
