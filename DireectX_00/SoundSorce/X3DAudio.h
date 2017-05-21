@@ -4,6 +4,7 @@
 #include<d3d9.h>
 #include<X3DAudio.h>
 #include<vector>
+#include"../Calculation.h"
 
 #pragma comment(lib,"X3daudio.lib")
 
@@ -21,10 +22,11 @@ public:
 
 	void Update();
 
-	void SetListener(D3DMATRIX* matrix);
+	void SetListener(D3DXMATRIX* matrix);
 
 private:
 	X3DAUDIO_LISTENER m_listener;
+	D3DXMATRIX* m_listenerMtx;
 };
 
 

@@ -36,5 +36,6 @@ public:
 	// épê®çsóÒ(Yé≤ÇÃÇ›)ÇÃê›íË
 	static D3DXMATRIX* CalcLookAtMatrixFix(D3DXMATRIX* mat, D3DXVECTOR3* pPos, D3DXVECTOR3* pLook, D3DXVECTOR3* pUp);
 
+	
 };
 

@@ -9,6 +9,13 @@
 #pragma comment(lib,"libvorbid_static.lib")
 #pragma comment(lib,"libvorbidfile_static.lib")
 
+//=================================================================
+//
+//	oggファイルの読み込み用
+//	
+//	ストリーミング機能がないので後々実装予定
+//
+//=================================================================
 class CLoadOgg
 {
 public:
@@ -16,6 +23,8 @@ public:
 	~CLoadOgg();
 
 	void LoadOggFile(char* filename);
+	WAVEFORMATEX* GetWaveFormat();
+
 
 private:
 	OggVorbis_File m_ovf;
