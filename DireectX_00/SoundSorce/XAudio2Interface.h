@@ -8,7 +8,7 @@
 
 #include"VoiceEffect.h"
 #include"LoadWave.h"
-
+#include"X3DAudio.h"
 
 
 namespace MasterVoiceData {
@@ -21,6 +21,8 @@ struct SoundData
 	IXAudio2SourceVoice*	Voice;				// サウンド
 	CLoadWave*				SourceWaveFormat;	// waveファイルの色々
 	CVoiceEffect*			VoiceEffect;		// 各種エフェクト
+	CListener*				VoiceListener;		// 3DSoundEffect(中心地)
+	CEmitter*				VoiceEmitter;		// 3DSoundEffect(発信地)
 
 	float Volume;								// 単体の音量
 	bool  Loop;									// ループ再生するのか？

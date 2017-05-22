@@ -27,6 +27,9 @@ public:
 private:
 	X3DAUDIO_LISTENER m_listener;
 	D3DXMATRIX* m_listenerMtx;
+
+	bool m_Uselistener;
+
 };
 
 
@@ -42,11 +45,11 @@ public:
 	CEmitter();
 	~CEmitter();
 
-	void SetEmitter(D3DMATRIX* matrix);
+	void SetEmitter(D3DXMATRIX* matrix);
 	void Update();
 
 private:
-	std::vector<D3DMATRIX*> m_Emitterlist;
+	std::vector<D3DXMATRIX*> m_Emitterlist;
 	//std::list<X3DAUDIO_EMITTER> m_emitter;
 	X3DAUDIO_EMITTER m_Emitter;
 

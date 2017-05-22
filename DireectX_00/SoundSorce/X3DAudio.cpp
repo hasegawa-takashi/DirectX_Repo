@@ -12,29 +12,36 @@ CListener::~CListener()
 
 void CListener::Update()
 {
-	m_listener.OrientFront;		//	前方向
-	m_listener.OrientTop;		//	上方向
-	m_listener.pCone = NULL;	//	聴覚範囲 NULLだと全方向
-	m_listener.Position;		//	座標
-	m_listener.Velocity;		//	移動量?移動ベクトルの大きさ？
+	D3DXVECTOR3 Pos;
+	D3DXVECTOR3 forvec;
+	D3DXVECTOR3 upvec;
+
+	CCalculation::CalcLookAtMatrix(m_listenerMtx, &Pos, &forvec, &upvec);
+
+	m_listener.OrientFront = forvec;
+	m_listener.OrientTop = upvec;
+	m_listener.pCone = NULL;
+	m_listener.Position = Pos;
+	m_listener.Velocity = D3DXVECTOR3(0, 0, 0);
 }
 
 void CListener::SetListener(D3DXMATRIX* matrix)
 {
 	m_listenerMtx = matrix;
 
-
 	D3DXVECTOR3 Pos;
 	D3DXVECTOR3 forvec;
 	D3DXVECTOR3 upvec;
 
-	CCalculation::CalcLookAtMatrix(matrix, &Pos,&forvec,&upvec);
+	CCalculation::CalcLookAtMatrix(m_listenerMtx, &Pos,&forvec,&upvec);
 
 	m_listener.OrientFront = forvec;
 	m_listener.OrientTop   = upvec;
 	m_listener.pCone = NULL;
 	m_listener.Position = Pos;
 	m_listener.Velocity = D3DXVECTOR3(0,0,0);
+
+	m_Uselistener = true;
 
 }
 
@@ -47,9 +54,10 @@ CEmitter::CEmitter()
 
 CEmitter::~CEmitter()
 {
+
 }
 
-void CEmitter::SetEmitter(D3DMATRIX* matrix)
+void CEmitter::SetEmitter(D3DXMATRIX* matrix)
 {
 
 	m_Emitter = { 0 };
@@ -59,9 +67,25 @@ void CEmitter::SetEmitter(D3DMATRIX* matrix)
 	
 	// マトリクスの登録
 	m_Emitterlist.push_back(matrix);
+	
+
 }
 
 void CEmitter::Update()
 {
 
+	D3DXVECTOR3 Pos;
+	D3DXVECTOR3 forvec;
+	D3DXVECTOR3 upvec;
+
+	for (auto itr = m_Emitterlist.begin(); itr != m_Emitterlist.end(); ++itr)
+	{
+		CCalculation::CalcLookAtMatrix(*itr, &Pos, &forvec, &upvec);
+
+		m_Emitter.OrientFront = forvec;
+		m_Emitter.OrientTop = upvec;
+		m_Emitter.Position = Pos;
+		m_Emitter.Velocity = D3DXVECTOR3(0, 0, 0);
+
+	}
 }
