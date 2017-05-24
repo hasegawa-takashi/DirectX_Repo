@@ -64,9 +64,7 @@ CVoiceEffect::CVoiceEffect(IXAudio2SourceVoice* voice)
 //
 CVoiceEffect::~CVoiceEffect()
 {
-	//delete m_voice;
-	
-	
+
 }
 
 void CVoiceEffect::SetReverbVolume(float walltype, float roomsize)

@@ -35,6 +35,15 @@ void CSoundMgr::Play(bgmdata::BgmNameList name, bool fadein)
 
 ///////////////////////////////////////////////////////////
 //
+//	çƒê∂(3Dâπê∫)
+//
+void CSoundMgr::Play(bgmdata::BgmNameList, bool fadeout, D3DXMATRIX emitter)
+{
+
+}
+
+///////////////////////////////////////////////////////////
+//
 //	í‚é~
 //
 void CSoundMgr::Stop(bgmdata::BgmNameList name, bool fadeout)
@@ -88,6 +97,15 @@ void CSoundMgr::OffBGMEcho()
 void CSoundMgr::Play(sedata::SeNameList name, bool fadein)
 {
 	m_Sedata->Play(name,fadein);
+}
+
+///////////////////////////////////////////////////////////
+//
+//	çƒê∂(3DSound)
+//
+void CSoundMgr::Play(sedata::SeNameList, bool fadein, D3DXMATRIX emitter)
+{
+
 }
 
 ///////////////////////////////////////////////////////////

@@ -19,6 +19,7 @@ public:
 
 	// BGM—p
 	void Play(bgmdata::BgmNameList, bool fadein);
+	void Play(bgmdata::BgmNameList, bool fadeout, D3DXMATRIX emitter);
 	void Stop(bgmdata::BgmNameList, bool fadeout);
 	void BgmVolume(float vol);
 	void SetPitctlate(bgmdata::BgmNameList, float late );
@@ -29,6 +30,7 @@ public:
 
 	// Se—p
 	void Play(sedata::SeNameList, bool fadein);
+	void Play(sedata::SeNameList, bool fadein,D3DXMATRIX emitter);
 	void Stop(sedata::SeNameList, bool fadeout);
 	void SeVolume(float vol);
 	void SetPitctlate(sedata::SeNameList, float late);

@@ -32,7 +32,9 @@ public:
 	~CSEDatabase();
 
 	void Play(int SeListNumb);
-	void Play(int SeListNumb,bool fadein);
+	void Play(int SeListNumb, bool fadein);
+	void Play(int SeListNumb, bool fadein, D3DXMATRIX matrix);
+
 	void Stop(int SeListNumb, bool fadeout);
 
 	void Update();

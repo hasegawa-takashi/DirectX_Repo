@@ -3,7 +3,7 @@
 
 #include<d3d9.h>
 #include<X3DAudio.h>
-#include<vector>
+#include"XAudio2Interface.h"
 #include"../Calculation.h"
 
 #pragma comment(lib,"X3daudio.lib")
@@ -49,8 +49,33 @@ public:
 	void Update();
 
 private:
-	std::vector<D3DXMATRIX*> m_Emitterlist;
-	//std::list<X3DAUDIO_EMITTER> m_emitter;
+	D3DXMATRIX* m_EmitterMatrix;
 	X3DAUDIO_EMITTER m_Emitter;
 
 };
+
+//------------------------------------------------------------
+//
+//	3DAudioをまとめてるやつ
+//
+//------------------------------------------------------------
+class C3DSound
+{
+public:
+	C3DSound();
+	~C3DSound();
+
+	bool SetListener(D3DXMATRIX** matrix);
+
+	X3DAUDIO_DSP_SETTINGS Calc3DAudio(D3DXMATRIX* emitter);
+
+private:
+
+	// 3DSound用
+	X3DAUDIO_HANDLE			m_X3DInstance;			//
+	X3DAUDIO_DSP_SETTINGS	m_X3DDsp;				// 
+	CListener*				m_VoiceListener;		// (中心地 :: 登録制)
+	CEmitter*				m_Emitter;				// (発信地 :: 引数制)
+
+};
+

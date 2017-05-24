@@ -7,11 +7,14 @@ CXAudio2Interface::CXAudio2Interface()
 	if ( !CreateXAudio() )
 	{
 	}
+
 }
 
 
 CXAudio2Interface::~CXAudio2Interface()
 {
+	
+
 }
 
 /////////////////////////////////////////////////////////////////
@@ -59,22 +62,6 @@ bool CXAudio2Interface::CreateXAudio()
 		CoUninitialize();
 		return false;
 	}
-
-	
-
-	// 3DSound‚Ì‰Šú‰»
-	DWORD channelMask = devicedetails.OutputFormat.dwChannelMask;
-	X3DAudioInitialize(channelMask,X3DAUDIO_SPEED_OF_SOUND, m_X3DInstance);
-
-	// DSPSetteing‚ÌÝ’è
-	m_X3DDsp = { 0 };
-	FLOAT32* matrix = new FLOAT32[devicedetails.OutputFormat.Format.nChannels];
-	m_X3DDsp.SrcChannelCount = 1;
-	m_X3DDsp.DstChannelCount = devicedetails.OutputFormat.Format.nChannels;
-	m_X3DDsp.pMatrixCoefficients = matrix;
-	delete matrix;
-	
-	
 
 	return true;
 }
@@ -149,3 +136,5 @@ void CXAudio2Interface::MasterVoiceFadeIn()
 	NowVolume += MasterVoiceData::FadeSpd;
 	m_MasterVoice->SetVolume(NowVolume);
 }
+
+

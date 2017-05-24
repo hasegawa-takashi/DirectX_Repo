@@ -39,6 +39,16 @@ void CBgmDatabase::CreateSourceVoice()
 			&m_VoiceData[loop].SourceWaveFormat->PreparationBuffer() );
 	}
 
+
+
+	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
+	{
+		m_VoiceData[loop].Voice->SubmitSourceBuffer(&m_VoiceData[loop].SourceWaveFormat->PreLoadSound());
+		m_VoiceData[loop].VoiceEffect = new CVoiceEffect(m_VoiceData[loop].Voice);
+	}
+
+
+
 	Soundfunc = nullptr;
 }
 
@@ -165,6 +175,13 @@ void CBgmDatabase::Close()
 	{
 		delete m_VoiceData[loop].SourceWaveFormat;
 	}
+
+
+	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
+	{
+		delete m_VoiceData[loop].VoiceEffect;
+	}
+
 
 	Soundfunc = nullptr;
 

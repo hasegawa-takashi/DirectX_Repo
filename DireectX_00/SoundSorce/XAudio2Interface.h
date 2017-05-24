@@ -21,8 +21,7 @@ struct SoundData
 	IXAudio2SourceVoice*	Voice;				// サウンド
 	CLoadWave*				SourceWaveFormat;	// waveファイルの色々
 	CVoiceEffect*			VoiceEffect;		// 各種エフェクト
-	CListener*				VoiceListener;		// 3DSoundEffect(中心地)
-	CEmitter*				VoiceEmitter;		// 3DSoundEffect(発信地)
+	
 
 	float Volume;								// 単体の音量
 	bool  Loop;									// ループ再生するのか？
@@ -55,6 +54,8 @@ public:
 	void MasterVoiceFadeOut();
 	void MasterVoiceFadeIn();
 
+	const IXAudio2* GetXAudio2() { return m_XAudio2; }
+
 private:
 	CXAudio2Interface();
 
@@ -63,10 +64,7 @@ private:
 	IXAudio2MasteringVoice* m_MasterVoice;
 	
 	
-	// 3DSound用（未実装）
-	X3DAUDIO_HANDLE m_X3DInstance;
-	X3DAUDIO_DSP_SETTINGS m_X3DDsp;
-	
+
 
 	UINT32 m_flags = 0;
 	UINT32 m_devicecnt;

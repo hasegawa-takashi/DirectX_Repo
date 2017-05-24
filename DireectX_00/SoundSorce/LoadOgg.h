@@ -5,9 +5,10 @@
 #include<vorbis\codec.h>
 #include<vorbis\vorbisfile.h>
 
+
 #pragma comment(lib,"libogg_static.lib")
-#pragma comment(lib,"libvorbid_static.lib")
-#pragma comment(lib,"libvorbidfile_static.lib")
+#pragma comment(lib,"libvorbis_static.lib")
+#pragma comment(lib,"libvorbisfile_static.lib")
 
 //=================================================================
 //

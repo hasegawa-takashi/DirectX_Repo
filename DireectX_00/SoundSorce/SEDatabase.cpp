@@ -69,6 +69,15 @@ void CSEDatabase::Play(int SeListNumb, bool fadein)
 
 ///////////////////////////////////////////////////////////
 //
+//	çƒê∂
+//
+void CSEDatabase::Play(int SeListNumb, bool fadein, D3DXMATRIX matrix)
+{
+
+}
+
+///////////////////////////////////////////////////////////
+//
 //	í‚é~
 //
 void CSEDatabase::Stop(int SeListNumb,bool fadeout)
@@ -103,7 +112,12 @@ void CSEDatabase::Close()
 	// 
 	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
 	{
-		delete m_VoiceData[loop].Voice;
+		delete m_VoiceData[loop].VoiceEffect;
+	}
+
+	for (int loop = 0; loop < sedata::MAX_SE; ++loop)
+	{
+		delete m_VoiceData[loop].SourceWaveFormat;
 	}
 
 	//m_Effects->Release();
