@@ -61,7 +61,7 @@ private:
 	void CreateSourceVoice();
 
 	SoundData m_VoiceData[bgmdata::MAX_BGM];				// SoundSorce
-	
+
 	std::function< void() > Soundfunc;					// Bgm‚Ìfunc
 	float Volume = 1.0f;								// ‘S‘ÌVol
 	

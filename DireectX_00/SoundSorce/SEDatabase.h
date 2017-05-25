@@ -53,7 +53,7 @@ public:
 	void ChangeEcho(int ListNumb, float Delay, float feedback, float wetdry);
 	void OffEcho();
 	void ChangePitch(int ListNumb, float PitchRate);
-
+	
 private:
 	void Close();
 	void CreateSourceVoice();

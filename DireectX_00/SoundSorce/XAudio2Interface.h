@@ -10,7 +10,6 @@
 #include"LoadWave.h"
 #include"X3DAudio.h"
 
-
 namespace MasterVoiceData {
 	const float FadeSpd = 0.01f;
 }

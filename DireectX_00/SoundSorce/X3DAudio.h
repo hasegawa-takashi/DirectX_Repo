@@ -70,8 +70,6 @@ public:
 	X3DAUDIO_DSP_SETTINGS Calc3DAudio(D3DXMATRIX* emitter);
 
 private:
-
-	// 3DSoundóp
 	X3DAUDIO_HANDLE			m_X3DInstance;			//
 	X3DAUDIO_DSP_SETTINGS	m_X3DDsp;				// 
 	CListener*				m_VoiceListener;		// (íÜêSín :: ìoò^êß)

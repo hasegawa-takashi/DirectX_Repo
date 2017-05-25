@@ -176,12 +176,11 @@ void CBgmDatabase::Close()
 		delete m_VoiceData[loop].SourceWaveFormat;
 	}
 
-
+	//
 	for (int loop = 0; loop < bgmdata::MAX_BGM; ++loop)
 	{
 		delete m_VoiceData[loop].VoiceEffect;
 	}
-
 
 	Soundfunc = nullptr;
 
