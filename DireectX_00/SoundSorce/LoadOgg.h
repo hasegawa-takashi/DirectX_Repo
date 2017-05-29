@@ -30,5 +30,6 @@ public:
 private:
 	OggVorbis_File m_ovf;
 	WAVEFORMATEX m_waveformat;
+
 };
 
