@@ -2,4 +2,5 @@
 *.opendb
 /Debug/*
 /DireectX_00/Debug/*
-
+/XAudio2_ClassBuild/Debug/*
+/XAudio2_ClassBuild/XAudio2_ClassBuild/Debug/*
