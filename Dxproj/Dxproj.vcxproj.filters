@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Singleton">
+      <UniqueIdentifier>{b12f0602-671b-4179-ac6d-d1a5b6a0f51b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFps">
+      <UniqueIdentifier>{92657f30-5c8b-4857-bfd5-4135b0790538}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneMgr">
+      <UniqueIdentifier>{5bfacc98-afb9-4034-9138-14c1559b1ad6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjMgr">
+      <UniqueIdentifier>{28260067-8f76-477b-a02a-11c8b976c95c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{81f23a9d-3da9-4a4a-9b22-cdc8bc117dcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IncludeHeader">
+      <UniqueIdentifier>{8ca7ee5c-9059-4a09-a9b9-2bc2c5d6acea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CGameScene">
+      <UniqueIdentifier>{f53d786c-cf58-45e6-b6e3-8b0714eef0e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameLoop">
+      <UniqueIdentifier>{97e383ee-e29d-4244-809e-f431a4da2024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WindowsCreate">
+      <UniqueIdentifier>{f9b19340-9e84-44e8-9f8d-7cf068bf56d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Directx">
+      <UniqueIdentifier>{669f7f42-c05b-4462-bca0-9b669ad8f00e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderFormat">
+      <UniqueIdentifier>{9ee0c95a-0189-4eeb-ad56-9f17a4446426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{b74a525f-7f6e-4a3f-86ec-d22bc739d0b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{b1bd624c-cdd6-42e2-8ad3-a0ab6de07515}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Calculation">
+      <UniqueIdentifier>{6eedbbf3-0969-4f49-95ca-0adcbf9ad42e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModelRender">
+      <UniqueIdentifier>{12416103-7538-4c55-9e67-1373b89c1964}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModelRender\Mesh">
+      <UniqueIdentifier>{502e28e0-1bc3-46d9-aecc-395554d3bf43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{e2cd26a8-1950-4b63-88a6-245b2a46e860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{f5688f96-4826-4610-b5a2-034a6f4d76db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ModelRender\RenderNonMesh">
+      <UniqueIdentifier>{27bcda86-9b2a-4cca-beca-f75948c5fe2e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Singleton.h">
+      <Filter>Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFps.h">
+      <Filter>GameFps</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMgr.h">
+      <Filter>SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjMgr.h">
+      <Filter>ObjMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="includeheader.h">
+      <Filter>IncludeHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="GameHeader.h">
+      <Filter>IncludeHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameScene.h">
+      <Filter>CGameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLoop.h">
+      <Filter>GameLoop</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowCreate.h">
+      <Filter>WindowsCreate</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectxMgr.h">
+      <Filter>Directx</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderFormat.h">
+      <Filter>RenderFormat</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Calculation.h">
+      <Filter>Calculation</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\AudioComponent\EmitterComponent\EmitterComponent.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\AudioComponent\ListenerComponent\ListenerComponent.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\AudioComponent\SoundComponent\SoundComponent.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\AudioComponent\SoundEffectComponent\SoundEffectComponent.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\AudioComponent\SoundPlayerComponent\SoundPlayerComponent.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\AudioDatabase\AudioDatabase.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\CreateSourceVoice\CSourceVoiceOperator.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\FileLoad\LoadSoundFile.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\FileLoad\Wave\LoadWave.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\Sound.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\SoundCue\SoundCue.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\SoundEffect\CueEffects.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\WaveformatData\WaveformatData.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\XAudio2\X3DAudio\X3DSound\X3DSound.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\XAudio2\XAPOFXEffect\VoiceEffect.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\XAudio2\XAudio2Interface\XAudioInterface.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="MyHierarchy.h">
+      <Filter>ModelRender\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderModel.h">
+      <Filter>ModelRender</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderNonMesh.h">
+      <Filter>ModelRender\RenderNonMesh</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameFps.cpp">
+      <Filter>GameFps</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMgr.cpp">
+      <Filter>SceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjMgr.cpp">
+      <Filter>ObjMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameScene.cpp">
+      <Filter>CGameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameLoop.cpp">
+      <Filter>GameLoop</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowCreate.cpp">
+      <Filter>WindowsCreate</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectxMgr.cpp">
+      <Filter>Directx</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderFormat.cpp">
+      <Filter>RenderFormat</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Calculation.cpp">
+      <Filter>Calculation</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\AudioComponent\EmitterComponent\EmitterComponent.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\AudioComponent\ListenerComponent\ListenerComponent.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\AudioComponent\SoundComponent\SoundComponent.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\AudioComponent\SoundEffectComponent\SoundEffectComponent.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\AudioComponent\SoundPlayerComponent\SoundPlayerComponent.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\AudioDatabase\AudioDatabase.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\CreateSourceVoice\CSourceVoiceOperator.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\FileLoad\Wave\LoadWave.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\SoundCue\SoundCue.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\SoundEffect\CueEffects.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\WaveformatData\WaveformatData.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\XAudio2\X3DAudio\X3DSound\X3DSound.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\XAudio2\XAPOFXEffect\VoiceEffect.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\XAudio2\XAudio2Interface\XAudioInterface.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="MyHierarchy.cpp">
+      <Filter>ModelRender\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderModel.cpp">
+      <Filter>ModelRender</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderNonMesh.cpp">
+      <Filter>ModelRender\RenderNonMesh</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
