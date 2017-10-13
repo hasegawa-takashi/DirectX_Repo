@@ -17,7 +17,7 @@ CCamera::CCamera()
 	m_OffsetZ = 0.0f;
 	m_Distance = 1.0f;
 	m_AngleUnit = 0.1f;
-
+	m_MoveFlag = false;
 }
 
 
@@ -33,11 +33,16 @@ void CCamera::Init()
 void CCamera::LateUpdate()
 {
 	CameraInput();
-
+	
 	// 追従移動
 	D3DXVECTOR3 _move = m_TargetObj->GetPosition();
-	float ForVec = m_DirDef.z * 1.5f;
-	m_Position = _move + m_Position;
+
+	if (m_MoveFlag)
+	{
+		m_Position = _move + m_Position;
+		m_MoveFlag = false;
+	}
+
 
 	// ビュー行列の更新
 	D3DXVECTOR3 posW = m_Position + m_LookAtPos;

@@ -16,6 +16,8 @@ public:
 	void Release();
 	void SetTargetObj(ObjBase* _target);
 
+	void TargetMove() { m_MoveFlag = true; }
+
 private:
 	
 	void CameraInput();
@@ -38,6 +40,8 @@ private:
 	float m_Zrot;
 	float m_AngleUnit;			// 移動時の回転単位 = カメラの移動速度
 	float m_OffsetZ;
+
+	bool m_MoveFlag;			// 対象の移動検知
 
 	ObjBase* m_TargetObj;
 

@@ -35,6 +35,7 @@ using namespace std;
 #include"Calculation.h"
 #include"Sound\Sound.h"
 #include"Camera.h"
+#include"Debug.h"
 
 
 #pragma comment (lib, "d3d9.lib")

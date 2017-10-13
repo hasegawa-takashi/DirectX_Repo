@@ -58,6 +58,9 @@
     <Filter Include="ModelRender\RenderNonMesh">
       <UniqueIdentifier>{27bcda86-9b2a-4cca-beca-f75948c5fe2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{0c7173bf-756d-4ea9-acd7-9463483a3038}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -162,6 +165,9 @@
     <ClInclude Include="RenderNonMesh.h">
       <Filter>ModelRender\RenderNonMesh</Filter>
     </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameFps.cpp">
@@ -253,6 +259,9 @@
     </ClCompile>
     <ClCompile Include="RenderNonMesh.cpp">
       <Filter>ModelRender\RenderNonMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Debug</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

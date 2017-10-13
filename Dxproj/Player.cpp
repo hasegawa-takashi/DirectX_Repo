@@ -16,7 +16,7 @@ CPlayer::~CPlayer()
 void CPlayer::Init()
 {
 	m_Position = D3DXVECTOR3(0,0,0);
-	m_MoveSpd = 3.0f;
+	m_MoveSpd = 0.1f;
 	m_PlayerModel = new CRenderModel("../data/model/Cube.x");
 	//m_PlayerModel = new CRenderNonMesh("../data/model/Field.x");
 
@@ -46,24 +46,28 @@ void CPlayer::Move()
 	if (CInput::GetKeyPress(DIK_A))
 	{
 		m_Movement.x -= m_MoveSpd;
+		CCamera::Getintance().TargetMove();
 		_inputstate += Left;
 	}
 
 	if (CInput::GetKeyPress(DIK_D))
 	{
 		m_Movement.x += m_MoveSpd;
+		CCamera::Getintance().TargetMove();
 		_inputstate += Right;
 	}
 
 	if (CInput::GetKeyPress(DIK_W))
 	{
 		m_Movement.z += m_MoveSpd;
+		CCamera::Getintance().TargetMove();
 		_inputstate += Forwad;
 	}
 
 	if (CInput::GetKeyPress(DIK_S))
 	{
 		m_Movement.z -= m_MoveSpd;
+		CCamera::Getintance().TargetMove();
 		_inputstate += Back;
 	}
 
@@ -86,17 +90,21 @@ void CPlayer::MoveResult()
 
 
 	// ç¿ïWÇ…îΩâf
+
 	m_WorldMtx._41 = m_Position.x;
 	m_WorldMtx._42 = m_Position.y;
 	m_WorldMtx._43 = m_Position.z;
 
 	m_PlayerModel->AnimationUpdate(m_WorldMtx);
 
+
 }
 
 void CPlayer::Draw()
 {
 	m_PlayerModel->RenderModel();
+
+	CDebug::Getintance().Conversion("ç¿ïW" ,m_Position);
 }
 
 void CPlayer::Release()
