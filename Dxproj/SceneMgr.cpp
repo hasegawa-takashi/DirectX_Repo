@@ -75,6 +75,7 @@ void CSceneMgr::Update()
 	// ƒV[ƒ“‚Ì€”õ
 	m_CurrentScene->Update();
 	m_CurrentScene->LateUpdate();
+
 	CCamera::Getintance().LateUpdate();
 }
 
@@ -93,6 +94,8 @@ void CSceneMgr::Draw()
 
 		m_CurrentScene->LateDraw();
 		CCamera::Getintance().LateDraw();
+
+		CDebug::Getintance().Render();
 
 		m_CurrentScene->UIDraw();
 	

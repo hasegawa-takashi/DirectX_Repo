@@ -9,6 +9,14 @@ private:
 	bool Init(LPCTSTR ModelName);
 	void Release();
 
+	bool IntersectFrame(LPD3DXFRAME pFrameBase,
+		D3DXVECTOR3& L0, D3DXVECTOR3& W, bool bRay,
+		D3DXVECTOR3* pCross, D3DXVECTOR3* pNormal);
+	bool IntersectMeshContainer(
+		LPD3DXMESHCONTAINER pMeshContainer,
+		D3DXVECTOR3& L0, D3DXVECTOR3& W, bool bRay,
+		D3DXVECTOR3* pCross, D3DXVECTOR3* pNormal);
+
 	LPD3DXFRAME					m_FrameRoot;	// ルート フレーム オブジェクト
 	LPD3DXANIMATIONCONTROLLER	m_AnimCtrl;	// アニメーション コントローラ オブジェクト
 	UINT						m_NumAnimSet;	// アニメーション セット数
@@ -31,5 +39,11 @@ public:
 	void SetTime(double dTime);
 	D3DXMATRIX* SerchBorn(LPSTR BornName);
 	D3DXMATRIX* GetBorn(LPD3DXFRAME pFrameBase, LPSTR BornName);
+
+	bool Intersect(D3DXVECTOR3& L0,
+		D3DXVECTOR3& L1,
+		bool bRay = false,
+		D3DXVECTOR3* pCross = NULL,
+		D3DXVECTOR3* pNormal = NULL);
 
 };

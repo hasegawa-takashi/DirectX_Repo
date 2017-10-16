@@ -21,6 +21,8 @@ using namespace std;
 #include<d3dx9.h>
 #include<XAudio2.h>
 #include<X3DAudio.h>
+#include<memory>
+
 
 // FuncƒtƒHƒ‹ƒ_
 #include"Singleton.h"

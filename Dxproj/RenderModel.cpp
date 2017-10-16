@@ -289,3 +289,135 @@ D3DXMATRIX* CRenderModel::GetBorn(LPD3DXFRAME pFrameBase, LPSTR BornName)
 
 	return NULL;
 }
+
+/////////////////////////////////////////////////////////////////////////
+//
+//		対象物（坂とか）の角度の取得と計算？
+//
+/////////////////////////////////////////////////////////////////////////
+bool CRenderModel::Intersect(D3DXVECTOR3& L0,
+	D3DXVECTOR3& L1, bool bRay,
+	D3DXVECTOR3* pCross, D3DXVECTOR3* pNormal)
+{
+	// 線分の方向ベクトルを求める
+	D3DXVECTOR3 W;
+	if (bRay) {
+		W = L1;
+	}
+	else {
+		W = L1 - L0;
+	}
+	return IntersectFrame(m_FrameRoot, L0, W, bRay, pCross, pNormal);
+}
+
+/////////////////////////////////////////////////////////////////////////
+//
+//		上の計算結果から結果の返信？
+//
+/////////////////////////////////////////////////////////////////////////
+bool CRenderModel::IntersectFrame(LPD3DXFRAME pFrameBase,
+	D3DXVECTOR3& L0, D3DXVECTOR3& W, bool bRay,
+	D3DXVECTOR3* pCross, D3DXVECTOR3* pNormal)
+{
+	MYFRAME* pFrame = (MYFRAME*)pFrameBase;
+	bool bResult = false;
+
+	if (!pFrame)
+		return bResult;
+
+	if (pFrame->pMeshContainer) {
+		bResult = IntersectMeshContainer(pFrame->pMeshContainer,
+			L0, W, bRay, pCross, pNormal);
+		if (bResult)
+			return bResult;
+	}
+	if (pFrame->pFrameSibling) {
+		bResult = IntersectFrame(pFrame->pFrameSibling,
+			L0, W, bRay, pCross, pNormal);
+		if (bResult)
+			return bResult;
+	}
+	if (pFrame->pFrameFirstChild) {
+		bResult = IntersectFrame(pFrame->pFrameFirstChild,
+			L0, W, bRay, pCross, pNormal);
+	}
+	return bResult;
+}
+
+/////////////////////////////////////////////////////////////////////////
+//
+//		メッシュコンテナの内部メッシュを見て
+//		角度を計算して返してるっぽい？
+//		アニメーションにおける角度制限？
+//
+/////////////////////////////////////////////////////////////////////////
+bool CRenderModel::IntersectMeshContainer(
+	LPD3DXMESHCONTAINER pMeshContainer,
+	D3DXVECTOR3& L0, D3DXVECTOR3& W, bool bRay,
+	D3DXVECTOR3* pCross, D3DXVECTOR3* pNormal)
+{
+	bool bResult = false;
+
+	LPD3DXMESH pMesh = pMeshContainer->MeshData.pMesh;
+	LPBYTE pVtx;
+	pMesh->LockVertexBuffer(0, (LPVOID*)&pVtx);
+	WORD* pIdx;
+	pMesh->LockIndexBuffer(0, (LPVOID*)&pIdx);
+	DWORD dwStride = pMesh->GetNumBytesPerVertex();
+	DWORD dwIdx = pMesh->GetNumFaces();
+	for (DWORD i = 0; i < dwIdx; ++i) {
+		// 三角形の頂点取得
+		D3DXVECTOR3 P0 = *(LPD3DXVECTOR3)(pVtx + dwStride * *pIdx++);
+		D3DXVECTOR3 P1 = *(LPD3DXVECTOR3)(pVtx + dwStride * *pIdx++);
+		D3DXVECTOR3 P2 = *(LPD3DXVECTOR3)(pVtx + dwStride * *pIdx++);
+		// 三角形の辺のベクトル取得
+		D3DXVECTOR3 P0P1 = P1 - P0;
+		D3DXVECTOR3 P1P2 = P2 - P1;
+		D3DXVECTOR3 P2P0 = P0 - P2;
+		// 三角形の辺と線分の作る面の法線ベクトル取得
+		D3DXVECTOR3 N;
+		D3DXVec3Cross(&N, &P0P1, &W);
+		if (D3DXVec3Dot(&N, &(L0 - P0)) < 0.0f) {
+			continue;
+		}
+		D3DXVec3Cross(&N, &P1P2, &W);
+		if (D3DXVec3Dot(&N, &(L0 - P1)) < 0.0f) {
+			continue;
+		}
+		D3DXVec3Cross(&N, &P2P0, &W);
+		if (D3DXVec3Dot(&N, &(L0 - P2)) < 0.0f) {
+			continue;
+		}
+		// 三角形の法線ベクトル取得、正規化
+		D3DXVec3Cross(&N, &P0P1, &P1P2);
+		D3DXVec3Normalize(&N, &N);
+		// 媒介変数tを求める前の分母を計算
+		float base = D3DXVec3Dot(&N, &W);
+		if (base == 0.0f) {
+			continue;	// 線分と面が平行
+		}
+		// tを求める
+		float t = D3DXVec3Dot(&N, &(P0 - L0)) / base;
+		if (t < 0.0f) {
+			continue;	// 交点が始点より後方
+		}
+		if (!bRay && t > 1.0f) {
+			continue;	// 交点が終点より前方
+		}
+		// 交点を求める
+		if (pCross) {
+			*pCross = L0 + t * W;
+		}
+		// 法線ベクトルを返す
+		if (pNormal) {
+			*pNormal = N;
+		}
+		// 交点がみつかった
+		bResult = true;
+		break;
+	}
+	pMesh->UnlockIndexBuffer();
+	pMesh->UnlockVertexBuffer();
+
+	return bResult;
+}

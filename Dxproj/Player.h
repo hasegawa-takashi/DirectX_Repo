@@ -1,11 +1,13 @@
 #pragma once
+
+
 #include"includeheader.h"
 
 class CRenderModel;
 #include"RenderModel.h"
 
-//class CRenderNonMesh;
-//#include"RenderNonMesh.h"
+class ColBox;
+#include"Collision.h"
 
 class CPlayer : public ObjBase
 {
@@ -21,6 +23,8 @@ public:
 private:
 
 	void Move();
+	void RotateDir();
+	void ChangeDir();
 	void MoveResult();
 
 	enum Controller
@@ -34,11 +38,14 @@ private:
 		BL = 0x00001010,
 		BR = 0x00001100,
 	};
-
-	CRenderModel* m_PlayerModel;
-	//CRenderNonMesh* m_PlayerModel;
-
+		
 	float m_MoveSpd;
-	
+	float m_DirectionAngle;
+
+	int m_Inputstate;
+
 	D3DXVECTOR3 m_Movement;
+	D3DXVECTOR3 m_Direction;
+	ColBox*	m_Collision;
+	CRenderModel* m_RenderModel;
 };

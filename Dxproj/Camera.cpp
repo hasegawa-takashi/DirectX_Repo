@@ -7,17 +7,25 @@ CCamera::CCamera()
 	D3DXMatrixIdentity(&m_ViewMatrix);
 	D3DXMatrixIdentity(&m_ProjectionMatrix);
 	D3DXMatrixIdentity(&m_PoseMatrix);
+	
+	m_Zrot = 0.0f;
+	m_OffsetZ = 10.0f;
+	m_Distance = 5.0f;
+	m_AngleUnit = 0.1f;
 
 	m_LookAtPos = D3DXVECTOR3(0,0,0);
-	m_Position = D3DXVECTOR3(0, 3, -5);
+	m_WorldPosition = D3DXVECTOR3(0, 0, 0);
+	m_LocalPosition = D3DXVECTOR3(0, m_Distance, -1);
 	m_DirDef = D3DXVECTOR3(0, 0, 0);
 	m_Upvec = D3DXVECTOR3(0, 1, 0);
+	
 
-	m_Zrot = 0.0f;
-	m_OffsetZ = 0.0f;
-	m_Distance = 1.0f;
-	m_AngleUnit = 0.1f;
-	m_MoveFlag = false;
+	memcpy(m_PoseMatrix.m[0], &D3DXVECTOR3(1, 0, 0), sizeof(D3DXVECTOR3));
+	memcpy(m_PoseMatrix.m[1], &D3DXVECTOR3(0, 1, 0), sizeof(D3DXVECTOR3));
+	memcpy(m_PoseMatrix.m[2], &D3DXVECTOR3(0, 0, 1), sizeof(D3DXVECTOR3));
+
+
+	m_MoveFlag = true;
 }
 
 
@@ -27,36 +35,37 @@ CCamera::~CCamera()
 
 void CCamera::Init()
 {
-	m_OffsetZ = 0.0f;
+
 }
 
 void CCamera::LateUpdate()
 {
 	CameraInput();
 	
+	TpsCamera();
+	
 	// 追従移動
 	D3DXVECTOR3 _move = m_TargetObj->GetPosition();
-
+	m_LookAtPos = _move;
 	if (m_MoveFlag)
 	{
-		m_Position = _move + m_Position;
+		// Targetの座標
+		m_WorldPosition = _move;
+
+		// 現在の球面上の座標の追加
+		
 		m_MoveFlag = false;
 	}
 
+	D3DXVECTOR3 _ConvertPos;
+	_ConvertPos = m_WorldPosition + m_LocalPosition;
 
 	// ビュー行列の更新
-	D3DXVECTOR3 posW = m_Position + m_LookAtPos;
-	memcpy(&m_ViewMatrix, &m_PoseMatrix, sizeof(D3DXMATRIX));
-	memcpy(&m_ViewMatrix.m[3], &posW, sizeof(D3DXVECTOR3));
-	m_ViewMatrix._44 = 1.0f;
-	D3DXMatrixInverse(&m_ViewMatrix, 0, &m_ViewMatrix);
+	D3DXMatrixLookAtLH(&m_ViewMatrix,&_ConvertPos, &m_LookAtPos,&m_Upvec);
 
 	// 
-	TpsCamera();
-
 	memset(&m_DirDef, 0, sizeof(D3DXVECTOR3));
 	memset(&m_CameraMove, 0, sizeof(D3DXVECTOR3));
-	m_OffsetZ = 0;
 
 
 }
@@ -64,11 +73,14 @@ void CCamera::LateUpdate()
 void CCamera::LateDraw()
 {
 
-	D3DXMatrixLookAtLH(&m_ViewMatrix,&m_Position, &m_LookAtPos,&m_Upvec);
+
 	D3DXMatrixPerspectiveFovLH(&m_ProjectionMatrix, FOVY, CWindowCreate::Getintance().GetASPECT(), NEAR_CLIP, FAR_CLIP);
 
 	CDirectxMgr::Getintance().GetDxDevice()->SetTransform(D3DTS_PROJECTION, &m_ProjectionMatrix);
 	CDirectxMgr::Getintance().GetDxDevice()->SetTransform(D3DTS_VIEW, &m_ViewMatrix);
+
+
+	CDebug::Getintance().Conversion("\nカメラ座標", m_WorldPosition);
 
 }
 
@@ -105,12 +117,12 @@ void CCamera::TpsCamera()
 
 	D3DXMATRIX TransRotMat;
 	D3DXMatrixRotationQuaternion(&TransRotMat, &TransQ);
-	D3DXVec3TransformCoord(&m_Position, &m_Position, &TransRotMat);
+	D3DXVec3TransformCoord(&m_LocalPosition, &m_LocalPosition, &TransRotMat);
 
 	// 移動後のカメラ姿勢の更新
 	D3DXVECTOR3 X, Y, Z;
 
-	Z = -m_Position;
+	Z = -m_LocalPosition;
 	D3DXVec3Normalize(&Z, &Z);
 
 	memcpy(&Y, m_PoseMatrix.m[1], sizeof(D3DXVECTOR3));
@@ -126,11 +138,11 @@ void CCamera::TpsCamera()
 	memcpy(m_PoseMatrix.m[2], &Z, sizeof(D3DXVECTOR3));
 
 	// 奥行きの設定
-	m_Distance = D3DXVec3Length(&m_Position);
+	m_Distance = D3DXVec3Length(&m_LocalPosition);
 	if (m_Distance - m_OffsetZ > 0) {
-		D3DXVECTOR3 Z = -m_Position;
+		D3DXVECTOR3 Z = -m_LocalPosition;
 		D3DXVec3Normalize(&Z, &Z);
-		m_Position += m_OffsetZ * Z;
+		m_LocalPosition += m_OffsetZ * Z;
 		m_Distance -= m_OffsetZ;
 	}
 

@@ -61,6 +61,9 @@
     <Filter Include="Debug">
       <UniqueIdentifier>{0c7173bf-756d-4ea9-acd7-9463483a3038}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{668b03ac-98fd-4f09-9760-47e152ae49c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -168,6 +171,9 @@
     <ClInclude Include="Debug.h">
       <Filter>Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameFps.cpp">
@@ -262,6 +268,9 @@
     </ClCompile>
     <ClCompile Include="Debug.cpp">
       <Filter>Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Collision</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

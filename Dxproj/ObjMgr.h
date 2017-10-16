@@ -31,10 +31,10 @@ public:
 	virtual int GetidentNumb() { return m_ObjNumb; }			// ŒÅ—L”Ô†‚Ìæ“¾
 	virtual bool GetNonDestFlag() { return m_NonDeleteObj; }	// ”j‰ó‚µ‚È‚¢Obj‚Ìæ“¾
 	virtual int GetObjID() { return m_ObjID; }					// ObjName‚Ìæ“¾
-	virtual D3DXVECTOR3 GetPosition() { return m_Position; }			// À•W‚Ìæ“¾
-	
+	virtual D3DXVECTOR3 GetPosition() { return m_Position; }	// À•W‚Ìæ“¾
 };
 #pragma endregion
+
 #include"includeheader.h"
 
 // --------------------

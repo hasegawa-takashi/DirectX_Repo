@@ -146,6 +146,7 @@
     <ClInclude Include="Calculation.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CGameScene.h" />
+    <ClInclude Include="Collision.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="DirectxMgr.h" />
     <ClInclude Include="GameFps.h" />
@@ -183,6 +184,7 @@
     <ClCompile Include="Calculation.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CGameScene.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="DirectxMgr.cpp" />
     <ClCompile Include="GameFps.cpp" />
