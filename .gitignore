@@ -1,5 +1,5 @@
 *.db
 *.opendb
-*.vs
+/vs/*
 /Debug/*
 /Dxproj/Debug/*
