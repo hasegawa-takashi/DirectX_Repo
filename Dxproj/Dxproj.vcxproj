@@ -143,12 +143,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BlackoutFade.h" />
     <ClInclude Include="Calculation.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CGameScene.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="DirectxMgr.h" />
+    <ClInclude Include="Fade.h" />
     <ClInclude Include="GameFps.h" />
     <ClInclude Include="GameHeader.h" />
     <ClInclude Include="GameLoop.h" />
@@ -156,6 +158,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="MyHierarchy.h" />
     <ClInclude Include="ObjMgr.h" />
+    <ClInclude Include="Particle.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RenderFormat.h" />
     <ClInclude Include="RenderModel.h" />
@@ -178,21 +181,25 @@
     <ClInclude Include="Sound\XAudio2\X3DAudio\X3DSound\X3DSound.h" />
     <ClInclude Include="Sound\XAudio2\XAPOFXEffect\VoiceEffect.h" />
     <ClInclude Include="Sound\XAudio2\XAudio2Interface\XAudioInterface.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="WindowCreate.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BlackoutFade.cpp" />
     <ClCompile Include="Calculation.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CGameScene.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="DirectxMgr.cpp" />
+    <ClCompile Include="Fade.cpp" />
     <ClCompile Include="GameFps.cpp" />
     <ClCompile Include="GameLoop.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyHierarchy.cpp" />
     <ClCompile Include="ObjMgr.cpp" />
+    <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderFormat.cpp" />
     <ClCompile Include="RenderModel.cpp" />
@@ -212,6 +219,7 @@
     <ClCompile Include="Sound\XAudio2\X3DAudio\X3DSound\X3DSound.cpp" />
     <ClCompile Include="Sound\XAudio2\XAPOFXEffect\VoiceEffect.cpp" />
     <ClCompile Include="Sound\XAudio2\XAudio2Interface\XAudioInterface.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="WindowCreate.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

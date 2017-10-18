@@ -64,6 +64,15 @@
     <Filter Include="Collision">
       <UniqueIdentifier>{668b03ac-98fd-4f09-9760-47e152ae49c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fade">
+      <UniqueIdentifier>{49c758c2-8ce9-4721-95b1-5b6a20549799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sprite">
+      <UniqueIdentifier>{53553b83-fe0f-47f3-a369-c37f6d96794f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle">
+      <UniqueIdentifier>{8645f81f-ca7c-40ae-9ccd-6667063fc110}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -174,6 +183,18 @@
     <ClInclude Include="Collision.h">
       <Filter>Collision</Filter>
     </ClInclude>
+    <ClInclude Include="Fade.h">
+      <Filter>Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="BlackoutFade.h">
+      <Filter>Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameFps.cpp">
@@ -271,6 +292,18 @@
     </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Fade.cpp">
+      <Filter>Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="BlackoutFade.cpp">
+      <Filter>Fade</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Particle</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
