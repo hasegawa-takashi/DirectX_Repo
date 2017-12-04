@@ -1,8 +1,10 @@
 #pragma once
 
-#include"includeheader.h"
+#include"SceneMgr.h"
+class CSprite;
 #include"Sprite.h"
 #include<functional>
+
 
 //////////////////////////////////////////////////////////////
 //
@@ -25,7 +27,7 @@ protected:
 	//==============================
 	//	ïœêî
 	int Fadenum;		// åªç›ÇÃFade
-	CSprite *sprite;	// SpriteClass
+	CSprite *m_Sprite;	// SpriteClass
 
 	//==============================
 	//	ä÷êî

@@ -64,13 +64,13 @@ bool CDirectxMgr::CreateDxDevice()
 	// デバイスのプレゼンテーションパラメータの設定
 	ZeroMemory(&m_D3DPP, sizeof(m_D3DPP));				// ワークをゼロクリア
 	m_D3DPP.BackBufferCount = 1;						// バックバッファの数
-	m_D3DPP.BackBufferWidth = 800;			// ゲーム画面サイズ(幅)
-	m_D3DPP.BackBufferHeight = 600;			// ゲーム画面サイズ(高さ)
+	m_D3DPP.BackBufferWidth = 800;						// ゲーム画面サイズ(幅)
+	m_D3DPP.BackBufferHeight = 600;						// ゲーム画面サイズ(高さ)
 	m_D3DPP.BackBufferFormat = d3ddm.Format;			// バックバッファフォーマットはディスプレイモードに合わせて使う
-	m_D3DPP.SwapEffect = D3DSWAPEFFECT_DISCARD;		// 映像信号に同期してフリップする
+	m_D3DPP.SwapEffect = D3DSWAPEFFECT_DISCARD;			// 映像信号に同期してフリップする
 	m_D3DPP.Windowed = CWindowCreate::Getintance().GetWindowMode();						// ウィンドウモード
-	m_D3DPP.EnableAutoDepthStencil = true;			// デプスバッファ（Ｚバッファ）とステンシルバッファを作成
-	m_D3DPP.AutoDepthStencilFormat = D3DFMT_D24S8;	// デプスバッファとして16bitを使う
+	m_D3DPP.EnableAutoDepthStencil = true;				// デプスバッファ（Ｚバッファ）とステンシルバッファを作成
+	m_D3DPP.AutoDepthStencilFormat = D3DFMT_D24S8;		// デプスバッファとして16bitを使う
 
 	if (CWindowCreate::Getintance().GetWindowMode())
 	{// ウィンドウモード
@@ -90,7 +90,10 @@ bool CDirectxMgr::CreateDxDevice()
 
 	for (Dev = 0; Dev < MaxDevice; Dev++) {
 		if (SUCCEEDED(m_D3D9->CreateDevice(D3DADAPTER_DEFAULT, device[Dev].type, CWindowCreate::Getintance().GethwndDevice(),	// デバイスを作成
-			device[Dev].behavior, &m_D3DPP, &m_D3DDevice))) break;
+			device[Dev].behavior, &m_D3DPP, &m_D3DDevice)))
+		{
+			break;
+		}
 	}
 
 

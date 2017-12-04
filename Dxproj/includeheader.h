@@ -4,7 +4,7 @@ using namespace std;
 
 // ------------------------------
 // --- グローバル定数宣言
-
+#define _CRT_SECURE_NO_WARNINGS
 
 #include<Windows.h>
 #include<tchar.h>
@@ -22,6 +22,8 @@ using namespace std;
 #include<XAudio2.h>
 #include<X3DAudio.h>
 #include<memory>
+#include<random>
+#include<functional>
 
 
 // Funcフォルダ
@@ -38,14 +40,15 @@ using namespace std;
 #include"Sound\Sound.h"
 #include"Camera.h"
 #include"Debug.h"
-
+#include"Sprite.h"
 
 #pragma comment (lib, "d3d9.lib")
 #pragma comment (lib, "d3dx9.lib")
 #pragma comment (lib, "dxguid.lib")
 #pragma comment (lib, "dinput8.lib")
 #pragma comment (lib, "winmm.lib")
-#pragma comment(lib,"X3daudio.lib")
+
+
 
 // -------------------------------------
 // --- SAFE_DELETEの代わり

@@ -7,6 +7,7 @@
 
 #include"includeheader.h"
 #include"GameHeader.h"
+#include"SoundInclude.h"
 
 class CGameScene : public CSceneBase
 {

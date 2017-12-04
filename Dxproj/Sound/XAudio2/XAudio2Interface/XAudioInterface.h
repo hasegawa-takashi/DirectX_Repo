@@ -1,6 +1,10 @@
 #pragma once
 
 #include"../../Sound.h"
+// TODO :: ƒtƒ@ƒCƒ‹ŠK‘w‚ª‚¨‚©‚µ‚¢
+#include"../../../XAudio2DLLSet.h"
+
+
 
 class CXAudioInterface
 {
@@ -12,11 +16,11 @@ public:
 		return &_Instance;
 	}
 
-
 	~CXAudioInterface();
 
 	bool CreateXAudio();
-	bool SetXAudio2SourceVoice(IXAudio2SourceVoice**, const WAVEFORMATEX);
+	bool ReleaseXAudio();
+	bool SetXAudio2SourceVoice(IXAudio2SourceVoice**, const WAVEFORMATEX, VoiceCallback* voiceCallback);
 	void SetMasterVolume(float Volume);
 
 	float GetMasterVolume();
@@ -27,6 +31,7 @@ public:
 private:
 	CXAudioInterface();
 
+	Xaudio2DllUnloadWorkaround_LoadLibraryVersion* m_Xaudio2dll;
 	IXAudio2* m_XAudio2;
 	IXAudio2MasteringVoice* m_MasterVoice;
 	UINT32 m_Flags;
@@ -39,3 +44,4 @@ inline CXAudioInterface* GetXAudio2Mgr()
 {
 	return CXAudioInterface::Instance();
 }
+

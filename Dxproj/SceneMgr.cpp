@@ -10,6 +10,7 @@ CSceneMgr::CSceneMgr()
 CSceneMgr::~CSceneMgr()
 {
 	Complete_type_safe_delete(m_CurrentScene);
+	m_SceneCreaterFunclist.clear();
 }
 
 bool CSceneMgr::CreateScene()
@@ -23,7 +24,11 @@ bool CSceneMgr::CreateScene()
 
 bool CSceneMgr::DeleteScene()
 {
+	if (m_CurrentScene == nullptr)
+		return true;
+
 	Complete_type_safe_delete(m_CurrentScene);
+	
 	return true;
 }
 
@@ -42,9 +47,14 @@ void CSceneMgr::SceneMigration()
 			return;
 
 		std::list<std::list<ObjBase*>> ExcludeObjList = CObjMgr::Getintance().ExculdeObj();
+		
 
 		if (!DeleteScene())
 			return;
+
+		// 各シーンのお掃除
+		CObjMgr::Getintance().ObjAllClear();
+		CCollisionMgr::Getintance().ResetCollisionList();
 
 		if (!CreateScene())
 			return;
@@ -53,7 +63,7 @@ void CSceneMgr::SceneMigration()
 		{
 			for (auto& _pentityObj : _Obj)
 			{
-				CObjMgr::Getintance().PushObj(_pentityObj, _pentityObj->GetObjID());
+				CObjMgr::Getintance().PushObj(_pentityObj, _pentityObj->GetObjName());
 			}
 		}
 		m_SceneChangeApply = false;
@@ -91,12 +101,9 @@ void CSceneMgr::Draw()
 		m_CurrentScene->Draw();
 
 		CRenderFormat::Getintance().TransmissionDraw();
-
 		m_CurrentScene->LateDraw();
 		CCamera::Getintance().LateDraw();
-
 		CDebug::Getintance().Render();
-
 		m_CurrentScene->UIDraw();
 	
 	}
@@ -109,7 +116,6 @@ void CSceneMgr::Release()
 {
 	if (m_CurrentScene == nullptr)
 		return;
-	// シーンの準備
 	m_CurrentScene->Release();
 	CCamera::Getintance().Release();
 }
@@ -118,6 +124,5 @@ void CSceneMgr::Pause()
 {
 	if (m_CurrentScene == nullptr)
 		return;
-	// シーンの準備
 	m_CurrentScene->Pause();
 }

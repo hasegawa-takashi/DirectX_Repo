@@ -10,8 +10,8 @@
 class CSoundComponent
 {
 public:
-	CSoundComponent() {}
-	~CSoundComponent() {}
+	CSoundComponent() : m_Sourcevoice(nullptr) {}
+	virtual ~CSoundComponent() {}
 
 	virtual void ComponentUpdate() = 0;
 

@@ -3,10 +3,9 @@
 class CSoundComponent;
 #include"..\..\Sound.h"
 #include "..\SoundComponent\SoundComponent.h"
+
 #include<XAPOFX.h>
-
 #pragma comment(lib,"XAPOFX.lib")
-
 /*
 *	
 *	サウンド一つ一つに付属するサウンドエフェクト
@@ -36,6 +35,18 @@ public:
 	void SetPitchRate(float PitchRate);
 	void offsetPitchRate();
 
+	// EQイコライザー用
+	void SetEQVolume(float freqcenter[4], float gain[4], float bandwidth[4]);
+	void offSetEQVolume();
+
+	// 宇宙空間用
+	void SetSpaceEffect();
+	void offsetSpaceEffect();
+
+	// トンネル空間用
+	void SetTunnelEffect();
+	void offsetTunnelEffect();
+
 private:
 
 	IXAudio2SourceVoice* m_voice;		// 登録されるボイスエフェクト
@@ -46,11 +57,19 @@ private:
 
 	FXREVERB_PARAMETERS m_Reverbpram;	// リバーブエフェクト
 	FXECHO_PARAMETERS m_EchoPram;		// エコーエフェクト
-	FXEQ_PARAMETERS m_EqPram;			// イコライザ(まだ何に使うんだ)
+	FXEQ_PARAMETERS m_EqPram;			// イコライザ
 
 	const int XAPOFX_EFFECT_TYPE = 3;	// XAPOFX用の定義
 
 	std::function< void() > Soundfunc;	// voiceのfunc
 
+	//
+	float m_SpaceDlay = 1.6f;
+	float m_SpaceFeedback = 0.3f;
+	float m_SpaceDlywet = 0.3f;
+
+	// トンネル内１
+	float m_TunnelWall = 0.2f;
+	float m_TunnelRoomsize = 0.9f;
 };
 

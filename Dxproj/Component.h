@@ -21,10 +21,15 @@ public:
 	//
 	~Component()
 	{
+	}
+
+	void  ClearComponent()
+	{
 		for (auto itr = m_SoundComp.begin(); itr != m_SoundComp.end(); ++itr)
 		{
 			delete(*itr);
 		}
+		m_SoundComp.clear();
 	}
 
 	//  ^  ^
@@ -51,10 +56,12 @@ public:
 	void Remove(CSoundComponent* _comp)
 	{
 		m_SoundComp.remove(_comp);
+		delete _comp;
 	}
 
 	template<class Ty>
 	Ty* GetComponent()
+
 	{
 		for (auto itr = m_SoundComp.begin(); itr != m_SoundComp.end(); ++itr)
 		{

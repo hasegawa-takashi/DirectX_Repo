@@ -14,7 +14,6 @@ int WINAPI WinMain(HINSTANCE hinstace,HINSTANCE hPrevInstance,LPSTR lpCmdLine,in
 
 	CWindowCreate::Getintance().InitWindow(hinstace, hPrevInstance, lpCmdLine, nCmdShow);
 
-
 	CGameLoop* _gameLoop = new CGameLoop();
 
 	_gameLoop->Init();

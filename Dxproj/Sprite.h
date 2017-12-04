@@ -1,7 +1,15 @@
 #pragma once
 
-#include"ObjManager.h"
-#include "Window.h"
+#include"includeheader.h"
+
+
+#define	NUM_VERTEX		(4)		// í∏ì_êî
+#define	NUM_POLYGON		(2)		// É|ÉäÉSÉìêî
+
+#define FVF_VERTEX_2D (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1)
+#define FVF_VERTEX_3D	(D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_DIFFUSE | D3DFVF_TEX1 )
+
+
 
 typedef struct{
 	D3DXVECTOR3 pos;	//í∏ì_ç∂è„

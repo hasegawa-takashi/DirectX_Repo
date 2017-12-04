@@ -5,9 +5,9 @@
 //	指定Csvの読み込み
 //	@param filepath csvファイルの名前	
 //
-CWaveformatData::CWaveformatData(std::string filepath)
+CWaveformatData::CWaveformatData(std::string filepath, std::string Soundname)
 {
-	RegistWaveformat(filepath);
+	RegistWaveformat(filepath,Soundname);
 }
 
 //====================================================
@@ -16,13 +16,7 @@ CWaveformatData::CWaveformatData(std::string filepath)
 //
 CWaveformatData::~CWaveformatData()
 {
-	for each (auto var in m_Formatlist)
-	{
-		delete(var.Loadsoundfile);
-	}
-
-	m_Formatlist.clear();
-
+	delete m_Format.Loadsoundfile;
 }
 
 //====================================================
@@ -30,7 +24,7 @@ CWaveformatData::~CWaveformatData()
 //	外部リソースをWAVEFORMATEXに登録するための処理
 //	@param filepath csvのファイル名を記入する
 //
-void CWaveformatData::RegistWaveformat(std::string filepath)
+void CWaveformatData::RegistWaveformat(std::string filepath, std::string Soundname)
 {
 
 	// CSVファイルの読み込み
@@ -61,23 +55,29 @@ void CWaveformatData::RegistWaveformat(std::string filepath)
 		getline(stream, streamtype, ',');
 		getline(stream, maxvolume, ',');
 
+		if (dataelement.FileName != Soundname)
+			continue;
+
 		// フラグ設定
 		dataelement.Loop = stof(looptype) != 0;
-		dataelement.StreamType = stof(streamtype);
+		dataelement.StreamType = stoi(streamtype);
 		dataelement.MaxVolume = stof(maxvolume);
 		
 		audiotype = dataelement.Audiotype;
 		name = dataelement.FileName;
 		resourcetype = dataelement.Resourcetype;
 
+		dataelement.Loadsoundfile = nullptr;
+		dataelement.Waveformat = nullptr;
+
 		// ファイルのロード
-		if (resourcetype == "wav")
+		if (dataelement.Resourcetype == "wav")
 		{
-			dataelement.Loadsoundfile = new CLoadWave((m_cAudioPath + audiotype + "/" + name + ".wav"), dataelement.Loop);
+			dataelement.Loadsoundfile = new CLoadWave((m_cAudioPath + dataelement.Audiotype + "/" + dataelement.FileName + ".wav"), dataelement.Loop);
 		}
-		else if (resourcetype == "ogg") {
+		else if (dataelement.Resourcetype == "ogg") {
 			// 現在使用不可
-			//dataelement.Loadsoundfile = new CLoadOgg((m_cAudioPath + audiotype + "/" + name + ".ogg"), dataelement.Loop);
+			dataelement.Loadsoundfile = new CLoadOgg((m_cAudioPath + audiotype + "/" + name + ".ogg"), dataelement.Loop);
 		}
 		else
 		{
@@ -87,46 +87,12 @@ void CWaveformatData::RegistWaveformat(std::string filepath)
 		// Waveformatの取得
 		dataelement.Waveformat = dataelement.Loadsoundfile->GetWaveFormat();
 
-		// Waveformatの設定
-		m_Formatlist.push_back(dataelement);
+		m_Format = dataelement;		
 	}
 
 }
 
-//====================================================
-//  @fn
-//	登録されたリソースを取得する関数
-//	@param Listnumb 欲しいサウンドデータ(Csvの順番参照)番号
-//	@return SoundElement 必要な情報を返す
-//	
-SoundElement CWaveformatData::GetWaveElement(int listnumb)
+SoundElement CWaveformatData::GetWaveElement()
 {
-	return m_Formatlist[listnumb];
-}
-
-//====================================================
-//  @fn
-//	登録されたリソースを取得する関数
-//	@param Listnumb 欲しいサウンドデータ(Csvの名称参照)の名前
-//	@return SoundElement 必要な情報を返す
-//	
-SoundElement CWaveformatData::GetWaveElement(std::string soundame)
-{
-	SoundElement _null;
-	
-	if (m_Formatlist.empty())
-	{
-		return _null;
-	}
-
-	for each (auto var in m_Formatlist)
-	{
-		if (var.FileName != soundame)
-			continue;
-
-		return var;
-	}
-
-	return _null;
-
+	return m_Format;
 }

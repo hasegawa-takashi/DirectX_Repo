@@ -1,6 +1,6 @@
 #pragma once
 #include"includeheader.h"
-#include"GameHeader.h"
+#include"TitleHeader.h"
 
 class CGameLoop
 {

@@ -4,12 +4,28 @@
 
 CRenderNonMesh::CRenderNonMesh(LPCTSTR ModelName)
 {
+	m_MatBuf = nullptr;
+	m_Mesh = nullptr;
+	m_Mat = 0;
+	m_MeshMat = nullptr;
+	m_MeshTex = nullptr;
 
-	HRESULT hr = (D3DXLoadMeshFromX(ModelName, D3DXMESH_MANAGED, CDirectxMgr::Getintance().GetDxDevice(), NULL, &m_MatBuf, NULL, &m_Mat, &m_Mesh));
+	TCHAR _Dir[_MAX_PATH];
+	TCHAR _DirWk[_MAX_DIR];
+	_tsplitpath(ModelName, _Dir, _DirWk, NULL, NULL);
+	lstrcat(_Dir, _DirWk);
 
-	if (!hr)
+	if(D3D_OK != D3DXLoadMeshFromX(ModelName,D3DXMESH_SYSTEMMEM,CDirectxMgr::Getintance().GetDxDevice(),NULL,&m_MatBuf,NULL,&m_Mat,&m_Mesh))
 	{
 		return;
+	}
+
+	if (m_Mesh->GetFVF()&D3DFVF_NORMAL)
+	{
+		LPD3DXMESH meshtmp = m_Mesh;
+		meshtmp->CloneMeshFVF(meshtmp->GetOptions(),meshtmp->GetFVF() | D3DFVF_NORMAL, CDirectxMgr::Getintance().GetDxDevice(),&m_Mesh);
+		meshtmp->Release();
+		D3DXComputeNormals(m_Mesh,NULL);
 	}
 
 	D3DXMATERIAL*	d3Mat = (D3DXMATERIAL*)m_MatBuf->GetBufferPointer();
@@ -28,22 +44,17 @@ CRenderNonMesh::CRenderNonMesh(LPCTSTR ModelName)
 			lstrlen(d3Mat[i].pTextureFilename) > 0)
 		{
 			// テクスチャ読み込み
-			hr = D3DXCreateTextureFromFile(
+			D3DXCreateTextureFromFile(
 				CDirectxMgr::Getintance().GetDxDevice(),
 				d3Mat[i].pTextureFilename,
 				&m_MeshTex[i]);
-
-			if (!hr)
-			{
-				return;
-			}
-
 		}
 	}
 
 	m_MatBuf->Release();
 
 }
+
 
 
 CRenderNonMesh::~CRenderNonMesh()
@@ -70,4 +81,9 @@ void CRenderNonMesh::Render()
 		CDirectxMgr::Getintance().GetDxDevice()->SetTexture(0, m_MeshTex[i]);	// テクスチャ情報をセット
 		m_Mesh->DrawSubset(i);				// メッシュを描画
 	}
+}
+
+void CRenderNonMesh::SetPos()
+{
+
 }

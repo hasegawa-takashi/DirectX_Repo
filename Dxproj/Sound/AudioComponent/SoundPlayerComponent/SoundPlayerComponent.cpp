@@ -1,19 +1,49 @@
 #include "SoundPlayerComponent.h"
 
-
-
 CSoundPlayerComponent::CSoundPlayerComponent()
+	: m_VoiceElement(nullptr)
 {
-
+	m_Sourcevoice = nullptr;
+	m_StartSamplePoint = { 0 };
+	m_EndSamplePoint = { 0 };
+	m_VoiceCallback = new VoiceCallback();
+	m_VoiceCallback->OnStreamEnd();
+	m_Fadefunc = nullptr;
 }
 
 CSoundPlayerComponent::~CSoundPlayerComponent()
 {
-	// Voiceの削除
-	m_VoiceElement->RegistVoice->DestroyVoice();
+	CAudioDatabase::Instance()->PopVoiceCue(m_VoiceElement->Soundelemt.Audiotype,m_VoiceElement);
+
+	if (m_Sourcevoice != 0)
+	{
+		m_Sourcevoice->SetVolume(1.0f);
+		m_Sourcevoice->Stop();
+		m_Sourcevoice->DestroyVoice();
+	}
+
+	if (m_VoiceElement->Waveformatdata != nullptr)
+	{
+		delete m_VoiceElement->Waveformatdata;
+	}
+
+	
+	delete m_VoiceCallback;
 	delete m_VoiceElement;
 
+	m_VoiceElement = nullptr;
+	m_VoiceCallback = nullptr;
+	m_Fadefunc.~function();
+}
 
+bool CSoundPlayerComponent::EndSoundflag()
+{
+	if (WAIT_OBJECT_0 == WaitForSingleObject(m_VoiceCallback->g_hEvent, INFINITE))
+	{
+		return true;
+	}
+
+	return false;
 }
 
 IXAudio2SourceVoice** CSoundPlayerComponent::Init(std::string type, std::string name)
@@ -22,29 +52,115 @@ IXAudio2SourceVoice** CSoundPlayerComponent::Init(std::string type, std::string 
 
 	// ボイスエレメントの作成
 	m_VoiceElement = new AudioElement();
+	
+	// 
+	CAudioDatabase::Instance()->SetAudioSource( m_VoiceElement, type, name,m_VoiceCallback);
+	
+	switch (m_VoiceElement->Soundelemt.StreamType)
+	{
 
-	// ボリューム
-	CAudioDatabase::Instance()->SetAudioSource( &m_VoiceElement, type, name);
+	case 0:
+		m_Buffer = m_VoiceElement->Soundelemt.Loadsoundfile->PreloadBuffer(m_StartSamplePoint, m_EndSamplePoint);
+		break;
 
-	// XAudio2バッファの設定
-	XAUDIO2_BUFFER buffer;
+	case 1:
+		m_Buffer = m_VoiceElement->Soundelemt.Loadsoundfile->StreamloadBuffer();
+		break;
 
-	// バッファーを
-	buffer = m_VoiceElement->Soundelemt.Loadsoundfile->StreamloadBuffer();
-
-	//
-	m_VoiceElement->RegistVoice->SubmitSourceBuffer(&buffer);
+	default:
+		break;
+	}
 
 	// ソースボイスのめもりーこぴー
-	(m_Sourcevoice) = (m_VoiceElement->RegistVoice);
+	m_Sourcevoice = m_VoiceElement->RegistVoice;
+
+	// Sourcevoiceへバッファの保存
+	if (S_FALSE == m_Sourcevoice->SubmitSourceBuffer(&m_Buffer))
+	{
+		OutputDebugStringA("NG_Submitsource\n");
+	}
+
 	
 	// 現在buffer分の取得
-	return &m_VoiceElement->RegistVoice;
+	return &m_Sourcevoice;
+}
+
+void CSoundPlayerComponent::FadePlay(int fadeSpd)
+{
+	m_Fadenum = 0;
+	m_FadeSpd = fadeSpd;
+	m_Sourcevoice->Start();
+	m_PlayNowFlag = true;
+	m_Fadefunc = std::bind(&CSoundPlayerComponent::FadeInPlay, this);
+}
+
+void CSoundPlayerComponent::FadeInPlay()
+{
+	float nowvol = 0;
+	nowvol += m_FadeSpd*0.01f;
+	// Fade終了
+	if (nowvol >= m_VoiceElement->Soundelemt.MaxVolume)
+	{
+		m_FadeSpd = 0;
+		m_Fadefunc = nullptr;
+		nowvol = m_VoiceElement->Soundelemt.MaxVolume;
+	}
+
+	HRESULT hr = m_Sourcevoice->SetVolume(nowvol);
+
+
+}
+
+/// <summary>
+/// DestroyVoiceでエラーを吐いてしまうため純粋なフェード処理を書くことに
+/// </summary>
+/// <param name="fadeSpd"></param>
+void CSoundPlayerComponent::FadeStop(int fadeSpd)
+{
+	m_FadeSpd = fadeSpd;
+	m_Fadenum = GetVolume();
+	m_Fadefunc = std::bind(&CSoundPlayerComponent::FadeOutStop, this);
+}
+
+/// <summary>
+/// 更新部分の本体
+/// </summary>
+/// <param name="fadespd"></param>
+/// <returns></returns>
+void CSoundPlayerComponent::FadeOutStop()
+{
+	float nowvol = 0.0f;
+	nowvol = GetVolume();
+	nowvol -= (m_FadeSpd* 0.01f);
+		
+	// Fade終了
+	if ( nowvol <= 0)
+	{
+		nowvol = 0;
+		m_PlayNowFlag = false;
+		m_FadeSpd = 0;
+		m_Fadefunc = nullptr;
+		m_Sourcevoice->SetVolume(0.0f);
+		m_Sourcevoice->Stop();
+	}
+
+	HRESULT hr = m_Sourcevoice->SetVolume(nowvol);
+
 }
 
 // 更新処理
 void CSoundPlayerComponent::ComponentUpdate()
 {
+	if (m_Fadefunc != nullptr)
+	{	
+		m_Fadefunc();
+	}
+
+	if (m_VoiceElement->Soundelemt.StreamType == 0)
+	{
+		return;
+	}
+
 	XAUDIO2_BUFFER buffer;
 
 	buffer = m_VoiceElement->Soundelemt.Loadsoundfile->UpdateBuffer(m_Sourcevoice);
@@ -65,24 +181,44 @@ void CSoundPlayerComponent::ComponentUpdate()
 // 再生処理
 void CSoundPlayerComponent::Play()
 {
-	m_VoiceElement->RegistVoice->Start();
+	if (m_PlayNowFlag)
+	{
+		return;
+	}
+	m_Sourcevoice->SetVolume(m_VoiceElement->Soundelemt.MaxVolume);
 
-	m_PlayNowFlag = true;
+	HRESULT hr;
+	hr = m_Sourcevoice->Start();
 
+	if (hr == S_OK)
+	{
+		m_PlayNowFlag = true;
+		return;
+	}
+
+	m_PlayNowFlag = false;
+	
 }
 
 // 停止処理
 void CSoundPlayerComponent::Stop()
 {
-	m_VoiceElement->RegistVoice->Stop();
+	m_Sourcevoice->Stop();
+	m_PlayNowFlag = false;
 }
 
 // 音量処理
 void CSoundPlayerComponent::ChangeVolume(float volume)
 {
-	m_VoiceElement->RegistVoice->SetVolume(volume);
+	m_Sourcevoice->SetVolume(volume);
 }
 
+float CSoundPlayerComponent::GetVolume()
+{
+	float vol;
+	m_Sourcevoice->GetVolume(&vol);
+	return vol;
+}
 
 //-----------------------------------------------------------------
 //

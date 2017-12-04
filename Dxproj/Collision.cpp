@@ -5,13 +5,28 @@ ColBox::ColBox(ObjBase* thisobj)
 	ThisObj = thisobj;
 }
 
+CCollisionMgr::CCollisionMgr()
+{
+	m_Collisionlist.clear();
+}
+
+CCollisionMgr::~CCollisionMgr()
+{
+	
+}
+
+void CCollisionMgr::ResetCollisionList()
+{
+	m_Collisionlist.clear();
+}
+
 /// <summary>
 /// ƒRƒŠƒWƒ‡ƒ“‚Ì‘‹Œû
 /// </summary>
 /// <param name="type"></param>
 /// <param name="name"></param>
 /// <returns></returns>
-std::list<ObjBase*> CCollisionMgr::CheckHitObj(ColBox* thisObj ,CollisionType type, int name, CRenderModel* modelMesh)
+std::list<ObjBase*> CCollisionMgr::CheckHitObj(ColBox* thisObj ,CollisionType type)
 {
 	std::list<ObjBase*> _ReturnTargetObjList;
 
@@ -26,7 +41,7 @@ std::list<ObjBase*> CCollisionMgr::CheckHitObj(ColBox* thisObj ,CollisionType ty
 		_ReturnTargetObjList = OBB(thisObj);
 		break;
 	case COL_RAY:
-		_ReturnTargetObjList = Raycast(thisObj, modelMesh);
+		_ReturnTargetObjList = Raycast(thisObj);
 		break;
 	case COL_RAY_SPHERE:
 		_ReturnTargetObjList = RaySphere(thisObj);
@@ -301,7 +316,7 @@ std::list<ObjBase*> CCollisionMgr::RaySphere(ColBox* thisObj)
 	return _ReturnTargetObjList;
 }
 
-std::list<ObjBase*> CCollisionMgr::Raycast(ColBox* thisObj, CRenderModel* modelMesh)
+std::list<ObjBase*> CCollisionMgr::Raycast(ColBox* thisObj)
 {
 	std::list<ObjBase*> _ReturnTargetObjList;
 	
@@ -315,10 +330,10 @@ std::list<ObjBase*> CCollisionMgr::Raycast(ColBox* thisObj, CRenderModel* modelM
 		
 		//m_ModelMesh = p->ThisObj->GetRender();
 
-		if (modelMesh == NULL)
+		if (thisObj->ModelMesh == NULL)
 			continue;
 
-		if (modelMesh->Intersect(thisObj->m_Pos, thisObj->Ray, true, &vCross))
+		if (thisObj->ModelMesh->Intersect(thisObj->m_Pos, thisObj->Ray, true, &vCross))
 		{
 			_ReturnTargetObjList.push_back(p->ThisObj);
 		}

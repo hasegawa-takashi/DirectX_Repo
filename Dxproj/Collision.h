@@ -5,6 +5,9 @@
 #include"ObjMgr.h"
 class ObjBase;
 
+#include"RenderModel.h"
+class CRenderModel;
+
 class ColBox {
 
 
@@ -21,12 +24,11 @@ public:
 	D3DXVECTOR3 Ray;				// レイの方向
 	D3DXVECTOR3 ResultPos;			// 交差地点の結果を取得
 	ObjBase* ThisObj;				// これを保有しているobj
+	CRenderModel* ModelMesh;
 };
 
 #include"includeheader.h"
 
-class CRenderModel;
-#include"RenderModel.h"
 
 enum CollisionType
 {
@@ -46,13 +48,16 @@ enum CollisionType
 //			当たり判定を持たせるオブジェクトには保持させること
 //
 /////////////////////////////////////////////////////////////
-
-class CCollisionMgr
+class CCollisionMgr : public CSingleton<CCollisionMgr>
 {
 public:
-	std::list<ObjBase*> CheckHitObj(ColBox* thisObj , CollisionType type,int name, CRenderModel* modelMesh = nullptr);
+	CCollisionMgr();
+	~CCollisionMgr();
+
+	std::list<ObjBase*> CheckHitObj(ColBox* thisObj , CollisionType type);
 	void SetCollision(ColBox *obj);
 	void DeleteCollision(ColBox *obj);
+	void ResetCollisionList();
 
 private:
 
@@ -62,5 +67,5 @@ private:
 	std::list<ObjBase*> Sphere(ColBox* thisObj);		// 球面
 	std::list<ObjBase*> OBB(ColBox* thisObj);			// OBB
 	std::list<ObjBase*> RaySphere(ColBox* thisObj);	// レイと球
-	std::list<ObjBase*> Raycast(ColBox* thisObj, CRenderModel* modelMesh);		// レイ
+	std::list<ObjBase*> Raycast(ColBox* thisObj);		// レイ
 };

@@ -2,12 +2,12 @@
 
 
 #include"includeheader.h"
-
 class CRenderModel;
 #include"RenderModel.h"
-
 class ColBox;
 #include"Collision.h"
+#include"SoundInclude.h"
+#include"BlackoutFade.h"
 
 class CPlayer : public ObjBase
 {
@@ -26,6 +26,7 @@ private:
 	void RotateDir();
 	void ChangeDir();
 	void MoveResult();
+	void HitPlayer();
 
 	enum Controller
 	{
@@ -43,9 +44,16 @@ private:
 	float m_DirectionAngle;
 
 	int m_Inputstate;
-
+	bool m_Alive;
+	bool m_Invisible;
 	D3DXVECTOR3 m_Movement;
 	D3DXVECTOR3 m_Direction;
 	ColBox*	m_Collision;
 	CRenderModel* m_RenderModel;
+	
+	AudioComponent m_FallVoice;
+	AudioComponent m_BombVoice;
+
+	std::list<ObjBase*> m_HitObj;
+
 };

@@ -11,6 +11,7 @@ CListenerComponent::CListenerComponent()
 
 CListenerComponent::~CListenerComponent()
 {
+
 }
 
 void CListenerComponent::Init(D3DXMATRIX* matrix)
@@ -43,11 +44,11 @@ void CListenerComponent::SetListener(D3DXMATRIX* matrix)
 	D3DXVECTOR3 forvec = { m_listenerMtx->_31,m_listenerMtx->_32,m_listenerMtx->_33 };
 	D3DXVECTOR3 upvec = { m_listenerMtx->_21,m_listenerMtx->_22,m_listenerMtx->_23 };
 	
-	m_listener.OrientFront	= forvec;
+	m_listener.OrientFront	= D3DXVECTOR3(0,0,1);
 	m_listener.OrientTop	= upvec;
-	m_listener.pCone = NULL;
-	m_listener.Position = Pos;
-	m_listener.Velocity = D3DXVECTOR3(0, 0, 0);
+	m_listener.pCone        = NULL;
+	m_listener.Position     = Pos;
+	m_listener.Velocity     = D3DXVECTOR3(0, 0, 0.1f);
 
 	m_Uselistener = true;
 

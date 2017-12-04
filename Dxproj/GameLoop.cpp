@@ -7,7 +7,7 @@ CGameLoop::CGameLoop()
 
 	// メモリーリークdebug用
 	_CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF | _CRTDBG_ALLOC_MEM_DF);
-	//_CrtSetBreakAlloc(212);
+	//_CrtSetBreakAlloc(598);
 
 }
 
@@ -19,17 +19,14 @@ CGameLoop::~CGameLoop()
 void CGameLoop::Init()
 {
 	timeBeginPeriod(1);	// 分解能のセット
-
+	srand((unsigned int)time(NULL));
 	CDirectxMgr::Getintance().CreateDxDevice();
 	CRenderFormat::Getintance().Init();
 	CInput::Init(CWindowCreate::Getintance().GethwndDevice());
 	CCamera::Getintance().Init();
 
-	CSceneMgr::Getintance().PushScene<CGameScene>();
+	CSceneMgr::Getintance().PushScene<CTitleScene>();
 	CSceneMgr::Getintance().ChangeScene();
-
-	CSceneMgr::Getintance().Init();
-
 }
 
 void CGameLoop::Reboot()
@@ -39,7 +36,7 @@ void CGameLoop::Reboot()
 
 void CGameLoop::Run()
 {
-	while (1)
+	while (true)
 	{
 		if (PeekMessage(&m_Message, NULL, 0, 0, PM_REMOVE))
 		{
@@ -56,13 +53,16 @@ void CGameLoop::Run()
 		}
 
 		CGameFps::Getintance().Update();
-
 		if (CGameFps::Getintance().GetUpdatetiming() == true)
 		{
 			CSceneMgr::Getintance().Init();
 			CSceneMgr::Getintance().Update();
 			CInput::Update();
 			CSceneMgr::Getintance().Draw();
+		}
+		else
+		{
+			continue;
 		}
 		
 		CObjMgr::Getintance().ObjMigration();
@@ -75,8 +75,9 @@ void CGameLoop::Release()
 {
 	::timeEndPeriod(1);
 
-	CSceneMgr::Getintance().Release();
+	CObjMgr::Getintance().Release();
+	CObjMgr::Getintance().ObjAllClear();
 	CInput::Fin();
 	CSceneMgr::Getintance().Release();
-	
+	CXAudioInterface::Instance()->ReleaseXAudio();	
 }

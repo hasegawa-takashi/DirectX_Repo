@@ -1,11 +1,11 @@
 #include "LoadWave.h"
 
 
-//====================================
+//==============================================================
 //
 //	サウンドの設定とループの設定 + 初期化
 //
-//====================================
+//==============================================================
 CLoadWave::CLoadWave(std::string Soundlistnumb, bool Loopflag)
 {
 	m_SoundResouce.DataChunkSample = NULL;
@@ -116,27 +116,23 @@ void CLoadWave::LoadFormat()
 //	WAVEFORMATEXへのbuffer情報の格納
 //
 //====================================
-XAUDIO2_BUFFER CLoadWave::PreloadBuffer()
+XAUDIO2_BUFFER CLoadWave::PreloadBuffer(std::size_t first, std::size_t last)
 {
-	std::size_t nextFirstSample = { 0 };
-	std::size_t bufferSample = { 0 };
+	
 	//std::vector<float> primaryMixed = { 0 };
 
 	XAUDIO2_BUFFER buffer = { 0 };
 
-	bufferSample = m_SoundResouce.DataChunkSize;
+	last = m_SoundResouce.DataChunkSize;
 
-	primaryMixed = std::vector<float>(bufferSample * 2);
+	primaryMixed = std::vector<float>(last * 2);
 
-	if (nextFirstSample < m_SoundResouce.DataChunkSample)
-	{
-		std::size_t readSample = ReadDataRaw(nextFirstSample, bufferSample, &(primaryMixed[0]));
+	std::size_t readSample = ReadDataRaw(first, last, &(primaryMixed[0]));
 
-		buffer = { 0 };
-		buffer.Flags = nextFirstSample + readSample >= m_SoundResouce.DataChunkSample ? XAUDIO2_END_OF_STREAM : 0;
-		buffer.AudioBytes = readSample * m_SoundResouce.Waveformat.nBlockAlign;
-		buffer.pAudioData = reinterpret_cast<BYTE*>(&(primaryMixed[0]));
-	}
+	buffer.Flags = XAUDIO2_END_OF_STREAM;
+	buffer.AudioBytes = readSample * m_SoundResouce.Waveformat.nBlockAlign;
+	buffer.pAudioData = reinterpret_cast<BYTE*>(&(primaryMixed[0]));
+	
 
 	return buffer;
 }
@@ -152,23 +148,11 @@ XAUDIO2_BUFFER CLoadWave::StreamloadBuffer()
 	XAUDIO2_BUFFER buffer = { 0 };
 	std::size_t bufferSample = { 0 };
 
-	std::vector<float> primaryLeft = { 0 };
-	std::vector<float> primaryRight = { 0 };
-	
-	std::vector< float > secondaryLeft = { 0 };
-	std::vector< float > secondaryRight = { 0 };
-
 	//bufferSample = m_SoundResouce.Waveformat.nSamplesPerSec * 2;
 	bufferSample = BUFF_SIZE;
 
 	// BGM保存用バッファの初期化
-	primaryLeft = std::vector<float>(bufferSample);
-	primaryRight = std::vector<float>(bufferSample);
 	primaryMixed = std::vector<float>(bufferSample * 2);
-
-
-	secondaryLeft = std::vector<float>(bufferSample);
-	secondaryRight = std::vector<float>(bufferSample);
 	secondaryMixed = std::vector<float>(bufferSample * 2);
 
 	if (m_SoundResouce.NextFirstSample < m_SoundResouce.DataChunkSample)
@@ -201,12 +185,6 @@ XAUDIO2_BUFFER CLoadWave::UpdateBuffer(IXAudio2SourceVoice* voice)
 	XAUDIO2_VOICE_STATE state;
 	XAUDIO2_BUFFER buffer = { 0 };
 	std::size_t bufferSample = { 0 };
-
-	std::vector<float> primaryLeft = { 0 };
-	std::vector<float> primaryRight = { 0 };
-
-	std::vector< float > secondaryLeft = { 0 };
-	std::vector< float > secondaryRight = { 0 };
 
 	voice->GetState(&state);
 

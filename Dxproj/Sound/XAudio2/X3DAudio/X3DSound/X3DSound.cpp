@@ -9,7 +9,10 @@
 CX3DSound::CX3DSound()
 {
 	// 3DSound‚Ì‰Šú‰»
-	X3DAudioInitialize( GetXAudio2Mgr()->GetDeviceDetails().OutputFormat.dwChannelMask, X3DAUDIO_SPEED_OF_SOUND, m_X3DInstance);
+	X3DAudioInitialize( GetXAudio2Mgr()->GetDeviceDetails().OutputFormat.
+		dwChannelMask, 
+		5,
+		m_X3DInstance);
 
 	// DSPSetteing‚ÌÝ’è
 	m_X3DDsp = { 0 };
@@ -32,12 +35,12 @@ bool CX3DSound::SetListener(D3DXMATRIX* posmatrix)
 	D3DXVECTOR3 forvec	= { m_Listener->_31,m_Listener->_32,m_Listener->_33 };
 	D3DXVECTOR3 upvec	= { m_Listener->_21,m_Listener->_22,m_Listener->_23 };
 
-	m_X3DListener.OrientFront = forvec;
+	m_X3DListener.OrientFront = D3DXVECTOR3(0, 0, 1);
 	m_X3DListener.OrientTop = upvec;
 	m_X3DListener.pCone = NULL;
 	m_X3DListener.Position = Pos;
 
-	m_X3DListener.Velocity = D3DXVECTOR3(0, 0, 0);
+	m_X3DListener.Velocity = D3DXVECTOR3(0, 0, 0.1f);
 
 	return true;
 }

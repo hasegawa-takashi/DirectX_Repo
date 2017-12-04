@@ -4,16 +4,17 @@
 
 CSoundCue::CSoundCue()
 {
+	m_CueVolume = 1.0f;
+	m_CueMute = false; 
 }
 
 
 CSoundCue::~CSoundCue()
 {
 	// リストの削除
-	for each (auto var in m_Voicelist)
-	{
-		delete var;
-	}
+	if (m_Voicelist.empty())
+		return;
+
 	m_Voicelist.clear();
 }
 
@@ -27,7 +28,7 @@ void CSoundCue::Registervoice(AudioElement* voice)
 {
 	(voice)->RegistVoice->SetVolume((voice)->Soundelemt.MaxVolume);
 
-	m_Voicelist.push_back(voice);
+	m_Voicelist.push_back( voice );
 }
 
 //-----------------------------------------------------------------
@@ -37,11 +38,28 @@ void CSoundCue::Registervoice(AudioElement* voice)
 //
 void CSoundCue::ChangeVolume(float volume)
 {
+	if (volume > 1.0f)
+	{
+		volume = 1.0f;
+	}
+	if (volume < 0.0f)
+	{
+		volume = 0.0f;
+	}
+
+	if (m_CueVolume == volume)
+	{
+		return;
+	}
+
+
 	m_CueVolume = volume;
+	
 
 	for (auto var = m_Voicelist.begin(); var != m_Voicelist.end(); ++var )
 	{
-		 (*var)->RegistVoice->SetVolume( (volume * (*var)->Soundelemt.MaxVolume) );
+		float setvol = (volume * (*var)->Soundelemt.MaxVolume);
+		(*var)->RegistVoice->SetVolume(setvol);
 	}
 
 }
@@ -55,10 +73,10 @@ void CSoundCue::UnRegistervoice(AudioElement* voice)
 {
 	for (auto var = m_Voicelist.begin(); var != m_Voicelist.end(); ++var)
 	{
-		// TODO :: これ本当に動くのだろうか…？
-		if ( *(var._Ptr) == voice)
+		if ( *(var) == voice)
 		{
 			m_Voicelist.erase(var);
+			break;
 		}
 	}
 }

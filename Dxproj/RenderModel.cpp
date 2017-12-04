@@ -11,6 +11,7 @@ CRenderModel::CRenderModel(LPCTSTR ModelName)
 CRenderModel::~CRenderModel()
 {
 	Release();
+	m_RelaseFlag = true;
 }
 
 bool CRenderModel::Init(LPCTSTR ModelName)
@@ -24,7 +25,7 @@ bool CRenderModel::Init(LPCTSTR ModelName)
 	m_Hierarchy.SetDirectory(_Dir);
 
 	HRESULT hr = D3DXLoadMeshHierarchyFromX(ModelName,
-		D3DXMESH_MANAGED,
+		D3DXMESH_SYSTEMMEM,
 		CDirectxMgr::Getintance().GetDxDevice(),
 		&m_Hierarchy,
 		NULL,
@@ -50,11 +51,14 @@ bool CRenderModel::Init(LPCTSTR ModelName)
 void CRenderModel::Release()
 {
 	// アニメーション破棄
+	if (m_RelaseFlag == true)
+		return;
+
 	if (m_AnimSet) {
 		for (DWORD u = 0; u < m_NumAnimSet; ++u) {
-			Complete_type_safe_delete(m_AnimSet[u]);
+			delete m_AnimSet[u];
 		}
-		Complete_type_safe_delete(m_AnimSet);
+		//delete(m_AnimSet);
 	}
 	Complete_type_safe_delete(m_AnimCtrl);
 

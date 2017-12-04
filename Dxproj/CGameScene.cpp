@@ -4,7 +4,10 @@
 
 CGameScene::CGameScene()
 {
-	CObjMgr::Getintance().PushObj( new CPlayer,ID_PLAYER );
+	CObjMgr::Getintance().PushObj(new CPlayer      , ID_PLAYER);
+	CObjMgr::Getintance().PushObj(new CEnemyMgr    , ID_OTHER);
+	CObjMgr::Getintance().PushObj(new CTunnelCreate, ID_OTHER);
+	CObjMgr::Getintance().PushObj(new CSkybox      , ID_OTHER);
 }
 
 
@@ -18,8 +21,8 @@ void CGameScene::Init()
 	{
 		return;
 	}
-
 	CObjMgr::Getintance().Init();
+	CCamera::Getintance().Init();
 	m_Initflag = true;
 }
 

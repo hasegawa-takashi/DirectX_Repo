@@ -24,6 +24,7 @@ private:
 	CMyHierarchy				m_Hierarchy;	// 階層メモリ確保/解放クラス
 	DWORD						m_Prev;		// 直前の時刻
 	bool						m_AnimationFlag;
+	bool						m_RelaseFlag = false;
 public:
 	CRenderModel(LPCTSTR ModelName);
 	~CRenderModel();

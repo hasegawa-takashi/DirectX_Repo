@@ -944,7 +944,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    1.000000;1.000000;1.000000;;
    TextureFilename {
-    "skydome004.tga";
+    "../Texture/Space.jpg";
    }
   }
  }

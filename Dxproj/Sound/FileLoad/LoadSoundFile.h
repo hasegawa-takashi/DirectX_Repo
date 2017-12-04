@@ -36,12 +36,12 @@ public:
 
 	virtual void LoadFormat() = 0;
 	virtual void Close() = 0;
-	virtual XAUDIO2_BUFFER PreloadBuffer() = 0;
+	virtual XAUDIO2_BUFFER PreloadBuffer(std::size_t first, std::size_t last) = 0;
 	virtual XAUDIO2_BUFFER StreamloadBuffer() = 0;
 
 	virtual WAVEFORMATEX* GetWaveFormat() { return &m_SoundResouce.Waveformat; };
 
-	virtual std::size_t ReadDataRaw( std::size_t start,  std::size_t sample, void* buffer) = 0;
+	virtual std::size_t ReadDataRaw(std::size_t start, std::size_t sample, void* buffer) { return 0; }
 	virtual XAUDIO2_BUFFER UpdateBuffer(IXAudio2SourceVoice* voice) = 0;
 
 	virtual std::vector<float> GetPrimaryBuffer() = 0;

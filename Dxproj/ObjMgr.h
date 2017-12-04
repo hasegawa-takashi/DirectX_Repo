@@ -29,8 +29,9 @@ public:
 
 	virtual void SetidentNumb(int ID) { m_ObjNumb = ID; }		// 固有番号のセット
 	virtual int GetidentNumb() { return m_ObjNumb; }			// 固有番号の取得
+	virtual void SetObjNameNumb(int ID) { m_ObjID = ID; };
+	virtual int GetObjName() { return m_ObjID; }					// ObjNameの取得
 	virtual bool GetNonDestFlag() { return m_NonDeleteObj; }	// 破壊しないObjの取得
-	virtual int GetObjID() { return m_ObjID; }					// ObjNameの取得
 	virtual D3DXVECTOR3 GetPosition() { return m_Position; }	// 座標の取得
 };
 #pragma endregion
@@ -42,9 +43,11 @@ public:
 enum ObjName
 {
 	ID_PLAYER = 0,	// プレイヤー用の番号
+	ID_ENEMY,		// 敵用の番号
 	ID_OTHER,		// その他の番号
 	ID_FADE,		// Fade用オブジェクト
-	MAX_ID
+	ID_TUNNEL,		// トンネル
+	MAX_ID,
 };
 
 
@@ -61,12 +64,15 @@ public:
 
 	// --------------------
 	// --- デストラクタ
-	virtual ~ObjList(){
-		if (m_Objlist.empty())
+	~ObjList(){
+		if (!m_Objlist.empty())
 		{
 			for (auto& _Obj : m_Objlist)
+			{
 				delete _Obj;
+			}
 		}
+		m_Objlist.clear();
 	}
 
 	// ------------------------------
@@ -74,6 +80,13 @@ public:
 	std::list<ObjBase*> GetObjList()
 	{
 		return m_Objlist;
+	}
+
+	// ------------------------------
+	// --- list内のobjの数
+	int GetListCnt()
+	{
+		return m_Objlist.size();
 	}
 
 	// ------------------------------
@@ -197,7 +210,7 @@ public:
 		{
 			auto p = *itr;
 
-			if (p->GetNonDestFlag())
+			if (p->GetNonDestFlag() == true)
 			{
 				GetObj.push_back(p);
 				itr = m_Objlist.erase(itr);
@@ -236,6 +249,9 @@ public:
 	std::list<ObjBase*> SerchObj(UINT ID);
 	std::list<std::list<ObjBase*>>  ExculdeObj();
 	void ObjMigration();
+
+	void ObjAllClear();
+	int GetObjCnt(int id);
 
 	friend class CSingleton<CObjMgr>;
 

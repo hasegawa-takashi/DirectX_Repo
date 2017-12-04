@@ -48,18 +48,27 @@ void CSoundEffectComponent::Init(IXAudio2SourceVoice* voice)
 
 	// リバーブの初期化
 	m_Reverbpram.Diffusion = FXREVERB_MIN_DIFFUSION;
-	m_Reverbpram.RoomSize = FXREVERB_MIN_ROOMSIZE;
+	m_Reverbpram.RoomSize  = FXREVERB_MIN_ROOMSIZE;
 
 	// エコーの初期化
-	m_EchoPram.Delay = FXECHO_MIN_DELAY;
-	m_EchoPram.Feedback = FXECHO_MIN_FEEDBACK;
-	m_EchoPram.WetDryMix = FXECHO_MIN_WETDRYMIX;
+	m_EchoPram.Delay		= FXECHO_MIN_DELAY;
+	m_EchoPram.Feedback		= FXECHO_MIN_FEEDBACK;
+	m_EchoPram.WetDryMix	= FXECHO_MIN_WETDRYMIX;
 
+	// イコライザの初期化
 	// イコライザの初期化
 	m_EqPram.FrequencyCenter0 = FXEQ_DEFAULT_FREQUENCY_CENTER_0;
 	m_EqPram.FrequencyCenter1 = FXEQ_DEFAULT_FREQUENCY_CENTER_1;
 	m_EqPram.FrequencyCenter2 = FXEQ_DEFAULT_FREQUENCY_CENTER_2;
 	m_EqPram.FrequencyCenter3 = FXEQ_DEFAULT_FREQUENCY_CENTER_3;
+	m_EqPram.Gain0 = FXEQ_DEFAULT_GAIN;
+	m_EqPram.Gain1 = FXEQ_DEFAULT_GAIN;
+	m_EqPram.Gain2 = FXEQ_DEFAULT_GAIN;
+	m_EqPram.Gain3 = FXEQ_DEFAULT_GAIN;
+	m_EqPram.Bandwidth0 = FXEQ_DEFAULT_BANDWIDTH;
+	m_EqPram.Bandwidth1 = FXEQ_DEFAULT_BANDWIDTH;
+	m_EqPram.Bandwidth2 = FXEQ_DEFAULT_BANDWIDTH;
+	m_EqPram.Bandwidth3 = FXEQ_DEFAULT_BANDWIDTH;
 
 	m_voice->SetEffectParameters(0, &m_Reverbpram, sizeof(FXREVERB_PARAMETERS));
 	m_voice->SetEffectParameters(1, &m_EchoPram, sizeof(FXECHO_PARAMETERS));
@@ -79,12 +88,10 @@ void CSoundEffectComponent::Init(IXAudio2SourceVoice* voice)
 //
 void CSoundEffectComponent::SetReverbVolume(float walltype, float roomsize)
 {
-	FXREVERB_PARAMETERS param;
+	m_Reverbpram.Diffusion = walltype;
+	m_Reverbpram.RoomSize = roomsize;
 
-	param.Diffusion = walltype;
-	param.RoomSize = roomsize;
-
-	m_voice->SetEffectParameters(0, &param, sizeof(FXREVERB_PARAMETERS));
+	m_voice->SetEffectParameters(0, &m_Reverbpram, sizeof(FXREVERB_PARAMETERS));
 }
 
 //-----------------------------------------------------------------
@@ -94,12 +101,10 @@ void CSoundEffectComponent::SetReverbVolume(float walltype, float roomsize)
 //
 void CSoundEffectComponent::offsetReverbVolume()
 {
-	FXREVERB_PARAMETERS param;
-
-	param.Diffusion = FXREVERB_MIN_DIFFUSION;
-	param.RoomSize = FXREVERB_MIN_ROOMSIZE;
-
-	m_voice->SetEffectParameters(0, &param, sizeof(FXREVERB_PARAMETERS));
+	m_Reverbpram.Diffusion = FXREVERB_MIN_DIFFUSION;
+	m_Reverbpram.RoomSize = FXREVERB_MIN_ROOMSIZE;
+	
+	m_voice->SetEffectParameters(0, &m_Reverbpram, sizeof(FXREVERB_PARAMETERS));
 }
 
 //-----------------------------------------------------------------
@@ -109,13 +114,11 @@ void CSoundEffectComponent::offsetReverbVolume()
 //
 void CSoundEffectComponent::SetEchoVolume(float Delay, float feedback, float wetdry)
 {
-	FXECHO_PARAMETERS param;
+	m_EchoPram.Delay = Delay;
+	m_EchoPram.Feedback = feedback;
+	m_EchoPram.WetDryMix = wetdry;
 
-	param.Delay = Delay;
-	param.Feedback = feedback;
-	param.WetDryMix = wetdry;
-
-	m_voice->SetEffectParameters(1, &param, sizeof(FXECHO_PARAMETERS));
+	m_voice->SetEffectParameters(1, &m_EchoPram, sizeof(FXECHO_PARAMETERS));
 }
 
 //-----------------------------------------------------------------
@@ -125,13 +128,11 @@ void CSoundEffectComponent::SetEchoVolume(float Delay, float feedback, float wet
 //
 void CSoundEffectComponent::offsetEchoVolume()
 {
-	FXECHO_PARAMETERS param;
+	m_EchoPram.Delay = FXECHO_MIN_DELAY;
+	m_EchoPram.Feedback = FXECHO_MIN_FEEDBACK;
+	m_EchoPram.WetDryMix = FXECHO_MIN_WETDRYMIX;
 
-	param.Delay = FXECHO_MIN_DELAY;
-	param.Feedback = FXECHO_MIN_FEEDBACK;
-	param.WetDryMix = FXECHO_MIN_WETDRYMIX;
-
-	m_voice->SetEffectParameters(1, &param, sizeof(FXECHO_PARAMETERS));
+	m_voice->SetEffectParameters(1, &m_EchoPram, sizeof(FXECHO_PARAMETERS));
 }
 
 //-----------------------------------------------------------------
@@ -146,10 +147,83 @@ void  CSoundEffectComponent::SetPitchRate(float PitchRate)
 
 //-----------------------------------------------------------------
 //
-//	SetPitchRate
+//	offsetPitchRate
 //		Pitchの値のリセット
 //
 void  CSoundEffectComponent::offsetPitchRate()
 {
 	m_voice->SetFrequencyRatio(1.0f);
+}
+
+//-----------------------------------------------------------------
+//
+//	SetEQVolume
+//		EQの値の設定
+//
+void CSoundEffectComponent::SetEQVolume(float freqcenter[4],float gain[4],float bandwidth[4])
+{
+	m_EqPram.FrequencyCenter0 = FXEQ_DEFAULT_FREQUENCY_CENTER_0;
+	m_EqPram.FrequencyCenter1 = FXEQ_DEFAULT_FREQUENCY_CENTER_1;
+	m_EqPram.FrequencyCenter2 = FXEQ_DEFAULT_FREQUENCY_CENTER_2;
+	m_EqPram.FrequencyCenter3 = FXEQ_DEFAULT_FREQUENCY_CENTER_3;
+	m_EqPram.Gain0 = gain[0];
+	m_EqPram.Gain1 = gain[1];
+	m_EqPram.Gain2 = gain[2];
+	m_EqPram.Gain3 = gain[3];
+	m_EqPram.Bandwidth0 = FXEQ_DEFAULT_BANDWIDTH;
+	m_EqPram.Bandwidth1 = FXEQ_DEFAULT_BANDWIDTH;
+	m_EqPram.Bandwidth2 = FXEQ_DEFAULT_BANDWIDTH;
+	m_EqPram.Bandwidth3 = FXEQ_DEFAULT_BANDWIDTH;
+
+	m_voice->SetEffectParameters(2, &m_EqPram, sizeof(FXEQ_PARAMETERS));
+}
+
+//-----------------------------------------------------------------
+//
+//	offSetEQVolume
+//		EQの値のリセット
+//
+void CSoundEffectComponent::offSetEQVolume()
+{
+	m_EqPram.FrequencyCenter0 = FXEQ_DEFAULT_FREQUENCY_CENTER_0;
+	m_EqPram.FrequencyCenter1 = FXEQ_DEFAULT_FREQUENCY_CENTER_1;
+	m_EqPram.FrequencyCenter2 = FXEQ_DEFAULT_FREQUENCY_CENTER_2;
+	m_EqPram.FrequencyCenter3 = FXEQ_DEFAULT_FREQUENCY_CENTER_3;
+	m_EqPram.Gain0 = FXEQ_DEFAULT_GAIN;
+	m_EqPram.Gain1 = FXEQ_DEFAULT_GAIN;
+	m_EqPram.Gain2 = FXEQ_DEFAULT_GAIN;
+	m_EqPram.Gain3 = FXEQ_DEFAULT_GAIN;
+	m_EqPram.Bandwidth0 = FXEQ_DEFAULT_BANDWIDTH;
+	m_EqPram.Bandwidth1 = FXEQ_DEFAULT_BANDWIDTH;
+	m_EqPram.Bandwidth2 = FXEQ_DEFAULT_BANDWIDTH;
+	m_EqPram.Bandwidth3 = FXEQ_DEFAULT_BANDWIDTH;
+
+	m_voice->SetEffectParameters(2, &m_EqPram, sizeof(FXEQ_PARAMETERS));
+}
+
+void CSoundEffectComponent::SetSpaceEffect()
+{
+	m_EchoPram.Delay = m_SpaceDlay;
+	m_EchoPram.Feedback = m_SpaceFeedback;
+	m_EchoPram.WetDryMix = m_SpaceDlywet;
+
+	m_voice->SetEffectParameters(1, &m_EchoPram, sizeof(FXECHO_PARAMETERS));
+}
+
+void CSoundEffectComponent::offsetSpaceEffect()
+{
+	offsetEchoVolume();
+}
+
+void CSoundEffectComponent::SetTunnelEffect()
+{
+	m_Reverbpram.Diffusion = m_TunnelWall;
+	m_Reverbpram.RoomSize = m_TunnelRoomsize;
+
+	m_voice->SetEffectParameters(0, &m_Reverbpram, sizeof(FXREVERB_PARAMETERS));
+}
+
+void CSoundEffectComponent::offsetTunnelEffect()
+{
+	offsetReverbVolume();
 }

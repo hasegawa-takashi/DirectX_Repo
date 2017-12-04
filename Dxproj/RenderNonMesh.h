@@ -8,12 +8,13 @@ public:
 	~CRenderNonMesh();
 
 	void Render();
+	void SetPos();
 
 private:
-	LPD3DXBUFFER	m_MatBuf;
-	LPD3DXMESH		m_Mesh;	// メッシュデータ
-	DWORD			m_Mat;	// マテリアルの数
-	D3DMATERIAL9*	m_MeshMat;	// マテリアル情報
+	LPD3DXBUFFER		m_MatBuf;
+	LPD3DXMESH			m_Mesh;	// メッシュデータ
+	DWORD				m_Mat;	// マテリアルの数
+	D3DMATERIAL9	*	m_MeshMat;	// マテリアル情報
 	LPDIRECT3DTEXTURE9*	m_MeshTex;	// メッシュのテクスチャ
 };
 

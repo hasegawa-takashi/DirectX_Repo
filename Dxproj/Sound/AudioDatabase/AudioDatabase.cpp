@@ -9,7 +9,6 @@ CAudioDatabase::CAudioDatabase()
 CAudioDatabase::~CAudioDatabase()
 {
 	DeleteSoundData();
-	CloseResourceFile();
 }
 
 //-----------------------------------------------------------------
@@ -17,20 +16,18 @@ CAudioDatabase::~CAudioDatabase()
 //	LoadResourceFile
 //		リソースファイルのロード
 //
-void CAudioDatabase::LoadResourceFile(std::string name)
+void CAudioDatabase::SetVoiceCue(std::string name, AudioElement* voice)
 {
-	// Csvの読み込み。
-	CWaveformatData* waveformatdata = new CWaveformatData(name);
-
-	// 登録をする。
-	m_Waveformat.insert( std::make_pair(name,waveformatdata) );
-	
 	// Cueデータの作成
-	CSoundCue* soundcue = new CSoundCue();
+	CSoundCue soundcue;
+	soundcue.Registervoice(voice);
 	m_Cuemap.insert( std::make_pair(name, soundcue) );
+}
 
-	
-
+void CAudioDatabase::PopVoiceCue(std::string name, AudioElement* voice)
+{
+	// Cueデータの作成
+	m_Cuemap[name].UnRegistervoice(voice);
 }
 
 //-----------------------------------------------------------------
@@ -40,38 +37,12 @@ void CAudioDatabase::LoadResourceFile(std::string name)
 //
 void CAudioDatabase::DeleteSoundData()
 {
+
 	if (m_Cuemap.empty())
 		return;
 
-	// 全Wavedataの削除
-	for each (auto var in m_Cuemap)
-	{
-		delete var.second;
-	}
-
 	// Dictionaryの削除
 	m_Cuemap.clear();
-}
-
-//-----------------------------------------------------------------
-//
-//	CloseResourceFile
-//		読み込んだリソースフォルダの開放
-//
-void CAudioDatabase::CloseResourceFile()
-{
-	if (m_Waveformat.empty())
-		return;
-
-	// 全Wavedataの削除
-	for each (auto var in m_Waveformat)
-	{
-		delete var.second;
-	}
-
-	// Dictionaryの削除
-	m_Waveformat.clear();
-
 }
 
 //-----------------------------------------------------------------
@@ -89,23 +60,22 @@ void CAudioDatabase::SetListener(D3DXMATRIX* listener)
 //	SetAudioSource
 //		再生音源の登録
 //		ここで生成した情報を各種ポインタに持たせて再生させたい		
+//		Bug :: ここでのコピーが分離していないために同時に音が鳴るとバグが発生している可能性
 //
-void CAudioDatabase::SetAudioSource(AudioElement** audioelement, std::string type ,std::string name)
+void CAudioDatabase::SetAudioSource(AudioElement* audioelement, std::string type ,std::string name, VoiceCallback* voiceCallback)
 {
-
-	if (m_Waveformat.empty())
-	{
-		return;
-	}
-
-	// Wave情報の取得
-	(*audioelement)->Soundelemt = m_Waveformat[type]->GetWaveElement(name);
+	// Wave情報を外部リースから読み込んで取得
+	audioelement->Waveformatdata = new CWaveformatData(type,name);
+	audioelement->Soundelemt = audioelement->Waveformatdata->GetWaveElement();
 
 	// マスターボイスへの登録
-	GetXAudio2Mgr()->SetXAudio2SourceVoice( &(*audioelement)->RegistVoice , *(*audioelement)->Soundelemt.Waveformat);
+	GetXAudio2Mgr()->SetXAudio2SourceVoice( &(audioelement)->RegistVoice , *(audioelement)->Soundelemt.Waveformat, voiceCallback);
 
-	// 種類ごとにSourceボイスの登録
-	m_Cuemap[type]->Registervoice(*audioelement);
+	// 種類別に登録
+	m_Cuemap[type].Registervoice(audioelement);
+
+	// 音量の設定
+	(audioelement)->RegistVoice->SetVolume(audioelement->Soundelemt.MaxVolume);
 }
 
 //-----------------------------------------------------------------
@@ -118,5 +88,5 @@ void CAudioDatabase::ChangeCueVolume(std::string name, float volume)
 	if (m_Cuemap.empty())
 		return;
 
-	m_Cuemap[name]->ChangeVolume(volume);
+	m_Cuemap[name].ChangeVolume(volume);
 }

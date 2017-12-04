@@ -15,7 +15,10 @@ public:
 
 protected:
 	CSingleton() {}
-	virtual ~CSingleton() {}
+	virtual ~CSingleton() 
+	{
+		int _a = 0;
+	}
 
 private:
 	void operator = (const CSingleton& obj) {}

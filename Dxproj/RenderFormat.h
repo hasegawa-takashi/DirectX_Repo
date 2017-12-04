@@ -3,7 +3,7 @@
 
 
 const float NEAR_CLIP = 1.0f;
-const float FAR_CLIP = 100.0f;
+const float FAR_CLIP = 1000.0f;
 const float FOVY = 45.0f;
 
 class CRenderFormat : public CSingleton<CRenderFormat>

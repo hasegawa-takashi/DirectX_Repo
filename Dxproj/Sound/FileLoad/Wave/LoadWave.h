@@ -6,7 +6,7 @@
 //-----------------------------------------------------------
 //
 //	WaveFileを扱うサウンドリソース読み込み
-//
+//	参考 https://gist.github.com/xrated/2700516
 //------------------------------------------------------------
 class CLoadWave : public CLoadSoundFile
 {
@@ -17,7 +17,7 @@ public:
 	void LoadFormat();
 	void Close();
 
-	XAUDIO2_BUFFER PreloadBuffer();
+	XAUDIO2_BUFFER PreloadBuffer(std::size_t first, std::size_t last);
 	XAUDIO2_BUFFER StreamloadBuffer();
 	
 	virtual WAVEFORMATEX* GetWaveFormat() { return &m_SoundResouce.Waveformat; };

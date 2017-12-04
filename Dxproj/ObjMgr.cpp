@@ -10,11 +10,21 @@ CObjMgr::CObjMgr()
 
 CObjMgr::~CObjMgr()
 {
-	Release();
-	for (auto& list : m_ObjListArray)
+	if (!m_ObjListArray.empty())
 	{
-		delete list;
+		for (auto& list : m_ObjListArray)
+		{
+			delete list;
+		}
 	}
+
+	if (!m_HoldDeletelistpair.empty())
+	{
+		m_HoldDeletelistpair.clear();
+	}
+
+	m_Numb = 0;
+
 }
 
 void CObjMgr::Init()
@@ -71,7 +81,6 @@ void CObjMgr::Release()
 	{
 		m_ObjListArray[loop]->Release();
 	}
-	m_Numb = 0;
 }
 
 void CObjMgr::Pause()
@@ -85,11 +94,18 @@ void CObjMgr::Pause()
 bool CObjMgr::PushObj(ObjBase* obj, UINT ID)
 {
 	// オブジェクトの登録 + 番号の登録
+	assert(ID < m_ObjListArray.size());
 	m_ObjListArray[ID]->AddObject(obj);
 	obj->SetidentNumb(m_Numb);
+	obj->SetObjNameNumb(ID);
 	m_Numb++;
 
 	return true;
+}
+
+int CObjMgr::GetObjCnt(int id)
+{
+	return m_ObjListArray[id]->GetListCnt();
 }
 
 bool CObjMgr::PopObj(int ID, int Numb)
@@ -100,6 +116,7 @@ bool CObjMgr::PopObj(int ID, int Numb)
 
 std::list<ObjBase*> CObjMgr::SerchObj(UINT ID)
 {
+	assert(ID < m_ObjListArray.size());
 	return m_ObjListArray[ID]->GetObjList();
 }
 
@@ -127,4 +144,30 @@ void CObjMgr::ObjMigration()
 
 	// all削除
 	m_HoldDeletelistpair.clear();
+}
+
+/// <summary>
+/// 内容物の全削除
+/// </summary>
+void CObjMgr::ObjAllClear()
+{
+	if (!m_ObjListArray.empty())
+	{
+		for (size_t loop = 0; loop < m_ObjListArray.size(); loop++)
+		{
+			delete m_ObjListArray[loop];
+		}
+	}
+
+	if (!m_HoldDeletelistpair.empty())
+	{
+		m_HoldDeletelistpair.clear();
+	}
+	
+	for (auto& list : m_ObjListArray)
+	{
+		list = new ObjList();
+	}
+
+	m_Numb = 0;
 }

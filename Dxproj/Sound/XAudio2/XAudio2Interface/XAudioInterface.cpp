@@ -10,13 +10,14 @@ CXAudioInterface::CXAudioInterface()
 
 CXAudioInterface::~CXAudioInterface()
 {
+	CoUninitialize();
 }
 
 bool CXAudioInterface::CreateXAudio()
 {
 	HRESULT hr;
-	m_XAudio2 = NULL;
-
+	m_XAudio2 = nullptr;
+		
 	if (FAILED(hr = CoInitializeEx(NULL, COINIT_MULTITHREADED)))
 	{
 		std::cout << "ì¬‚ÉŽ¸”s‚µ‚Ü‚µ‚½" << std::endl;
@@ -51,13 +52,26 @@ bool CXAudioInterface::CreateXAudio()
 		return false;
 	}
 
+	m_Xaudio2dll = new Xaudio2DllUnloadWorkaround_LoadLibraryVersion();
+	m_Xaudio2dll->Invoke(true);
+
+
 	return true;
 }
 
-bool CXAudioInterface::SetXAudio2SourceVoice(IXAudio2SourceVoice** souce, const WAVEFORMATEX wave)
+
+bool CXAudioInterface::ReleaseXAudio()
+{
+	delete m_Xaudio2dll;
+	m_MasterVoice->DestroyVoice();
+	m_XAudio2->Release();
+	return true;
+}
+
+bool CXAudioInterface::SetXAudio2SourceVoice(IXAudio2SourceVoice** souce, const WAVEFORMATEX wave, VoiceCallback* voiceCallback)
 {
 	HRESULT hr;
-	if (FAILED(hr = m_XAudio2->CreateSourceVoice(souce, &wave, 0)))
+	if (FAILED(hr = m_XAudio2->CreateSourceVoice(souce, &wave, 0, XAUDIO2_DEFAULT_FREQ_RATIO, voiceCallback,NULL,NULL)))
 	{
 		return false;
 	}

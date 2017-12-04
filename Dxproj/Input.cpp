@@ -56,7 +56,7 @@ CInput::~CInput(void)
 // 初期化
 void CInput::Init(HWND hWnd)
 {
-	HINSTANCE hInst = (HINSTANCE)GetWindowLong(hWnd, GWL_HINSTANCE);
+	HINSTANCE hInst = (HINSTANCE)GetWindowLong(hWnd, GWLP_HINSTANCE);
 
 	// DirectInputオブジェクトの作成
 	HRESULT hr = DirectInput8Create(hInst, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&m_pDI, NULL);

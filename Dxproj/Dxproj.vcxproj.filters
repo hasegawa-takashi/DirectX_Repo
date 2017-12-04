@@ -19,9 +19,6 @@
     <Filter Include="IncludeHeader">
       <UniqueIdentifier>{8ca7ee5c-9059-4a09-a9b9-2bc2c5d6acea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CGameScene">
-      <UniqueIdentifier>{f53d786c-cf58-45e6-b6e3-8b0714eef0e0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameLoop">
       <UniqueIdentifier>{97e383ee-e29d-4244-809e-f431a4da2024}</UniqueIdentifier>
     </Filter>
@@ -73,6 +70,81 @@
     <Filter Include="Particle">
       <UniqueIdentifier>{8645f81f-ca7c-40ae-9ccd-6667063fc110}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{1690c9fe-f58b-4a56-8d10-58784c3cee47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\EnemyMgr">
+      <UniqueIdentifier>{26f99b77-2cfc-4a96-9d40-3dcc3ee3c38a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{4def93f5-b417-4939-b299-f50526093093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameScene">
+      <UniqueIdentifier>{f53d786c-cf58-45e6-b6e3-8b0714eef0e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TitleScene">
+      <UniqueIdentifier>{a1767022-36f1-4a31-a3ab-1acaebcafafe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TitleScene\TitleController">
+      <UniqueIdentifier>{a8a38cfc-1308-4337-9e0c-101abda1cd1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FieldObj">
+      <UniqueIdentifier>{82bde320-b4b9-4362-9f79-38a27fc773ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FieldObj\SkyBox">
+      <UniqueIdentifier>{9e3877ac-e098-432b-af67-c5f3b7f0d5ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FieldObj\Tunnel">
+      <UniqueIdentifier>{6f8aea18-b251-4845-98e8-b08bd41e2ea8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\AudioComponent">
+      <UniqueIdentifier>{5f5d64f7-045c-424f-b898-5f58bd08d1a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\AudioComponent\Emitter">
+      <UniqueIdentifier>{96cf1fad-6bd8-4d05-af1a-89690cf15694}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\AudioComponent\Listener">
+      <UniqueIdentifier>{2d3359ce-408e-488a-8db7-82e1b96c84e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\AudioComponent\SoundBase">
+      <UniqueIdentifier>{54c9164c-efed-49d6-953a-2315e14854c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\AudioComponent\Effect">
+      <UniqueIdentifier>{6d3b3a55-e723-45f4-a18b-db98d76cdd5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\AudioComponent\Player">
+      <UniqueIdentifier>{ecdf53b1-096d-449b-850e-323680d5ef73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\AudioDatabase">
+      <UniqueIdentifier>{537117e4-206b-4c2b-8bd4-d6ac3cae624a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\FileLoad">
+      <UniqueIdentifier>{4efaf21b-edc7-4571-abe4-541ff6049dfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\FileLoad\Wave">
+      <UniqueIdentifier>{b6b452c4-8fbe-4b5d-98d6-4907f6a54db6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\SoundCue">
+      <UniqueIdentifier>{37c5bc5d-8b1d-4275-a45f-0b1415c3d421}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\SoundCue\Group">
+      <UniqueIdentifier>{e03cb39b-3f6c-4fa4-b1ea-68b51031649f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\Waveformatdata">
+      <UniqueIdentifier>{e0282695-9d39-4d0f-8f13-3f88ffa8019e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\3DSound">
+      <UniqueIdentifier>{f48bcf1e-9029-45cd-ab1d-b07f46e6ab13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\XAudio2Dllfix">
+      <UniqueIdentifier>{6463bb2d-bc07-4c24-b895-1e3746b363bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\XAudioInterface">
+      <UniqueIdentifier>{f694a97e-4ff4-4374-8c54-0d44bc89d467}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound\FileLoad\Ogg">
+      <UniqueIdentifier>{1be74026-a018-4d85-a7a1-5214153c0d47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -94,7 +166,7 @@
       <Filter>IncludeHeader</Filter>
     </ClInclude>
     <ClInclude Include="CGameScene.h">
-      <Filter>CGameScene</Filter>
+      <Filter>GameScene</Filter>
     </ClInclude>
     <ClInclude Include="GameLoop.h">
       <Filter>GameLoop</Filter>
@@ -114,52 +186,7 @@
     <ClInclude Include="Calculation.h">
       <Filter>Calculation</Filter>
     </ClInclude>
-    <ClInclude Include="Sound\AudioComponent\EmitterComponent\EmitterComponent.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\AudioComponent\ListenerComponent\ListenerComponent.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\AudioComponent\SoundComponent\SoundComponent.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\AudioComponent\SoundEffectComponent\SoundEffectComponent.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\AudioComponent\SoundPlayerComponent\SoundPlayerComponent.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\AudioDatabase\AudioDatabase.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\CreateSourceVoice\CSourceVoiceOperator.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\FileLoad\LoadSoundFile.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\FileLoad\Wave\LoadWave.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
     <ClInclude Include="Sound\Sound.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\SoundCue\SoundCue.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\SoundEffect\CueEffects.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\WaveformatData\WaveformatData.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\XAudio2\X3DAudio\X3DSound\X3DSound.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\XAudio2\XAPOFXEffect\VoiceEffect.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound\XAudio2\XAudio2Interface\XAudioInterface.h">
       <Filter>Sound</Filter>
     </ClInclude>
     <ClInclude Include="MyHierarchy.h">
@@ -195,6 +222,78 @@
     <ClInclude Include="Particle.h">
       <Filter>Particle</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyMgr.h">
+      <Filter>Enemy\EnemyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>FieldObj\SkyBox</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundInclude.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleCtrl.h">
+      <Filter>TitleScene\TitleController</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleHeader.h">
+      <Filter>IncludeHeader</Filter>
+    </ClInclude>
+    <ClInclude Include="Tunnel.h">
+      <Filter>FieldObj\Tunnel</Filter>
+    </ClInclude>
+    <ClInclude Include="TunnelCreate.h">
+      <Filter>FieldObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\AudioComponent\EmitterComponent\EmitterComponent.h">
+      <Filter>Sound\AudioComponent\Emitter</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\AudioComponent\ListenerComponent\ListenerComponent.h">
+      <Filter>Sound\AudioComponent\Listener</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\AudioComponent\SoundEffectComponent\SoundEffectComponent.h">
+      <Filter>Sound\AudioComponent\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\AudioComponent\SoundPlayerComponent\SoundPlayerComponent.h">
+      <Filter>Sound\AudioComponent\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\AudioComponent\SoundComponent\SoundComponent.h">
+      <Filter>Sound\AudioComponent\SoundBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\AudioDatabase\AudioDatabase.h">
+      <Filter>Sound\AudioDatabase</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\FileLoad\LoadSoundFile.h">
+      <Filter>Sound\FileLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\FileLoad\Wave\LoadWave.h">
+      <Filter>Sound\FileLoad\Wave</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\SoundCue\SoundCue.h">
+      <Filter>Sound\SoundCue\Group</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\WaveformatData\WaveformatData.h">
+      <Filter>Sound\Waveformatdata</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\XAudio2\X3DAudio\X3DSound\X3DSound.h">
+      <Filter>Sound\3DSound</Filter>
+    </ClInclude>
+    <ClInclude Include="XAudio2DLLSet.h">
+      <Filter>Sound\XAudio2Dllfix</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\XAudio2\XAudio2Interface\XAudioInterface.h">
+      <Filter>Sound\XAudioInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\FileLoad\Ogg\LoadOgg.h">
+      <Filter>Sound\FileLoad\Ogg</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameFps.cpp">
@@ -210,7 +309,7 @@
       <Filter>Main</Filter>
     </ClCompile>
     <ClCompile Include="CGameScene.cpp">
-      <Filter>CGameScene</Filter>
+      <Filter>GameScene</Filter>
     </ClCompile>
     <ClCompile Include="GameLoop.cpp">
       <Filter>GameLoop</Filter>
@@ -229,48 +328,6 @@
     </ClCompile>
     <ClCompile Include="Calculation.cpp">
       <Filter>Calculation</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\AudioComponent\EmitterComponent\EmitterComponent.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\AudioComponent\ListenerComponent\ListenerComponent.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\AudioComponent\SoundComponent\SoundComponent.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\AudioComponent\SoundEffectComponent\SoundEffectComponent.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\AudioComponent\SoundPlayerComponent\SoundPlayerComponent.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\AudioDatabase\AudioDatabase.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\CreateSourceVoice\CSourceVoiceOperator.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\FileLoad\Wave\LoadWave.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\SoundCue\SoundCue.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\SoundEffect\CueEffects.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\WaveformatData\WaveformatData.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\XAudio2\X3DAudio\X3DSound\X3DSound.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\XAudio2\XAPOFXEffect\VoiceEffect.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound\XAudio2\XAudio2Interface\XAudioInterface.cpp">
-      <Filter>Sound</Filter>
     </ClCompile>
     <ClCompile Include="MyHierarchy.cpp">
       <Filter>ModelRender\Mesh</Filter>
@@ -304,6 +361,69 @@
     </ClCompile>
     <ClCompile Include="Particle.cpp">
       <Filter>Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyMgr.cpp">
+      <Filter>Enemy\EnemyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>FieldObj\SkyBox</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleCtrl.cpp">
+      <Filter>TitleScene\TitleController</Filter>
+    </ClCompile>
+    <ClCompile Include="Tunnel.cpp">
+      <Filter>FieldObj\Tunnel</Filter>
+    </ClCompile>
+    <ClCompile Include="TunnelCreate.cpp">
+      <Filter>FieldObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\AudioComponent\EmitterComponent\EmitterComponent.cpp">
+      <Filter>Sound\AudioComponent\Emitter</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\AudioComponent\ListenerComponent\ListenerComponent.cpp">
+      <Filter>Sound\AudioComponent\Listener</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\AudioComponent\SoundEffectComponent\SoundEffectComponent.cpp">
+      <Filter>Sound\AudioComponent\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\AudioComponent\SoundPlayerComponent\SoundPlayerComponent.cpp">
+      <Filter>Sound\AudioComponent\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\AudioComponent\SoundComponent\SoundComponent.cpp">
+      <Filter>Sound\AudioComponent\SoundBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\AudioDatabase\AudioDatabase.cpp">
+      <Filter>Sound\AudioDatabase</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\FileLoad\Wave\LoadWave.cpp">
+      <Filter>Sound\FileLoad\Wave</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\SoundCue\SoundCue.cpp">
+      <Filter>Sound\SoundCue\Group</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\WaveformatData\WaveformatData.cpp">
+      <Filter>Sound\Waveformatdata</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\XAudio2\X3DAudio\X3DSound\X3DSound.cpp">
+      <Filter>Sound\3DSound</Filter>
+    </ClCompile>
+    <ClCompile Include="XAudio2DLLSet.cpp">
+      <Filter>Sound\XAudio2Dllfix</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\XAudio2\XAudio2Interface\XAudioInterface.cpp">
+      <Filter>Sound\XAudioInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\FileLoad\Ogg\LoadOgg.cpp">
+      <Filter>Sound\FileLoad\Ogg</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

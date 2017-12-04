@@ -25,22 +25,23 @@ public:
 	~CAudioDatabase();
 
 	// 初期化処理
-	void LoadResourceFile(std::string name);
+	void SetVoiceCue(std::string name, AudioElement* voice);
+	void PopVoiceCue(std::string name, AudioElement* voice);
+
 	// 音量操作
 	void ChangeCueVolume(std::string name,float volume);
-	// 終了処理
-	void CloseResourceFile();
+
+
 	// Listenerの設定
 	void SetListener(D3DXMATRIX* listener);
 	// データの設定
-	void SetAudioSource(AudioElement** audioelement, std::string type, std::string name);
-	// 保存しているデータの削除
-	void DeleteSoundData();
+	void SetAudioSource(AudioElement* audioelement, std::string type, std::string name, VoiceCallback* voiceCallback);
 
 private:
 	CAudioDatabase();
+	// 保存しているデータの削除
+	void DeleteSoundData();
 
-	std::map<std::string,CWaveformatData*> m_Waveformat;	// Waveformatの情報の取得
-	std::map<std::string, CSoundCue*> m_Cuemap;				// 種類 + SourceVoice
+	std::map<std::string, CSoundCue> m_Cuemap;				// 種類 + SourceVoice
 
 };

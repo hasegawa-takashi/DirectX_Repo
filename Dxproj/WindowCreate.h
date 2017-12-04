@@ -29,9 +29,9 @@ public:
 	char* GetCLASSNAME() { return CLASS_NAME; }
 	char* GetWINDOWNAME() { return WINDOW_NAME; }
 
-	float GetSCREENWIDTH() { return SCREEN_WIDTH; }
-	float GetSCREENHEIGHT() { return SCREEN_HEIGHT; }
-	float GetASPECT() { return ASPECT; }
+	int GetSCREENWIDTH() { return SCREEN_WIDTH; }
+	int GetSCREENHEIGHT() { return SCREEN_HEIGHT; }
+	int GetASPECT() { return ASPECT; }
 
 private:
 
@@ -40,9 +40,9 @@ private:
 	HINSTANCE m_hInstance;
 	bool m_Winmode;
 
-	float SCREEN_WIDTH = 800;
-	float SCREEN_HEIGHT = 600;
-	float ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT;
+	int SCREEN_WIDTH = 800;
+	int SCREEN_HEIGHT = 600;
+	int ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT;
 
 	char* CLASS_NAME = "DirectxProj";
 	char* WINDOW_NAME = "DirectxProj";

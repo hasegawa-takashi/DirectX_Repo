@@ -20,9 +20,7 @@ public:
 
 private:
 	std::vector< AudioElement* > m_Voicelist;	// 登録されているボイス
-
-	//CVoiceEffect m_CueEffect;	/* 現在エフェクトが足りないので使わない */
-	
+		
 	bool m_CueMute;								// ミュートフラグ
 	float m_CueVolume;							// Cue別ボリューム
 };
